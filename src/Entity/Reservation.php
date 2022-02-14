@@ -6,6 +6,7 @@ use App\Repository\ReservationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
@@ -21,16 +22,30 @@ class Reservation
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Do not leave empty")
      */
     private $date_reservation;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Do not leave empty"),
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
+     * @Assert\Positive
      */
     private $nbrebillet;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Do not leave empty"),
+     * @Assert\Length(
+     * min = 5,
+     * max = 7,
+     * minMessage = "L' etat de reservation doit comporter au moins {{ limit }} caractères",
+     * maxMessage = "L' etat de reservation doit comporter au plus {{ limit }} caractères"
+     * )
      */
     private $etat_reservation;
 
@@ -40,14 +55,11 @@ class Reservation
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Billet::class, mappedBy="reservation")
+     * @ORM\ManyToOne(targetEntity=Billet::class, inversedBy="reservation")
      */
     private $billet;
 
-    public function __construct()
-    {
-        $this->billet = new ArrayCollection();
-    }
+
 
     public function getId(): ?int
     {
@@ -102,33 +114,17 @@ class Reservation
         return $this;
     }
 
-    /**
-     * @return Collection|Billet[]
-     */
-    public function getBillet(): Collection
+    public function getBillet(): ?Billet
     {
         return $this->billet;
     }
 
-    public function addBillet(Billet $billet): self
+    public function setBillet(?Billet $billet): self
     {
-        if (!$this->billet->contains($billet)) {
-            $this->billet[] = $billet;
-            $billet->setReservation($this);
-        }
+        $this->billet = $billet;
 
         return $this;
     }
 
-    public function removeBillet(Billet $billet): self
-    {
-        if ($this->billet->removeElement($billet)) {
-            // set the owning side to null (unless already changed)
-            if ($billet->getReservation() === $this) {
-                $billet->setReservation(null);
-            }
-        }
 
-        return $this;
-    }
 }

@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\BilletRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BilletRepository::class)
@@ -19,39 +22,71 @@ class Billet
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Do not leave empty"),
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
+     * @Assert\Positive
      */
     private $chair_billet;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Do not leave empty"),
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
+     * @Assert\Positive
      */
     private $voyage_num;
 
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Do not leave empty"),
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
+     * @Assert\Positive
      */
     private $terminal;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Do not leave empty"),
+     * @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
+     * @Assert\Positive
      */
     private $portail;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Do not leave empty")
      */
     private $embarquement;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Reservation::class, inversedBy="billet")
-     */
-    private $reservation;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Localisation::class, inversedBy="billet")
      */
     private $localisation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="billet")
+     */
+    private $reservation;
+
+    public function __construct()
+    {
+        $this->reservation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,17 +154,7 @@ class Billet
         return $this;
     }
 
-    public function getReservation(): ?Reservation
-    {
-        return $this->reservation;
-    }
 
-    public function setReservation(?Reservation $reservation): self
-    {
-        $this->reservation = $reservation;
-
-        return $this;
-    }
 
     public function getLocalisation(): ?Localisation
     {
@@ -142,6 +167,37 @@ class Billet
 
         return $this;
     }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservation(): Collection
+    {
+        return $this->reservation;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservation->contains($reservation)) {
+            $this->reservation[] = $reservation;
+            $reservation->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservation->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getBillet() === $this) {
+                $reservation->setBillet(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 
 }
