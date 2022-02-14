@@ -1,0 +1,42 @@
+{% extends ('baseback/base.html.twig') %}
+{% block title %}Gestion des Offres
+{% endblock %}
+
+
+{% block body %}
+	<h1>Gestion des Offres</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom offre</th>
+				<th>Description offre</th>
+				<th>Prix_offre</th>
+				<th>Duree_offre</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{%  for offre in offres %}
+				<tr>
+					<td>{{ offre.id }}</td>
+					<td>{{ offre.nomOffre }}</td>
+					<td>{{ offre.descriptionOffre }}</td>
+					<td>{{ offre.prixOffre }}</td>
+					<td>{{ offre.dureeOffre }}</td>
+					<td>
+						<a href="{{ path('offre_show', {'id': offre.id}) }}">show</a>
+						<a href="{{ path('offre_edit', {'id': offre.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('offre_new') }}">Create new</a>
+{% endblock %}
