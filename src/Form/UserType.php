@@ -21,7 +21,7 @@ class UserType extends AbstractType
             ->add('Etat_Compte')
             ->add('Numero_utilisateur')
             ->add('DateN_utilisateur')
-            ->add('post')
+            
         ;
     }
 
