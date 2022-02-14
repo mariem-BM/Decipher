@@ -1,0 +1,32 @@
+{{ form_start(form) }}
+   {# {{ form_widget(form) }}
+    {{ form_errors(form) }} #}
+   
+	<div class="input-field col s12 m12 l12">
+    {{ form_widget(form.date_reservation, {'attr': {'placeholder': 'Date reservation'}}) }}
+	{{ form_errors(form.date_reservation) }}
+	</div>
+	<br>
+	<div class="input-field col s12 m6 l6">
+    {{ form_widget(form.nbrebillet, {'attr': {'placeholder': 'nbre billet'}}) }}
+	{{ form_errors(form.nbrebillet) }}
+</div>
+<br>	<div class="input-field col s12 m12 l12">
+    {{ form_widget(form.etat_reservation, {'attr': {'placeholder': 'etat reservation'}}) }}
+	{{ form_errors(form.etat_reservation) }}
+</div>
+<br>
+	<div class="input-field col s12 m12 l12">
+    {{ form_widget(form.user, {'attr': {'placeholder': 'user'}}) }}
+	{{ form_errors(form.user) }}
+</div>
+	<br>
+{#	<div class="input-field col s12 m12 l12">
+	
+    {{ form_widget(form.billet, {'attr': {'placeholder': 'billet'}}) }}
+	{{ form_errors(form.billet) }}
+</div>
+<br>#}
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
