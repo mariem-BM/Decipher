@@ -40,4 +40,17 @@ class UserController extends AbstractController
 
 
     }
+    function Add(Request $request)
+    {
+        $user=new User();
+        $form=$this->createForm(UserType::class,$user);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid())
+{
+    $em=$this->getDoctrine()->getManager();
+    $em->persist($user);
+    $em->flush();
+}
+return $this->render('user/Add.html.twig',['form'=>$form->createView()]);
+    }
 }
