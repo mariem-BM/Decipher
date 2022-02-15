@@ -6,7 +6,7 @@ use App\Repository\PlaninngRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=PlaninngRepository::class)
  */
@@ -20,6 +20,13 @@ class Planinng
     private $id;
 
     /**
+     *  * @Assert\NotBlank(message="Do not leave empty"),
+     * @Assert\Length(
+     * min = 6,
+     * max = 20,
+     * minMessage = "Le nom_planning doit comporter au moins {{ limit }} caractères",
+     * maxMessage = "Le nom_planning doit comporter au plus {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $nom_planning;
@@ -46,6 +53,13 @@ class Planinng
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Do not leave empty"),
+     * @Assert\Length(
+     * min = 20,
+     * max = 100,
+     * minMessage = "Le description_planning doit comporter au moins {{ limit }} caractères",
+     * maxMessage = "Le description_planning doit comporter au plus {{ limit }} caractères"
+     * )
      */
     private $description_planning;
 
