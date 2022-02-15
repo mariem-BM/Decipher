@@ -32,6 +32,7 @@
  <td> {{u.getSudoUtilisateur}} </td>
  <td> {{u.getMdpUtilisateur}} </td>
   <td> <a href="{{path('d',{'id':u.id})}}">Delete </a></td>
+  <td> <a href="{{path('Update',{'id':u.id})}}">Update </a></td>
 
 </tr {% endfor %}>
   </table>

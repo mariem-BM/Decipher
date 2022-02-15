@@ -65,4 +65,23 @@ class UserController extends AbstractController
 }
 return $this->render('user/Add.html.twig',['form'=>$form->createView()]);
     }
+     /**
+     * @Route("/User/Update/{id}", name="Update")
+     */
+    function Update(UserRepository $repository,$id,Request $request){
+        $user=$repository->find($id);
+        $form=$this->createForm(UserType::class,$user);
+        $form->add('Update',SubmitType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid())
+{
+    $em=$this->getDoctrine()->getManager();
+    $em->flush();
+    return $this->redirectToRoute("AfficheUser");
+
+}
+return $this->render('user/Update.html.twig',[
+    'f'=>$form->createView()
+]);
+    }
 }
