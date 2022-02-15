@@ -18,7 +18,7 @@
     <!-- theme stylesheet-->
     <link rel="stylesheet" href="{{ asset ('Front/css/style.violet.css')}}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="{{ asset ('Front/css/custom.css')}}">
+  <link rel="stylesheet" href="{{ asset ('Front/css/custom.css')}}">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset ('Front/img/logo.png')}}">
     <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
@@ -32,22 +32,22 @@
     <body class="scrollspy-example" data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="0" tabindex="0">
      <header class="header">
       <nav class="navbar navbar-expand-lg navbar-dark position-absolute w-100" id="navbar">
-        <div class="container"><a class="navbar-brand d-block d-lg-none" href="#!"><img src="{{ asset ('Front/img/logo.png')}}" alt="..." width="60"></a>
+        <div class="container"><a class="navbar-brand d-block d-lg-none" href="{{path('home')}}"><img src="{{ asset ('Front/img/logo.png')}}" alt="..." width="60"></a>
           <button class="navbar-toggler navbar-toggler-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto">
-              <li class="nav-item"><a class="nav-link" href="#hero">Home </a></li>
-               <li class="nav-item"><a class="nav-link" href="#account">Account</a></li>
-              <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-              <li class="nav-item"><a class="nav-link" href="#trips">Trips</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{path('home')}}">Home </a></li>
+               <li class="nav-item"><a class="nav-link" href="{{path('account')}}">Account</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{path('services')}}">Services</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{path('trips')}}">Trips</a></li>
             </ul>
             <ul class="navbar-nav d-none d-lg-block px-4">
               <li class="nav-item m-0"><a class="navbar-brand m-0" href="#!"><img src="{{ asset ('Front/img/logo.png')}}" alt="..." width="80"></a></li>
             </ul>
             <ul class="navbar-nav me-auto">
-              <li class="nav-item"><a class="nav-link" href="#reservation">Reservation</a></li>
-              <li class="nav-item"><a class="nav-link" href="#equipement">Equipement</a></li>
-              <li class="nav-item"><a class="nav-link" href="#blog">Blog</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{path('reservation')}}">Reservation</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{path('equipement')}}">Equipement</a></li>
+              <li class="nav-item"><a class="nav-link" href="{{path('blog')}}">Blog</a></li>
               <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             </ul>
           </div>
@@ -58,7 +58,7 @@
     <section class="text-center pt-lg-0 hero-home" id="hero">
       <div class="swiper hero-slider">
         <div class="swiper-wrapper">
-          <div class="swiper-slide hero-slide bg-cover py-5 with-border-image d-flex align-items-center" style="background: url(Front/img/hero-bg-2.jpg)">
+          <div class="swiper-slide hero-slide bg-cover py-5 with-border-image d-flex align-items-center" style="background: url(Front/img/bg.png)">
             <div class="container text-white py-5 my-5 index-forward">
               <h1 class="text-uppercase text-xl mt-5">Celestial</h1>
               <div class="row">
@@ -90,11 +90,11 @@
               </div>
             </div>
           </div>
-        </div>-->
+        </div>
 
         <div class="swiper-button-next swiper-nav-custom d-none d-lg-block"></div>
         <div class="swiper-button-prev swiper-nav-custom d-none d-lg-block"></div>
-        <div class="swiper-pagination py-3 d-block d-lg-none"></div>
+        <div class="swiper-pagination py-3 d-block d-lg-none"></div>-->
       </div>
     </section>
     
@@ -115,31 +115,31 @@
               
           
               <li class="mb-2">
-                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="#hero">Home</a></h6>
+                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('home')}}">Home</a></h6>
               </li>
 
               <li class="mb-2">
-                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="#account">Account</a></h6>
+                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('account')}}">Account</a></h6>
               </li>
 
               <li class="mb-2">
-                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="#services">Services</a></h6>
+                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('services')}}">Services</a></h6>
               </li>
 
               <li class="mb-2">
-                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="#trips">Trips</a></h6>
+                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('trips')}}">Trips</a></h6>
               </li>
 
               <li class="mb-2">
-                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="#reservation">Reservation</a></h6>
+                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('reservation')}}">Reservation</a></h6>
               </li>
 
               <li class="mb-2">
-                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="#equipement">Equipement</a></h6>
+                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('equipement')}}">Equipement</a></h6>
               </li>
 
                <li class="mb-2">
-                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="#blog">Blog</a></h6>
+                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('blog')}}">Blog</a></h6>
               </li>
 
                <li class="mb-2">

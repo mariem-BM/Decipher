@@ -17,7 +17,6 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     *  @Assert\NotBlank(message="id is required") 
      */
     private $id;
 

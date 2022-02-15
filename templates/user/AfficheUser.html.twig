@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Affichage User</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+{% extends ('baseback/base.html.twig') %}
+{% block title %}Gestion des Post
+{% endblock %}
 
-  </head>
-  <body>
-  <table align='center' border=1>
+
+{% block body %}
+  <table align='center' class='table'>
   <tr color='black'>
   <th>ID
   </th>
@@ -31,13 +25,11 @@
  <td> {{u.getNumeroUtilisateur}} </td>
  <td> {{u.getSudoUtilisateur}} </td>
  <td> {{u.getMdpUtilisateur}} </td>
+  <td> {{u.getMailUtilisateur}} </td>
+
   <td> <a href="{{path('d',{'id':u.id})}}">Delete </a></td>
   <td> <a href="{{path('Update',{'id':u.id})}}">Update </a></td>
 
 </tr {% endfor %}>
   </table>
-  </body>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-</html>
+  {% endblock %}

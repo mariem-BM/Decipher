@@ -1,6 +1,14 @@
+{% extends ('baseback/base.html.twig') %}
+{% block title %}Gestion des Post
+{% endblock %}
+
+
+{% block body %}
 <h1>Ajout D'un USER <h1>
+
 {{form_start(form)}}
 {{form_widget(form)}}
 <button> Ajout </button>
 {{form_end(form)}}
-
+{% endblock %}
+ 
