@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,17 +17,20 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(message="id is required") 
      */
     private $id;
 
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="nom is required") 
      */
     private $nom_utilisateur;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="prenom is required") 
      */
     private $prenom_utilisateur;
 
@@ -37,6 +41,8 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\NotBlank(message="Email is required") 
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid  email.") 
      */
     private $mail_utilisateur;
 
