@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 /**
  * @Route("/offre")
  */
@@ -29,13 +31,29 @@ class OffreController extends AbstractController
     /**
      * @Route("/new", name="offre_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
         $offre = new Offre();
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $errors = $validator->validate($offre);
+            if (count($errors) > 0) {
+                /*
+         * Uses a __toString method on the $errors variable which is a
+         * ConstraintViolationList object. This gives us a nice string
+         * for debugging.
+         */
+                $errorsString = (string) $errors;
+
+                return new Response($errorsString);
+                return $this->render('offre/_form.html.twig', [
+                    'errors' => $errors,
+                ]);
+            }
+
             $entityManager->persist($offre);
             $entityManager->flush();
 
@@ -61,12 +79,28 @@ class OffreController extends AbstractController
     /**
      * @Route("/{id}/edit", name="offre_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Offre $offre, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Offre $offre, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $errors = $validator->validate($offre);
+
+            if (count($errors) > 0) {
+                /*
+         * Uses a __toString method on the $errors variable which is a
+         * ConstraintViolationList object. This gives us a nice string
+         * for debugging.
+         */
+                $errorsString = (string) $errors;
+
+                return new Response($errorsString);
+                return $this->render('offre/_form.html.twig', [
+                    'errors' => $errors,
+                ]);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
