@@ -1,0 +1,43 @@
+{% extends ('baseback/base.html.twig') %}
+{% block title %}Gestion des Localisations
+{% endblock %}
+
+
+{% block body %}
+	<h1>Gestion des Localisations</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>HeureDepart_localisation</th>
+				<th>HeureArrivee_loacalisation</th>
+				<th>PositionDepart_localisation</th>
+				<th>PositionArivee_planning</th>
+				<th>Fusee</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for localisation in localisations %}
+				<tr>
+					<td>{{ localisation.id }}</td>
+					<td>{{ localisation.heureDepartLocalisation ? localisation.heureDepartLocalisation|date('H:i:s') : '' }}</td>
+					<td>{{ localisation.heureArriveeLoacalisation ? localisation.heureArriveeLoacalisation|date('H:i:s') : '' }}</td>
+					<td>{{ localisation.positionDepartLocalisation }}</td>
+					<td>{{ localisation.positionAriveePlanning }}</td>
+					<td>{{ localisation.fusee }}</td>
+					<td>
+						<a href="{{ path('localisation_show', {'id': localisation.id}) }}">show</a>
+						<a href="{{ path('localisation_edit', {'id': localisation.id}) }}">edit</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+				{% endfor %}
+			</tbody>
+		</tbody>
+	</table>
+
+	<a href="{{ path('localisation_new') }}">Create new</a>
+{% endblock %}
