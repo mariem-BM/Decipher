@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BilletRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,15 +45,22 @@ class Billet
      */
     private $embarquement;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Reservation::class, inversedBy="billet")
-     */
-    private $reservation;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Localisation::class, inversedBy="billet")
      */
     private $localisation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="billet")
+     */
+    private $reservation;
+
+    public function __construct()
+    {
+        $this->reservation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,17 +128,7 @@ class Billet
         return $this;
     }
 
-    public function getReservation(): ?Reservation
-    {
-        return $this->reservation;
-    }
 
-    public function setReservation(?Reservation $reservation): self
-    {
-        $this->reservation = $reservation;
-
-        return $this;
-    }
 
     public function getLocalisation(): ?Localisation
     {
@@ -139,6 +138,36 @@ class Billet
     public function setLocalisation(?Localisation $localisation): self
     {
         $this->localisation = $localisation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reservation[]
+     */
+    public function getReservation(): Collection
+    {
+        return $this->reservation;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservation->contains($reservation)) {
+            $this->reservation[] = $reservation;
+            $reservation->setBillet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservation->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getBillet() === $this) {
+                $reservation->setBillet(null);
+            }
+        }
 
         return $this;
     }

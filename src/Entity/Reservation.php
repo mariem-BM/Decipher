@@ -40,14 +40,11 @@ class Reservation
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Billet::class, mappedBy="reservation")
+     * @ORM\ManyToOne(targetEntity=Billet::class, inversedBy="reservation")
      */
     private $billet;
 
-    public function __construct()
-    {
-        $this->billet = new ArrayCollection();
-    }
+
 
     public function getId(): ?int
     {
@@ -102,33 +99,17 @@ class Reservation
         return $this;
     }
 
-    /**
-     * @return Collection|Billet[]
-     */
-    public function getBillet(): Collection
+    public function getBillet(): ?Billet
     {
         return $this->billet;
     }
 
-    public function addBillet(Billet $billet): self
+    public function setBillet(?Billet $billet): self
     {
-        if (!$this->billet->contains($billet)) {
-            $this->billet[] = $billet;
-            $billet->setReservation($this);
-        }
+        $this->billet = $billet;
 
         return $this;
     }
 
-    public function removeBillet(Billet $billet): self
-    {
-        if ($this->billet->removeElement($billet)) {
-            // set the owning side to null (unless already changed)
-            if ($billet->getReservation() === $this) {
-                $billet->setReservation(null);
-            }
-        }
 
-        return $this;
-    }
 }

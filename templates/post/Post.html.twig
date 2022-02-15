@@ -1,0 +1,29 @@
+<html>
+
+    <h1>Articles</h1>
+
+  <table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Categorie_post_id</th>
+      <th>nom_post</th>
+      <th>img_post</th>
+       <th>description_post</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr {% for article in  Articles %}>
+        <th>{{ article.id }}</th>
+      <th>{{ article.getCategoriePost() }}</th>
+      <th>{{ article.getNomPost() }}</th>
+      <th>{{ article.getImgPost()}}</th> 
+       <th>{{ article.getDescriptionPost()}}</th>
+       
+    </tr {% endfor %}>
+   
+  </tbody>
+
+</table>
+</html>
