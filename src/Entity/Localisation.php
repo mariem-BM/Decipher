@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Localisation
 {
+    
+    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -28,6 +30,11 @@ class Localisation
      * @ORM\Column(type="time")
      */
     private $heureArrivee_loacalisation;
+
+    public function __toString()
+    {
+        return $this->positionDepart_localisation;
+    }
 
     /**
      * @ORM\Column(type="string", length=255)
