@@ -13,12 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 class CategoriePost
 {
     /**
-     * @ORM\Id
+     * @ORM\id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
 
+    public function __toString()
+    {
+        return $this->nom_categorie_post;
+    }
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -28,6 +32,8 @@ class CategoriePost
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="categoriePost")
      */
     private $Post;
+
+   
 
     public function __construct()
     {
@@ -80,4 +86,6 @@ class CategoriePost
 
         return $this;
     }
+
+   
 }
