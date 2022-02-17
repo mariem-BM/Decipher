@@ -1,87 +1,93 @@
 <?php
 
 namespace App\Controller;
-use App\Entity\User;
-use App\Form\EquipementType;
-use App\Repository\UserRepository;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 
+use App\Entity\Equipement;
+use App\Form\EquipementType;
+use App\Repository\EquipementRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-class UserController extends AbstractController
+/**
+ * @Route("/equipement")
+ */
+class EquipementController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/", name="equipement_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(EquipementRepository $equipementRepository): Response
     {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+        return $this->render('equipement/index.html.twig', [
+            'equipements' => $equipementRepository->findAll(),
         ]);
     }
+
     /**
-     * @param EquipementRepository $repository
-     * @return /Symfony/Component/HttpFondation/Response;
-     * @Route("/AfficheEquipement",name="AfficheEquipement")
+     * @Route("/new", name="equipement_new", methods={"GET", "POST"})
      */
-    public function Affiche(EquipementRepository $repository)
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $user=$repository->findAll();
-        return $this->render('equipement/AfficheEquipement.html.twig',['user'=>$user]);
-    }
-    /**
-     * @Route("/SupprimerUser/{id}",name="d")
-     */
-    function Delete($id,UserRepository $repository)
-    { $user=$repository->find($id);
-        $em=$this->getDoctrine()->getManager();
-        $em->remove($user);
-        $em->flush();
-        return $this->redirectToRoute('AfficheUser');
+        $equipement = new Equipement();
+        $form = $this->createForm(EquipementType::class, $equipement);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($equipement);
+            $entityManager->flush();
 
+            return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('equipement/new.html.twig', [
+            'equipement' => $equipement,
+            'form' => $form->createView(),
+        ]);
     }
+
     /**
-     * @param Request $request
-     * @return /Symfony/Component/HttpFondation/Response;
-     * @Route("/User/Add")
+     * @Route("/{id}", name="equipement_show", methods={"GET"})
      */
-    function Add(Request $request)
+    public function show(Equipement $equipement): Response
     {
-        $user=new User();
-        $form=$this->createForm(UserType::class,$user);
-        $form->add('Ajouter',SubmitType::class);
-        $form->handleRequest($request);
-        if($form->isSubmitted()&& $form->isValid())
-{
-    $em=$this->getDoctrine()->getManager();
-    $em->persist($user);
-    $em->flush();
-    return $this->redirectToRoute('AfficheUser');
-}
-return $this->render('user/Add.html.twig',['form'=>$form->createView()]);
+        return $this->render('equipement/show.html.twig', [
+            'equipement' => $equipement,
+        ]);
     }
-     /**
-     * @Route("/User/Update/{id}", name="Update")
-     */
-    function Update(UserRepository $repository,$id,Request $request){
-        $user=$repository->find($id);
-        $form=$this->createForm(UserType::class,$user);
-        $form->add('Update',SubmitType::class);
-        $form->handleRequest($request);
-        if($form->isSubmitted()&& $form->isValid())
-{
-    $em=$this->getDoctrine()->getManager();
-    $em->flush();
-    return $this->redirectToRoute("AfficheUser");
 
-}
-return $this->render('user/Update.html.twig',[
-    'f'=>$form->createView()
-]);
+    /**
+     * @Route("/{id}/edit", name="equipement_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, Equipement $equipement, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(EquipementType::class, $equipement);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('equipement/edit.html.twig', [
+            'equipement' => $equipement,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="equipement_delete", methods={"POST"})
+     */
+    public function delete(Request $request, Equipement $equipement, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$equipement->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($equipement);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
     }
 }
