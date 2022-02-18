@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=CommentaireRepository::class)
  */
@@ -16,14 +16,20 @@ class Commentaire
      * @ORM\Column(type="integer")
      */
     private $id;
+    public function __toString()
+    {
+        return $this->msg_commentaire;
+    }
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Do not leave empty")
      */
     private $date_commentaire;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Do not leave empty")
      */
     private $msg_commentaire;
 

@@ -6,7 +6,7 @@ use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
  */
@@ -18,19 +18,32 @@ class Post
      * @ORM\Column(type="integer")
      */
     private $id;
+    public function __toString()
+    {
+        return $this->nom_post;
+    }
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="le champ est vide")
      */
     private $nom_post;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="s'il vous plaît télécharger l'image")
+     * @Assert\Image(
+     *     minWidth = 200,
+     *     maxWidth = 400,
+     *     minHeight = 200,
+     *     maxHeight = 400
+     * )
      */
     private $img_post;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="le champ est vide")
      */
     private $description_post;
 
@@ -72,17 +85,18 @@ class Post
         return $this;
     }
 
-    public function getImgPost(): ?string
+    public function getImgPost()
     {
         return $this->img_post;
     }
 
-    public function setImgPost(string $img_post): self
+    public function setImgPost( $img_post)
     {
         $this->img_post = $img_post;
 
         return $this;
     }
+    
 
     public function getDescriptionPost(): ?string
     {
