@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<title>User</title>
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom_utilisateur</th>
+                <td>{{ user.nomUtilisateur }}</td>
+            </tr>
+            <tr>
+                <th>Prenom_utilisateur</th>
+                <td>{{ user.prenomUtilisateur }}</td>
+            </tr>
+            <tr>
+                <th>Adresse_utilisateur</th>
+                <td>{{ user.adresseUtilisateur }}</td>
+            </tr>
+            <tr>
+                <th>Mail_utilisateur</th>
+                <td>{{ user.mailUtilisateur }}</td>
+            </tr>
+            <tr>
+                <th>Sudo_utilisateur</th>
+                <td>{{ user.sudoUtilisateur }}</td>
+            </tr>
+            <tr>
+                <th>Mdp_utilisateur</th>
+                <td>{{ user.mdpUtilisateur }}</td>
+            </tr>
+            <tr>
+                <th>Etat_Compte</th>
+                <td>{{ user.EtatCompte }}</td>
+            </tr>
+            <tr>
+                <th>Numero_utilisateur</th>
+                <td>{{ user.NumeroUtilisateur }}</td>
+            </tr>
+            <tr>
+                <th>DateN_utilisateur</th>
+                <td>{{ user.DateNUtilisateur ? user.DateNUtilisateur|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_index') }}">back to list</a>
+
+    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+{% endblock %}
