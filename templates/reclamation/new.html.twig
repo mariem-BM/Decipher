@@ -1,12 +1,9 @@
-{% extends ('baseback/base.html.twig') %}
-{% block title %}New Reclamation
+{% extends ('base_back_f/basebackF.html.twig') %}
+{% block title %}Creer Reclamation
 {% endblock %}
 
 
 {% block body %}
-	<h1>Create new reclamation</h1>
+<h1>Creer reclamation</h1>
 
-	{{ include('reclamation/_form.html.twig') }}
-
-	<a href="{{ path('reclamation_index') }}">back to list</a>
-{% endblock %}
+<aback {{ include('reclamation/_form.html.twig') }} </a> <a href="{{ path('reclamation_index') }}" class="btn btn-primary"> to list</a> {% endblock %}

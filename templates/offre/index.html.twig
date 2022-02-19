@@ -1,4 +1,4 @@
-{% extends ('baseback/base.html.twig') %}
+{% extends ('base_back_f/basebackF.html.twig') %}
 {% block title %}Gestion des Offres
 {% endblock %}
 
@@ -12,9 +12,11 @@
 				<th>Id</th>
 				<th>Nom offre</th>
 				<th>Description offre</th>
-				<th>Prix_offre</th>
-				<th>Duree_offre</th>
-				<th>actions</th>
+				<th>Prix
+				</th>
+				<th>Duree
+				</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -26,8 +28,11 @@
 					<td>{{ offre.prixOffre }}</td>
 					<td>{{ offre.dureeOffre }}</td>
 					<td>
-						<a href="{{ path('offre_show', {'id': offre.id}) }}">show</a>
-						<a href="{{ path('offre_edit', {'id': offre.id}) }}">edit</a>
+						<a href="{{ path('offre_show', {'id': offre.id}) }}" class="btn btn-primary">consulter</a>
+						<a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-primary">modifier</a>
+						<a href="{{ path('offre_new') }}" class="btn btn-primary">Creer</a>
+
+
 					</td>
 				</tr>
 			{% else %}
@@ -38,5 +43,5 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('offre_new') }}">Create new</a>
+
 {% endblock %}

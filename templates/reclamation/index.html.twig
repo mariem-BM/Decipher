@@ -1,4 +1,4 @@
-{% extends ('baseback/base.html.twig') %}
+{% extends ('base_back_f/basebackF.html.twig') %}
 {% block title %}Gestion des Reclamations
 {% endblock %}
 
@@ -9,11 +9,11 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Id</th>
-				<th>Description_reclamation</th>
-				<th>Date_reclamation</th>
-				<th>Etat_reclamation</th>
-				<th>actions</th>
+				<th>Id reclamation</th>
+				<th>Description reclamation</th>
+				<th>Date reclamation</th>
+				<th>Etat reclamation</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,10 +23,15 @@
 					<td>{{ reclamation.descriptionReclamation }}</td>
 					<td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
 					<td>{{ reclamation.etatReclamation }}</td>
-					<td>
-						<a href="{{ path('reclamation_show', {'id': reclamation.id}) }}">show</a>
-						<a href="{{ path('reclamation_edit', {'id': reclamation.id}) }}">edit</a>
-					</td>
+					<div>
+						<td>
+							<a href="{{ path('reclamation_show', {'id': reclamation.id}) }}" class="btn btn-primary">consulter</a>
+
+							<a href="{{ path('reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-primary">modifier</a>
+
+							<a href="{{ path('reclamation_new') }}" class="btn btn-primary">Creer</a>
+						</td>
+					</div>
 				</tr>
 			{% else %}
 				<tr>
@@ -36,5 +41,4 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('reclamation_new') }}">Create new</a>
 {% endblock %}
