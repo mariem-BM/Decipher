@@ -18,7 +18,7 @@ class ReservationType extends AbstractType
             ->add('nbrebillet')
             ->add('etat_reservation')
             ->add('user')
-            //->add('billet')
+           // ->add('billet')
          /*  ->add('billet',EntityType::class,[
                 'class' => Billet::class,
                     'choice_label' => 'id',

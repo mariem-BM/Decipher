@@ -19,7 +19,10 @@ class Billet
      * @ORM\Column(type="integer")
      */
     private $id;
-
+ /* public function __toString()
+    {
+        return $this->id;
+    }*/
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank(message="Do not leave empty"),
@@ -41,7 +44,7 @@ class Billet
      * @Assert\Positive
      */
     private $voyage_num;
-
+ 
 
     /**
      * @ORM\Column(type="integer")
@@ -92,6 +95,8 @@ class Billet
     {
         return $this->id;
     }
+ 
+
 
     public function getChairBillet(): ?int
     {
@@ -116,6 +121,7 @@ class Billet
 
         return $this;
     }
+  
 
 
     public function getTerminal(): ?int
@@ -197,7 +203,5 @@ class Billet
 
         return $this;
     }
-
-
 
 }

@@ -55,7 +55,7 @@ class BasefrontController extends AbstractController
     }
 
           /**
-     * @Route("/reservation", name="reservation")
+     * @Route("/reservations", name="reservation")
      */
     public function reservation(): Response
     {

@@ -47,6 +47,7 @@ class Reservation
      * maxMessage = "L' etat de reservation doit comporter au plus {{ limit }} caractères"
      * )
      */
+    
     private $etat_reservation;
 
     /**
