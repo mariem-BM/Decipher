@@ -1,26 +1,27 @@
 {% extends ('baseback/base.html.twig') %}
-{% block %}Gestion des Users
+{% block body %}Gestion des Users
 
 <!DOCTYPE html>
 
 <title>User</title>
 
-
-    <h1>User index</h1>
+<div align="center">
+    <h1>Users List</h1>
+    </div>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom_utilisateur</th>
-                <th>Prenom_utilisateur</th>
-                <th>Adresse_utilisateur</th>
-                <th>Mail_utilisateur</th>
-                <th>Sudo_utilisateur</th>
-                <th>Mdp_utilisateur</th>
-                <th>Etat_Compte</th>
-                <th>Numero_utilisateur</th>
-                <th>DateN_utilisateur</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse</th>
+                <th>Mail</th>
+                <th>Sudo</th>
+                <th>Mdp</th>
+                <th>Etat du Compte</th>
+                <th>Numero</th>
+                <th>Date de naissance</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -33,7 +34,7 @@
                 <td>{{ user.adresseUtilisateur }}</td>
                 <td>{{ user.mailUtilisateur }}</td>
                 <td>{{ user.sudoUtilisateur }}</td>
-                <td>{{ user.mdpUtilisateur }}</td>
+                <td Type="password">{{ user.mdpUtilisateur }}</td>
                 <td>{{ user.EtatCompte }}</td>
                 <td>{{ user.NumeroUtilisateur }}</td>
                 <td>{{ user.DateNUtilisateur ? user.DateNUtilisateur|date('Y-m-d') : '' }}</td>
@@ -49,6 +50,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('user_new') }}">Create new</a>
+    <div align="center">
+    <a href="{{ path('user_new') }}" class="btn-primary">Create new</a>
+    </div>
 {% endblock %}

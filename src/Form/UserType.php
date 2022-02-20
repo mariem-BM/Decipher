@@ -6,6 +6,8 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+
 
 class UserType extends AbstractType
 {
@@ -17,11 +19,11 @@ class UserType extends AbstractType
             ->add('adresse_utilisateur')
             ->add('mail_utilisateur')
             ->add('sudo_utilisateur')
-            ->add('mdp_utilisateur')
+            ->add('mdp_utilisateur',PasswordType::class, [
+                'attr' => ['class' => 'Masked']])
             ->add('Etat_Compte')
             ->add('Numero_utilisateur')
             ->add('DateN_utilisateur')
-            ->add('post')
         ;
     }
 

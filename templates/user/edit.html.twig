@@ -1,15 +1,14 @@
-{% extends ('baseback/base.html.twig') %}
-{% block %}Gestion des Users
-
+{% block body %}
 <!DOCTYPE html>
 
 <title>Edit User</title>
 
     <h1>Edit User</h1>
-
+<div align="center">
     {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('user_index') }}">back to list</a>
 
     {{ include('user/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
