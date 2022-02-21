@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,16 @@ class Role
      * @ORM\Column(type="string", length=255)
      */
     private $tacherole;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="nom_role")
+     */
+    private $userRoles;
+
+    public function __construct()
+    {
+        $this->userRoles = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -75,4 +87,38 @@ class Role
 
         return $this;
     }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUserRoles(): Collection
+    {
+        return $this->userRoles;
+    }
+
+    public function addUserRole(User $userRole): self
+    {
+        if (!$this->userRoles->contains($userRole)) {
+            $this->userRoles[] = $userRole;
+            $userRole->setNomRole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRole(User $userRole): self
+    {
+        if ($this->userRoles->removeElement($userRole)) {
+            // set the owning side to null (unless already changed)
+            if ($userRole->getNomRole() === $this) {
+                $userRole->setNomRole(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString() 
+{
+    return (string) $this->nom_role; 
+}
 }

@@ -14,6 +14,11 @@
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
+                <th>Role</th>
+                <td>{{ user.Nom_role }}</td>
+            </tr>
+           
+            <tr>
                 <th>Nom</th>
                 <td>{{ user.nomUtilisateur }}</td>
             </tr>
@@ -38,7 +43,7 @@
                 <td>{{ user.mdpUtilisateur }}</td>
             </tr>
             <tr>
-                <th>Etat du Compte</th>
+                <th>Etat_Compte</th>
                 <td>{{ user.EtatCompte }}</td>
             </tr>
             <tr>
@@ -46,7 +51,7 @@
                 <td>{{ user.NumeroUtilisateur }}</td>
             </tr>
             <tr>
-                <th>Date de naissance</th>
+                <th>DateN</th>
                 <td>{{ user.DateNUtilisateur ? user.DateNUtilisateur|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>

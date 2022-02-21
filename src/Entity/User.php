@@ -85,6 +85,11 @@ class User
      */
     private $reservations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="user")
+     */
+    private $nom_role;
+
     public function __construct()
     {
         $this->Reclamation = new ArrayCollection();
@@ -276,4 +281,20 @@ class User
 
         return $this;
     }
+
+    public function getNomRole(): ?Role
+    {
+        return $this->nom_role;
+    }
+
+    public function setNomRole(?Role $nom_role): self
+    {
+        $this->nom_role = $nom_role;
+
+        return $this;
+    }
+    public function __toString() 
+{
+    return (string) $this->nom_role; 
+}
 }

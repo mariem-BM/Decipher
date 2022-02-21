@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<title>Role index</title>
+
+{% block body %}
+    <h1>Role index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_role</th>
+                <th>Description_role</th>
+                <th>Tacherole</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for role in roles %}
+            <tr>
+                <td>{{ role.id }}</td>
+                <td>{{ role.nomRole }}</td>
+                <td>{{ role.descriptionRole }}</td>
+                <td>{{ role.tacherole }}</td>
+                <td>
+                    <a href="{{ path('role_show', {'id': role.id}) }}">show</a>
+                    <a href="{{ path('role_edit', {'id': role.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('role_new') }}">Create new</a>
+{% endblock %}

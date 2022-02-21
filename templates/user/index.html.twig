@@ -5,23 +5,24 @@
 
 <title>User</title>
 
-<div align="center">
-    <h1>Users List</h1>
-    </div>
+
+    <h1>User index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
+                                <th>Role</th>
+
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Adresse</th>
                 <th>Mail</th>
                 <th>Sudo</th>
                 <th>Mdp</th>
-                <th>Etat du Compte</th>
+                <th>Etat_Compte</th>
                 <th>Numero</th>
-                <th>Date de naissance</th>
+                <th>DateN</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -29,12 +30,14 @@
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
+                                <td>{{ user.getNomRole() }}</td>
+
                 <td>{{ user.nomUtilisateur }}</td>
                 <td>{{ user.prenomUtilisateur }}</td>
                 <td>{{ user.adresseUtilisateur }}</td>
                 <td>{{ user.mailUtilisateur }}</td>
                 <td>{{ user.sudoUtilisateur }}</td>
-                <td Type="password">{{ user.mdpUtilisateur }}</td>
+                <td>{{ user.mdpUtilisateur }}</td>
                 <td>{{ user.EtatCompte }}</td>
                 <td>{{ user.NumeroUtilisateur }}</td>
                 <td>{{ user.DateNUtilisateur ? user.DateNUtilisateur|date('Y-m-d') : '' }}</td>
@@ -50,7 +53,6 @@
         {% endfor %}
         </tbody>
     </table>
-    <div align="center">
-    <a href="{{ path('user_new') }}" class="btn-primary">Create new</a>
-    </div>
+
+    <a href="{{ path('user_new') }}">Create new</a>
 {% endblock %}
