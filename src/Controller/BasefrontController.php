@@ -17,7 +17,7 @@ class BasefrontController extends AbstractController
             'controller_name' => 'BasefrontController',
         ]);
     }
-        /**
+    /**
      * @Route("/", name="home")
      */
     public function home(): Response
@@ -26,7 +26,7 @@ class BasefrontController extends AbstractController
             'controller_name' => 'BasefrontController',
         ]);
     }
-        /**
+    /**
      * @Route("/account", name="account")
      */
     public function account(): Response
@@ -35,7 +35,7 @@ class BasefrontController extends AbstractController
             'controller_name' => 'BasefrontController',
         ]);
     }
-          /**
+    /**
      * @Route("/services", name="services")
      */
     public function services(): Response
@@ -44,7 +44,7 @@ class BasefrontController extends AbstractController
             'controller_name' => 'BasefrontController',
         ]);
     }
-          /**
+    /**
      * @Route("/trips", name="trips")
      */
     public function trips(): Response
@@ -54,7 +54,7 @@ class BasefrontController extends AbstractController
         ]);
     }
 
-          /**
+    /**
      * @Route("/reservation", name="reservation")
      */
     public function reservation(): Response
@@ -64,7 +64,7 @@ class BasefrontController extends AbstractController
         ]);
     }
 
-          /**
+    /**
      * @Route("/equipement", name="equipement")
      */
     public function equipement(): Response
@@ -74,7 +74,7 @@ class BasefrontController extends AbstractController
         ]);
     }
 
-          /**
+    /**
      * @Route("/tblog", name="blog")
      */
     public function blog(): Response

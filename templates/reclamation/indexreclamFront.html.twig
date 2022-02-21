@@ -1,4 +1,4 @@
-{% extends ('base_back_f/basebackF.html.twig') %}
+{% extends ('basefront/base.html.twig') %}
 {% block title %}Gestion des Reclamations
 {% endblock %}
 
@@ -12,7 +12,7 @@
 				<th>Id reclamation</th>
 				<th>Description reclamation</th>
 				<th>Date reclamation</th>
-
+				<th>Etat reclamation</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -22,11 +22,13 @@
 					<td>{{ reclamation.id }}</td>
 					<td>{{ reclamation.descriptionReclamation }}</td>
 					<td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
-
+					<td>{{ reclamation.etatReclamation }}</td>
 					<div>
 						<td>
 							<a href="{{ path('reclamation_show', {'id': reclamation.id}) }}" class="btn btn-primary">consulter</a>
+
 							<a href="{{ path('reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-primary">modifier</a>
+
 							<a href="{{ path('reclamation_new') }}" class="btn btn-primary">Creer</a>
 
 

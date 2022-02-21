@@ -64,6 +64,24 @@ class Offre
      */
     private $duree_offre;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $reduction;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Planinng::class, inversedBy="offres")
+     */
+
+
+    /* private $planning;*/
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date_debut_offre;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -113,6 +131,45 @@ class Offre
     public function setDureeOffre(float $duree_offre): self
     {
         $this->duree_offre = $duree_offre;
+
+        return $this;
+    }
+
+    public function getReduction(): ?float
+    {
+        return $this->reduction;
+    }
+
+    public function setReduction(float $reduction): self
+    {
+        $this->reduction = $reduction;
+
+        return $this;
+    }
+
+
+
+
+    public function getPlanning(): ?Planinng
+    {
+        return $this->planning;
+    }
+
+    public function setPlanning(?Planinng $planning): self
+    {
+        $this->planning = $planning;
+
+        return $this;
+    }
+
+    public function getDateDebutOffre(): ?\DateTimeInterface
+    {
+        return $this->date_debut_offre;
+    }
+
+    public function setDateDebutOffre(?\DateTimeInterface $date_debut_offre): self
+    {
+        $this->date_debut_offre = $date_debut_offre;
 
         return $this;
     }

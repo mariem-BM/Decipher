@@ -28,10 +28,6 @@ class Reclamation
      */
     private $date_reclamation;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $etat_reclamation;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="Reclamation")
@@ -68,17 +64,7 @@ class Reclamation
         return $this;
     }
 
-    public function getEtatReclamation(): ?string
-    {
-        return $this->etat_reclamation;
-    }
 
-    public function setEtatReclamation(string $etat_reclamation): self
-    {
-        $this->etat_reclamation = $etat_reclamation;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {

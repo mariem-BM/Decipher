@@ -27,6 +27,16 @@ class ReclamationController extends AbstractController
     }
 
     /**
+     * @Route("/reclamation_indexFront", name="reclamation_indexFront", methods={"GET"})
+     */
+    /*   public function indexF(ReclamationRepository $reclamationRepository): Response
+    {
+        return $this->render('reclamation/indexreclamFront.html.twig', [
+            'reclamations' => $reclamationRepository->findAll(),
+        ]);
+    }*/
+
+    /**
      * @Route("/new", name="reclamation_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -83,7 +93,7 @@ class ReclamationController extends AbstractController
      */
     public function delete(Request $request, Reclamation $reclamation, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$reclamation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $reclamation->getId(), $request->request->get('_token'))) {
             $entityManager->remove($reclamation);
             $entityManager->flush();
         }

@@ -1,4 +1,4 @@
-{% extends ('base_back_f/basebackF.html.twig') %}
+{% extends ('basefont/base.html.twig') %}
 
 
 {% block title %}Reclamation
@@ -21,13 +21,16 @@
 				<th>Date_reclamation</th>
 				<td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
 			</tr>
-
+			<tr>
+				<th>Etat_reclamation</th>
+				<td>{{ reclamation.etatReclamation }}</td>
+			</tr>
 		</tbody>
 	</table>
 	<div>
-		<a href="{{ path('reclamation_index') }}" class="btn btn-primary">back to list</a>
+		<a href="{{ path('reclamation_indexFront') }}" class="btn btn-primary">back to list</a>
 
-		<a href="{{ path('reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-primary">edit</a>
+		<a href="{{ path('reclamation_edit'), {'id': reclamation.id}) }}" class="btn btn-primary">edit</a>
 
 
 	</div>

@@ -16,8 +16,11 @@ class OffreType extends AbstractType
             ->add('description_offre')
             ->add('prix_offre')
             ->add('duree_offre')
-        ;
+            ->add('reduction')
+            /*  ->add('planning')*/
+            ->add('date_debut_offre');
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {

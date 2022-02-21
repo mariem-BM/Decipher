@@ -22,6 +22,10 @@ class Planinng
     /**
      * @ORM\Column(type="string", length=255)
      */
+    public function __toString()
+    {
+        return (string) $this->getNomPlanning();
+    }
     private $nom_planning;
 
     /**
@@ -64,10 +68,16 @@ class Planinng
      */
     private $localisation;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Offre::class, mappedBy="planning")
+     */
+    private $offres;
+
 
     public function __construct()
     {
         $this->billets = new ArrayCollection();
+        $this->offres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,4 +193,33 @@ class Planinng
         return $this;
     }
 
+    /**
+     * @return Collection<int, Offre>
+     */
+    public function getOffres(): Collection
+    {
+        return $this->offres;
+    }
+
+    public function addOffre(Offre $offre): self
+    {
+        if (!$this->offres->contains($offre)) {
+            $this->offres[] = $offre;
+            $offre->setPlanning($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffre(Offre $offre): self
+    {
+        if ($this->offres->removeElement($offre)) {
+            // set the owning side to null (unless already changed)
+            if ($offre->getPlanning() === $this) {
+                $offre->setPlanning(null);
+            }
+        }
+
+        return $this;
+    }
 }

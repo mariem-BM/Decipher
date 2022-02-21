@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Offre;
+use App\Entity\PropertySearch;
+use App\Form\PropertySearchType;
 use App\Form\OffreType;
 use App\Repository\OffreRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form;
+
+use Knp\Component\Pager\PaginatorInterface;
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -112,6 +117,25 @@ class OffreController extends AbstractController
         ]);
     }
 
+    //offre delete test
+    //DELETE 
+
+    /**
+     * @Route("/offre/delete/{id}",name="delete_offre")
+     * @Method({"DELETE"})
+     */
+    /*public function deleteo(Request $request, $id)
+    {
+        $offre = $this->getDoctrine()->getRepository(Offre::class)->find($id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($offre);
+        $entityManager->flush();
+        $response = new Response();
+        $response->send();
+        $this->addFlash('success', 'Article Deleted!');
+        return $this->redirectToRoute('offre_index');
+    }
+*/
     /**
      * @Route("/{id}", name="offre_delete", methods={"POST"})
      */
@@ -124,4 +148,6 @@ class OffreController extends AbstractController
 
         return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }

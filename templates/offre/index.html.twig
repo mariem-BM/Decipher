@@ -2,8 +2,9 @@
 {% block title %}Gestion des Offres
 {% endblock %}
 
-
 {% block body %}
+
+
 	<h1>Gestion des Offres</h1>
 
 	<table class="table">
@@ -16,6 +17,8 @@
 				</th>
 				<th>Duree
 				</th>
+				<th>Reduction
+				</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -27,6 +30,7 @@
 					<td>{{ offre.descriptionOffre }}</td>
 					<td>{{ offre.prixOffre }}</td>
 					<td>{{ offre.dureeOffre }}</td>
+					<td>{{ offre.reduction }}</td>
 					<td>
 						<a href="{{ path('offre_show', {'id': offre.id}) }}" class="btn btn-primary">consulter</a>
 						<a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-primary">modifier</a>
@@ -35,13 +39,10 @@
 
 					</td>
 				</tr>
-			{% else %}
-				<tr>
-					<td colspan="5">no records found</td>
-				</tr>
-			{% endfor %}
+			</a>
 		</tbody>
-	</table>
-
-
-{% endblock %}
+	</td>
+</tr>{% else %}
+<tr>
+	<td colspan="5">no records found</td>
+</tr>{% endfor %}</tbody></table>{% endblock %}
