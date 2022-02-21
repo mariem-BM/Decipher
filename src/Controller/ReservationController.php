@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use App\Entity\User;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,6 +25,17 @@ class ReservationController extends AbstractController
     public function index(ReservationRepository $reservationRepository): Response
     {
         return $this->render('reservation/index.html.twig', [
+            'reservations' => $reservationRepository->findAll(),
+        ]);
+    }
+     /**
+     * @Route("/mesreservations", name="reservation_front", methods={"GET"})
+     */
+    public function indexfront(ReservationRepository $reservationRepository): Response
+    { /*  $user = new User(); 
+        $user = $this->getUser()->getReservations();*/
+
+        return $this->render('reservation/indexfront.html.twig', [
             'reservations' => $reservationRepository->findAll(),
         ]);
     }

@@ -26,37 +26,16 @@ class Reservation
      */
     private $date_reservation;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Do not leave empty"),
-     * @Assert\Type(
-     *     type="integer",
-     *     message="The value {{ value }} is not a valid {{ type }}."
-     * )
-     * @Assert\Positive
-     */
-    private $nbrebillet;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="Do not leave empty"),
-     * @Assert\Length(
-     * min = 5,
-     * max = 7,
-     * minMessage = "L' etat de reservation doit comporter au moins {{ limit }} caractères",
-     * maxMessage = "L' etat de reservation doit comporter au plus {{ limit }} caractères"
-     * )
-     */
-    
-    private $etat_reservation;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id",nullable=false)
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Billet::class, inversedBy="reservation")
+     * @ORM\JoinColumn(name="billet_id", referencedColumnName="id",nullable=false)
      */
     private $billet;
 
@@ -79,29 +58,7 @@ class Reservation
         return $this;
     }
 
-    public function getNbrebillet(): ?int
-    {
-        return $this->nbrebillet;
-    }
 
-    public function setNbrebillet(int $nbrebillet): self
-    {
-        $this->nbrebillet = $nbrebillet;
-
-        return $this;
-    }
-
-    public function getEtatReservation(): ?string
-    {
-        return $this->etat_reservation;
-    }
-
-    public function setEtatReservation(string $etat_reservation): self
-    {
-        $this->etat_reservation = $etat_reservation;
-
-        return $this;
-    }
 
     public function getUser(): ?User
     {

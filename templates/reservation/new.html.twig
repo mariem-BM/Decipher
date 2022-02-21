@@ -1,4 +1,4 @@
-{% extends ('base_back_f/basebackF.html.twig') %}
+{% extends ('basefront/base.html.twig') %}
 {% block title %}New Reservation{% endblock %}
 
 
@@ -8,5 +8,5 @@
 
     {{ include('reservation/_form.html.twig') }}
 
-    <a href="{{ path('reservation_index') }}">back to list</a>
+   <a href="{{ path('reservation_front') }}">back to list</a>
 {% endblock %}

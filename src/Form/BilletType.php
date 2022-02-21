@@ -7,6 +7,7 @@ use App\Entity\Reservation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class BilletType extends AbstractType
 {
@@ -18,7 +19,12 @@ class BilletType extends AbstractType
             ->add('terminal')
             ->add('portail')
             ->add('embarquement')
-            ->add('localisation')
+           ->add('localisation')
+          /*  ->add('localisation',EntityType::class,[
+                'class' => Localisation::class,
+                'choice_label' => 'id',
+                 'label' => 'Localisation']
+                 )*/
         ;
     }
 

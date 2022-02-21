@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Billet;
+use App\Entity\Reservation;
+use App\Entity\User;
+use App\Form\ReservationType;
+use App\Repository\ReservationRepository;
 use App\Form\BilletType;
 use App\Repository\BilletRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,8 +30,18 @@ class BilletController extends AbstractController
         return $this->render('billet/index.html.twig', [
             'billets' => $billetRepository->findAll(),
         ]);
+       
     }
-
+     
+    /**
+     * @Route("/billets", name="billet_front", methods={"GET"})
+     */
+    public function indexfront(BilletRepository $billetRepository): Response
+    {
+        return $this->render('billet/indexfront.html.twig', [
+            'billets' => $billetRepository->findAll(),
+        ]);
+    }
     /**
      * @Route("/new", name="billet_new", methods={"GET", "POST"})
      */
@@ -118,4 +132,18 @@ class BilletController extends AbstractController
 
         return $this->redirectToRoute('billet_index', [], Response::HTTP_SEE_OTHER);
     }
+   
+    /**
+     * @Route("/showBillet/{id}", name="showBillet")
+     */
+ /*   public function showBillet($id)
+    {
+        $billet = $this->getDoctrine()->getRepository(Billet::class)->find($id);
+        $reservations= $this->getDoctrine()->getRepository(Reservation::class)->listReservationByBillet($billet->getId());
+        return $this->render('billet/showB.html.twig', [
+            "billet" => $billet,
+            "reservations"=>$reservations]);
+    }*/
+
+
 }

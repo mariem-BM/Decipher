@@ -1,4 +1,4 @@
-{% extends ('base_back_f/basebackF.html.twig') %}
+{% extends ('basefront/base.html.twig') %}
 
 
 {% block title %}Reservation{% endblock %}
@@ -16,18 +16,20 @@
                 <th>Date_reservation</th>
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
             </tr>
-            <tr>
-                <th>Nbrebillet</th>
-                <td>{{ reservation.nbrebillet }}</td>
+        
+           <tr>
+                <th>User</th>
+                <td>{{ reservation.user }}</td>
             </tr>
             <tr>
-                <th>Etat_reservation</th>
-                <td>{{ reservation.etatReservation }}</td>
+                <th>billet</th>
+                <td>{{ reservation.billet.id }}</td>
+              
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('reservation_index') }}">back to list</a>
+    <a href="{{ path('reservation_front') }}">back to list</a>
 
     <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
 

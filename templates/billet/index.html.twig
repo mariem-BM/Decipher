@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>localisation</th>
                 <th>Chair_billet</th>
                 <th>Voyage_num</th>
                 <th>Terminal</th>
@@ -21,6 +22,7 @@
         {% for billet in billets %}
             <tr>
                 <td>{{ billet.id }}</td>
+                <td>{{ billet.localisation }}</td>
                 <td>{{ billet.chairBillet }}</td>
                 <td>{{ billet.voyageNum }}</td>
                 <td>{{ billet.terminal }}</td>

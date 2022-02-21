@@ -38,7 +38,10 @@ class Localisation
      * @ORM\Column(type="string", length=255)
      */
     private $positionArivee_planning;
-
+    public function __toString()
+    {
+        return $this->positionArivee_planning;
+    }
     /**
      * @ORM\Column(type="string", length=255)
      */
