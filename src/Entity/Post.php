@@ -31,13 +31,6 @@ class Post
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="s'il vous plaît télécharger l'image")
-     * @Assert\Image(
-     *     minWidth = 200,
-     *     maxWidth = 400,
-     *     minHeight = 200,
-     *     maxHeight = 400
-     * )
      */
     private $img_post;
 
@@ -96,7 +89,6 @@ class Post
 
         return $this;
     }
-    
 
     public function getDescriptionPost(): ?string
     {

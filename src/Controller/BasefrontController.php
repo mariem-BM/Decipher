@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\CategoriePost;
+use App\Entity\Post;
 
 class BasefrontController extends AbstractController
 {
@@ -13,8 +15,12 @@ class BasefrontController extends AbstractController
      */
     public function index(): Response
     {
+        $em=$this->getDoctrine();
+        $categorypost=$em->getRepository(CategoriePost::class)->findAll();
         return $this->render('basefront/base.html.twig', [
             'controller_name' => 'BasefrontController',
+            'categoryPost' => $categorypost,
+            
         ]);
     }
         /**
@@ -22,8 +28,12 @@ class BasefrontController extends AbstractController
      */
     public function home(): Response
     {
+        $em=$this->getDoctrine();
+        $categorypost=$em->getRepository(CategoriePost::class)->findAll();
         return $this->render('basefront/home.html.twig', [
             'controller_name' => 'BasefrontController',
+            'categoryPost' => $categorypost,
+
         ]);
     }
         /**
@@ -74,13 +84,32 @@ class BasefrontController extends AbstractController
         ]);
     }
 
-          /**
-     * @Route("/tblog", name="blog")
+            /**
+     * @Route("/blog", name="blog" )
      */
-    public function blog(): Response
+    public function blog($id): Response
     {
+        $em=$this->getDoctrine();
+        $categorypost=$em->getRepository(CategoriePost::class)->findAll();
+          
         return $this->render('basefront/blog.html.twig', [
             'controller_name' => 'BasefrontController',
+            'categoryPost' => $categorypost,
+        ]);
+    }
+          /**
+     * @Route("/tblog/{id}", name="tblog" )
+     */
+    public function tblog($id): Response
+    {
+        $em=$this->getDoctrine();
+        $categorypost=$em->getRepository(CategoriePost::class)->findAll();
+        $idcategory = (int) $id ;
+        $postes=$em->getRepository(Post::class)->getallbycategory($idcategory);    
+        return $this->render('basefront/blog.html.twig', [
+            'controller_name' => 'BasefrontController',
+            'categoryPost' => $categorypost,
+            'postes'=> $postes,
         ]);
     }
 }

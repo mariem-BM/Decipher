@@ -5,6 +5,7 @@ use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class PostController extends AbstractController
 {
+   
     /**
      * @Route("/", name="post_index", methods={"GET"})
      */
@@ -35,14 +37,19 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           
-            $errors = $validator->validate($post);
-            if (count($errors) > 0) {
-                $errorsString = (string) $errors;
-        
-                return new Response($errorsString);
-            }
-           
+            $uploadedFile = $form['photoFile']->getData();
+            $pathupload = $this->getParameter('kernel.project_dir').'/public/uploads/images';
+            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = Urlizer::urlize($originalFilename).'-'.uniqid().'.'.$uploadedFile->guessExtension();
+            $uploadedFile->move(
+                $pathupload,
+                $newFilename
+            );
+            $post->setImgPost($newFilename);
+
+            
+         
+            $entityManager=$this->getDoctrine()->getManager(); 
             $entityManager->persist($post);
             $entityManager->flush();
 
@@ -64,7 +71,17 @@ class PostController extends AbstractController
             'post' => $post,
         ]);
     }
-
+    /**
+     * @Route("/bycategory/{id}", name="get_allpost_show", methods={"GET"})
+     */
+    public function getAllPostbyCategory(): Response
+    {
+        $em=$this->getDoctrine();
+        $categorypost=$em->getRepository(Post::class)->findBy(array('categoriePost' => id));
+        return $this->render('basefront/blog.html.twig', [
+            'post' => $post,
+        ]);
+    }
     /**
      * @Route("/{id}/edit", name="post_edit", methods={"GET", "POST"})
      */

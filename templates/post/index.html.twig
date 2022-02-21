@@ -1,5 +1,4 @@
-
-{% extends ('baseback/base.html.twig') %}
+{% extends ('base_back_f/basebackF.html.twig') %}
 {% block title %}Gestion des Post
 {% endblock %}
 
@@ -22,8 +21,7 @@
             <tr>
                 <td>{{ post.id }}</td>
                 <td>{{ post.nomPost }}</td>
-                <td>{{ post.imgPost }}>
-                
+                 <td><img src={{asset('uploads/images/'~post.imgPost)}}></td>
                 </td>
                 <td>{{ post.descriptionPost }}</td>
                 <td>

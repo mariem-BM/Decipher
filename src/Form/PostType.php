@@ -6,7 +6,7 @@ use App\Entity\Post;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PostType extends AbstractType
 {
@@ -14,7 +14,9 @@ class PostType extends AbstractType
     {
         $builder
             ->add('nom_post')
-            ->add('img_post')
+            ->add('photoFile', FileType::class, [
+                'mapped' => false
+             ] )
             ->add('description_post')
             ->add('categoriePost')
         ;

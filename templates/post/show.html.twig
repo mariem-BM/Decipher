@@ -1,4 +1,4 @@
-{% extends ('baseback/base.html.twig') %}
+{% extends ('base_back_f/basebackF.html.twig') %}
 
 
 {% block title %}Post
@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <th>Img_post</th>
-                <td>{{ post.imgPost }}</td>
+                <td><img src={{asset('uploads/images/'~post.imgPost)}}></td>
             </tr>
             <tr>
                 <th>Description_post</th>

@@ -29,14 +29,14 @@ class CommentaireController extends AbstractController
     /**
      * @Route("/new", name="commentaire_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,ValidatorInterface $validator): Response
     {
         $commentaire = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $validator->validate($reservation);
+            $errors = $validator->validate($commentaire);
             if (count($errors) > 0) {
                 $errorsString = (string) $errors;
         
@@ -67,13 +67,13 @@ class CommentaireController extends AbstractController
     /**
      * @Route("/{id}/edit", name="commentaire_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Commentaire $commentaire, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Commentaire $commentaire, EntityManagerInterface $entityManager,ValidatorInterface $validator): Response
     {
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $validator->validate($reservation);
+            $errors = $validator->validate($commentaire);
             if (count($errors) > 0) {
                 $errorsString = (string) $errors;
         

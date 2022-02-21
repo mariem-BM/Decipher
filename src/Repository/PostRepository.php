@@ -47,4 +47,12 @@ class PostRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getallbycategory($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.categoriePost = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult();
+    }
 }
