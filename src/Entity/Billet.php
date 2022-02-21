@@ -78,6 +78,7 @@ class Billet
 
     /**
      * @ORM\ManyToOne(targetEntity=Localisation::class, inversedBy="billet")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $localisation;
 

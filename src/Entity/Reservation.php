@@ -29,13 +29,13 @@ class Reservation
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id",nullable=false)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Billet::class, inversedBy="reservation")
-     * @ORM\JoinColumn(name="billet_id", referencedColumnName="id",nullable=false)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $billet;
 

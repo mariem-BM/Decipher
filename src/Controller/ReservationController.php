@@ -45,6 +45,7 @@ class ReservationController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager,ValidatorInterface $validator): Response
     {
+       // $user = new User();
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
@@ -125,5 +126,17 @@ class ReservationController extends AbstractController
         }
         $this->addFlash('success', 'Reservation Deleted!');
         return $this->redirectToRoute('reservation_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/myreservation/{id}", name="showreservationbyuser")
+     */
+  public function showBillet($id)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $reservations= $this->getDoctrine()->getRepository(Reservation::class)->listReservationByUser($user->getId());
+        return $this->render('billet/showreservationbyuser.html.twig', [
+            "user" => $user,
+            "reservations"=>$reservations]);
     }
 }

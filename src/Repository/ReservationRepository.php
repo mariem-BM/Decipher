@@ -57,4 +57,14 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }*/
+    public function listReservationByUser($id)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.billet', 'u')
+            ->addSelect('u')
+            ->where('u.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
+    }
 }
