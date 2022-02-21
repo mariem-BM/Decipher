@@ -26,7 +26,15 @@ class PlaninngController extends AbstractController
             'planinngs' => $planinngRepository->findAll(),
         ]);
     }
-
+    /**
+     * @Route("/plans", name="planinng_front", methods={"GET"})
+     */
+    public function indexfront(PlaninngRepository $planinngRepository): Response
+    {
+        return $this->render('planinng/indexfront.html.twig', [
+            'planinngs' => $planinngRepository->findAll(),
+        ]);
+    }
     /**
      * @Route("/new", name="planinng_new", methods={"GET", "POST"})
      */
@@ -65,7 +73,7 @@ class PlaninngController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="planinng_show", methods={"GET"})
+     * @Route("/plans", name="planinng_show", methods={"GET"})
      */
     public function show(Planinng $planinng): Response
     {
@@ -74,6 +82,15 @@ class PlaninngController extends AbstractController
         ]);
     }
 
+     /**
+     * @Route("/{id}", name="planinng_showfront", methods={"GET"})
+     */
+    public function showfront(Planinng $planinng): Response
+    {
+        return $this->render('planinng/showfront.html.twig', [
+            'planinng' => $planinng,
+        ]);
+    }
     /**
      * @Route("/{id}/edit", name="planinng_edit", methods={"GET", "POST"})
      */

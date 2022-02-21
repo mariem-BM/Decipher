@@ -1,0 +1,39 @@
+{% extends ('basefront/base.html.twig') %}
+
+
+{% block title %}Offre
+{% endblock %}
+
+{% block body %}
+	<h1>Localisation</h1>
+
+	<table class="table">
+		<tbody>
+			<th>Id</th>
+			<td>{{ localisation.id }}</td>
+		</tbody>
+	</tr>
+	<tr>
+		<th>HeureDepart_localisation</th>
+		<td>{{ localisation.heureDepartLocalisation ? localisation.heureDepartLocalisation|date('H:i:s') : '' }}</td>
+	</tr>
+	<tr>
+		<th>HeureArrivee_loacalisation</th>
+		<td>{{ localisation.heureArriveeLoacalisation ? localisation.heureArriveeLoacalisation|date('H:i:s') : '' }}</td>
+	</tr>
+	<tr>
+		<th>PositionDepart_localisation</th>
+		<td>{{ localisation.positionDepartLocalisation }}</td>
+	</tr>
+	<tr>
+		<th>PositionArivee_planning</th>
+		<td>{{ localisation.positionAriveePlanning }}</td>
+	</tr>
+	<tr>
+		<th>Fusee</th>
+		<td>{{ localisation.fusee }}</td>
+	</tr>
+</tbody>
+</table>
+
+{% endblock %}

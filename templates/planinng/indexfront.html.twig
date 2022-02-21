@@ -30,34 +30,43 @@
       </div>
     </section>
     <!-- Events Section-->
-    <section class="py-5">
+    <section class="py-7">
       <div class="container py-5">
         <header class="mb-4 text-center mb-5">
           <p class="text-serif mb-0 text-primary">Northrop Grumman CRS-17 Mission to the Space Station</p>
           <h2 class="text-uppercase">Next Events</h2>
         </header>
 
-
-        <div class="p-4 p-lg-5 bg-light text-center">
-          <div class="row gy-4 align-items-center">
+{% for planinng in planinngs %}
+        <div class="p-4 p-lg-5 text-center">
+          <div class="row gy-7 align-items-center">
             <div class="col-lg-3">
               <div class="d-flex align-items-center justify-content-center justify-content-lg-start">
-                <p class="text-gray text-xl h1 mb-0">1</p>
+                <p class="text-gray text-xl h3 mb-2">{{ planinng.dateDebutPlanning ? planinng.dateDebutPlanning|date('d') : '' }}</p>
                 <div class="ms-2">
-                  <h5 class="mb-0">March</h5>
-                  <p class="text-small mb-0 text-muted">2022</p>
+                  <h5 class="mb-0">{{ planinng.dateDebutPlanning ? planinng.dateDebutPlanning|date('m') : '' }}</h5>
+                  <p class="text-small mb-0 text-muted">{{ planinng.dateDebutPlanning ? planinng.dateDebutPlanning|date('Y') : '' }}</p>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 text-center">
-              <h4 class="text-primary mb-1"> <a class="reset-anchor" href="text.html">SGOES-T</a></h4>
-              <p class="text-serif mb-0 text-muted">March 1, 2022</p>
-              <p class="text-serif mb-0 text-muted">Lorem ipsum</p>
+            <div class="col-lg-5 text-center">
+              <h4 class="text-primary mb-1"> <a class="reset-anchor" href="text.html">{{ planinng.nomPlanning }}</a></h4>
+              <p class="text-serif mb-0 text-muted">{{ planinng.dateDebutPlanning ? planinng.dateDebutPlanning|date('Y-m-d') : '' }}</p>
+              <p class="text-serif mb-0 text-muted">{{ planinng.dateFinPlanning ? planinng.dateFinPlanning|date('Y-m-d') : '' }}</p>
+            <p class="text-serif mb-0 text-muted">{{ planinng.destinationPlanning }}</p>
+              
+            
             </div>
-            <div class="col-lg-3 text-lg-end"><a class="btn btn-outline-primary px-4" href="text.html">Find out more</a></div>
+            <div class="col-lg-3 text-lg-end"><a class="btn btn-outline-primary px-4" href="{{ path('planinng_showfront', {'id': planinng.id}) }}">Détails</a></div>
           </div>
+          
         </div>
       </div>
+      			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
     </section>
 
     {% endblock %}

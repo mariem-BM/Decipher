@@ -49,11 +49,21 @@ class LocalisationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="localisation_show", methods={"GET"})
+     * @Route("/plans", name="localisation_show", methods={"GET"})
      */
     public function show(Localisation $localisation): Response
     {
         return $this->render('localisation/show.html.twig', [
+            'localisation' => $localisation,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="localisation_showfront", methods={"GET"})
+     */
+    public function showfront(Localisation $localisation): Response
+    {
+        return $this->render('localisation/showfront.html.twig', [
             'localisation' => $localisation,
         ]);
     }
