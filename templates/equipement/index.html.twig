@@ -1,0 +1,41 @@
+{% extends ('basefront/base.html.twig') %}
+{% block body %}
+<!DOCTYPE html>
+
+<title>Equipement index</title>
+
+
+    <h1>Equipement index</h1>
+    
+<table align="center">
+
+{% for equipement in equipements %}
+
+<td>
+<div  class="card text-white bg-dark mb-3"style="width: 18rem;" align="center">
+  
+  <div class="card-body" >
+   
+    <h5 class="card-title">Equipement {{ equipement.id }}</h5>
+        <p class="card-text">Nom ;  {{ equipement.nomEquipement }}</p>
+            <p class="card-text">Etat ;{{ equipement.etatEquipement }}</p>
+                        <p class="card-text">Description ; {{ equipement.descriptionEquipement }}</p>
+                                                <p class="card-text">Categorie ; {{ equipement.categorieEquipement }}</p>
+
+                        <p class="card-text">Afficher en detail  <a href="{{ path('equipement_show', {'id': equipement.id}) }}">show</a></p>
+                        <p class="card-text">Modifier                      <a href="{{ path('equipement_edit', {'id': equipement.id}) }}">edit</a>
+</p>
+ 
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+       
+  {% endfor %}
+  </div>
+</div>
+
+<td/>
+<table/>
+{% endblock %}
+

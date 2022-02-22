@@ -80,4 +80,8 @@ class CategorieEquipement
 
         return $this;
     }
+    public function __toString() 
+{
+    return (string) $this->nom_categorie_equipement; 
+}
 }

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+
+<title>New CategorieEquipement</title>
+
+{% block body %}
+    <h1>Create new CategorieEquipement</h1>
+
+    {{ include('categorie_equipement/_form.html.twig') }}
+
+    <a href="{{ path('categorie_equipement_index') }}">back to list</a>
+{% endblock %}
