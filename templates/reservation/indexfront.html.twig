@@ -24,7 +24,7 @@
                 <td>{{ reservation.user }}</td>
                 <td>{{ reservation.billet.id }}</td>
                 <td>
-                    <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
+                    <a href="{{ path('reservationfront_show', {'id': reservation.id}) }}">show</a>
                     <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
                 </td>
             </tr>

@@ -10,11 +10,11 @@
             <tr>
                 <th>Id</th>
                 <th>localisation</th>
+                <th>Embarquement</th>
                 <th>Chair_billet</th>
                 <th>Voyage_num</th>
                 <th>Terminal</th>
                 <th>Portail</th>
-                <th>Embarquement</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,11 +23,12 @@
             <tr>
                 <td>{{ billet.id }}</td>
                 <td>{{ billet.localisation }}</td>
+                <td>{{ billet.embarquement ? billet.embarquement|date('Y-m-d') : '' }}</td>
                 <td>{{ billet.chairBillet }}</td>
                 <td>{{ billet.voyageNum }}</td>
                 <td>{{ billet.terminal }}</td>
                 <td>{{ billet.portail }}</td>
-                <td>{{ billet.embarquement ? billet.embarquement|date('Y-m-d') : '' }}</td>
+                
                 <td>
                     <a href="{{ path('billet_show', {'id': billet.id}) }}">show</a>
                     <a href="{{ path('billet_edit', {'id': billet.id}) }}">edit</a>

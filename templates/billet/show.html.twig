@@ -20,6 +20,10 @@
                 <td>{{ billet.chairBillet }}</td>
             </tr>
             <tr>
+                <th>Embarquement</th>
+                <td>{{ billet.embarquement ? billet.embarquement|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
                 <th>Voyage_num</th>
                 <td>{{ billet.voyageNum }}</td>
             </tr>
@@ -31,10 +35,7 @@
                 <th>Portail</th>
                 <td>{{ billet.portail }}</td>
             </tr>
-            <tr>
-                <th>Embarquement</th>
-                <td>{{ billet.embarquement ? billet.embarquement|date('Y-m-d') : '' }}</td>
-            </tr>
+            
         </tbody>
     </table>
 

@@ -83,6 +83,15 @@ class ReservationController extends AbstractController
             'reservation' => $reservation,
         ]);
     }
+     /**
+     * @Route("/showfront/{id}", name="reservationfront_show", methods={"GET"})
+     */
+    public function showfront(Reservation $reservation): Response
+    {
+        return $this->render('reservation/showfront.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
 
     /**
      * @Route("/{id}/edit", name="reservation_edit", methods={"GET", "POST"})
