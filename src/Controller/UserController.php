@@ -50,7 +50,7 @@ class UserController extends AbstractController
         ]);
     }
     /**
-     * @Route("/newC", name="user_new", methods={"GET", "POST"})
+     * @Route("/newC", name="user_newC", methods={"GET", "POST"})
      */
     public function newC(Request $request, EntityManagerInterface $entityManager): Response
     {
