@@ -66,21 +66,30 @@ class Offre
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * 
+     * @Assert\Positive
      */
+
     private $reduction;
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Planinng::class, inversedBy="offres")
-     */
 
 
-    /* private $planning;*/
+
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     
      */
+
+
     private $date_debut_offre;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Planinng::class, inversedBy="offres")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $planning;
 
     public function getId(): ?int
     {
@@ -150,17 +159,6 @@ class Offre
 
 
 
-    public function getPlanning(): ?Planinng
-    {
-        return $this->planning;
-    }
-
-    public function setPlanning(?Planinng $planning): self
-    {
-        $this->planning = $planning;
-
-        return $this;
-    }
 
     public function getDateDebutOffre(): ?\DateTimeInterface
     {
@@ -170,6 +168,18 @@ class Offre
     public function setDateDebutOffre(?\DateTimeInterface $date_debut_offre): self
     {
         $this->date_debut_offre = $date_debut_offre;
+
+        return $this;
+    }
+
+    public function getPlanning(): ?Planinng
+    {
+        return $this->planning;
+    }
+
+    public function setPlanning(?Planinng $planning): self
+    {
+        $this->planning = $planning;
 
         return $this;
     }

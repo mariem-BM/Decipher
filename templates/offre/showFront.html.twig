@@ -1,4 +1,4 @@
-{% extends ('base_back_f/basebackF.html.twig') %}
+{% extends ('basefront/base.html.twig') %}
 
 
 {% block title %}Offre
@@ -29,11 +29,20 @@
 			<th>Duree_offre</th>
 			<td>{{ offre.dureeOffre }}</td>
 		</tr>
+
+        <tr>
+			<th>Reduction_offre</th>
+			<td>{{ offre.reduction }}</td>
+		</tr>
+
+         <tr>
+			<th>Planning_offre</th>
+			<td>{{ offre.planning}}</td>
+		</tr>
+
+
 	</tbody>
 </table>
+<a href="{{ path('offre_indexOffreTest') }}" class="btn btn-primary">back to list</a>
 <div>
-	<a href="{{ path('offre_index') }}" class="btn btn-primary">back to list</a>
-
-	<a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-primary">edit</a>
-
-	 {{ include('offre/_delete_form.html.twig') }}  <div> {% endblock %}
+	 <div> {% endblock %}

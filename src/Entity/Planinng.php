@@ -22,15 +22,15 @@ class Planinng
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $nom_planning;
     public function __toString()
     {
-        return (string) $this->getNomPlanning();
+        return $this->nom_planning;
     }
-    private $nom_planning;
-
     /**
      * @ORM\Column(type="date")
      */
+
     private $dateDebut_planning;
 
     /**
@@ -68,10 +68,13 @@ class Planinng
      */
     private $localisation;
 
+
+
     /**
      * @ORM\OneToMany(targetEntity=Offre::class, mappedBy="planning")
      */
     private $offres;
+
 
 
     public function __construct()

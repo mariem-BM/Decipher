@@ -6,6 +6,7 @@ use App\Entity\Offre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class OffreType extends AbstractType
 {
@@ -17,7 +18,8 @@ class OffreType extends AbstractType
             ->add('prix_offre')
             ->add('duree_offre')
             ->add('reduction')
-            /*  ->add('planning')*/
+            ->add('planning')
+
             ->add('date_debut_offre');
     }
 

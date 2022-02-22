@@ -19,10 +19,11 @@
 				</th>
 				<th>Reduction
 				</th>
-				<th></th>
+				<th>ID Planning</th>
 			</tr>
 		</thead>
 		<tbody>
+			<a href="{{ path('offre_new') }}" class="btn btn-primary">Creer</a>
 			{%  for offre in offres %}
 				<tr>
 					<td>{{ offre.id }}</td>
@@ -31,10 +32,11 @@
 					<td>{{ offre.prixOffre }}</td>
 					<td>{{ offre.dureeOffre }}</td>
 					<td>{{ offre.reduction }}</td>
+					<td>{{ offre.planning }}</td>
 					<td>
 						<a href="{{ path('offre_show', {'id': offre.id}) }}" class="btn btn-primary">consulter</a>
 						<a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-primary">modifier</a>
-						<a href="{{ path('offre_new') }}" class="btn btn-primary">Creer</a>
+					
 
 
 					</td>

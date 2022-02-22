@@ -33,6 +33,17 @@ class OffreController extends AbstractController
         ]);
     }
 
+    /***************************IndexFront **************************/
+    /**
+     * @Route("/indexOffreTest", name="offre_indexOffreTest", methods={"GET"})
+     */
+    public function indexF(OffreRepository $offreRepository): Response
+    {
+        return $this->render('offre/indexOffreTest.html.twig', [
+            'offres' => $offreRepository->findAll(),
+        ]);
+    }
+
     /**
      * @Route("/new", name="offre_new", methods={"GET", "POST"})
      */
@@ -62,12 +73,23 @@ class OffreController extends AbstractController
             $entityManager->persist($offre);
             $entityManager->flush();
 
-            return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('offre_indexOffreTest', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('offre/new.html.twig', [
             'offre' => $offre,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /****************Show Front******************** */
+    /**
+     * @Route("/offreFront/{id}", name="offre_showFront", methods={"GET"})
+     */
+    public function showF(Offre $offre): Response
+    {
+        return $this->render('offre/showFront.html.twig', [
+            'offre' => $offre,
         ]);
     }
 
@@ -148,6 +170,4 @@ class OffreController extends AbstractController
 
         return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    
 }

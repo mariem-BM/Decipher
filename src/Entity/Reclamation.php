@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReclamationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ReclamationRepository::class)
@@ -20,17 +21,32 @@ class Reclamation
 
     /**
      * @ORM\Column(type="text")
+     * 
+     * @Assert\NotBlank(message="Do not leave empty"),
+     * @Assert\Length(
+     * min = 10,
+     * max = 100,
+     * minMessage = "Le description_offre doit comporter au moins {{ limit }} caractères",
+     * maxMessage = "Le description_offre doit comporter au plus {{ limit }} caractères"
+     * )
+     
      */
+
+
+
     private $description_reclamation;
 
     /**
      * @ORM\Column(type="date")
+    
+     
      */
     private $date_reclamation;
 
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="Reclamation")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 

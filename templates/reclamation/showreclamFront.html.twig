@@ -1,4 +1,4 @@
-{% extends ('basefont/base.html.twig') %}
+{% extends ('basefront/base.html.twig') %}
 
 
 {% block title %}Reclamation
@@ -28,10 +28,12 @@
 		</tbody>
 	</table>
 	<div>
-		<a href="{{ path('reclamation_indexFront') }}" class="btn btn-primary">back to list</a>
 
-		<a href="{{ path('reclamation_edit'), {'id': reclamation.id}) }}" class="btn btn-primary">edit</a>
-
-
+		<div href="{{ path('reclamation_showFront', {'id': reclamation.id}) }}">VOIR Reclaamtion</a>
 	</div>
-{% endblock %}
+	<a href="{{ path('reclamation_indexreclamFront') }}" class="btn btn-primary">back to list</a>
+
+	<a href="{{ path('reclamation_editFront'), {'id': reclamation.id}) }}" class="btn btn-primary">edit</a>
+
+
+</div>{% endblock %}

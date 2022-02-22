@@ -39,6 +39,10 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $mail_utilisateur;
+    public function __toString()
+    {
+        return $this->mail_utilisateur;
+    }
 
     /**
      * @ORM\Column(type="string", length=255)

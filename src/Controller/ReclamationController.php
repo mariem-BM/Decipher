@@ -26,15 +26,19 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+    /********* **************** Index Front*********** ***************/
+
     /**
-     * @Route("/reclamation_indexFront", name="reclamation_indexFront", methods={"GET"})
+     * @Route("/reclamation_indexreclamFront", name="reclamation_indexreclamFront", methods={"GET"})
      */
-    /*   public function indexF(ReclamationRepository $reclamationRepository): Response
+    public function indexF(ReclamationRepository $reclamationRepository): Response
     {
         return $this->render('reclamation/indexreclamFront.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
         ]);
-    }*/
+    }
+    /*****reclamation/indexreclamFront.html.twig*/
+    /**************************ADD Back************************************ */
 
     /**
      * @Route("/new", name="reclamation_new", methods={"GET", "POST"})
@@ -49,7 +53,7 @@ class ReclamationController extends AbstractController
             $entityManager->persist($reclamation);
             $entityManager->flush();
 
-            return $this->redirectToRoute('reclamation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('reclamation_indexreclamFront', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('reclamation/new.html.twig', [
@@ -58,6 +62,20 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+
+    /**********************Te3 Front********************************** */
+    /**
+     * @Route("/reclamation/{id}", name="reclamation_showFront", methods={"GET"})
+     */
+    public function showF(Reclamation $reclamation): Response
+    {
+        return $this->render('reclamation/showFront.html.twig', [
+            'reclamation' => $reclamation,
+        ]);
+    }
+
+
+    /**********************Te3 Back*********************************** */
     /**
      * @Route("/{id}", name="reclamation_show", methods={"GET"})
      */
@@ -68,6 +86,27 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+    /********************************Te3 Front*************************************** */
+    /**
+     * @Route("/{id}/edit", name="reclamation_editFront", methods={"GET", "POST"})
+     */
+    public function editF(Request $request, Reclamation $reclamation, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ReclamationType::class, $reclamation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('reclamation_indexreclamFront', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('reclamation/editFront.html.twig', [
+            'reclamation' => $reclamation,
+            'form' => $form->createView(),
+        ]);
+    }
+    /********************************* Te3 Back************************ */
     /**
      * @Route("/{id}/edit", name="reclamation_edit", methods={"GET", "POST"})
      */
@@ -88,6 +127,9 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+
+
+
     /**
      * @Route("/{id}", name="reclamation_delete", methods={"POST"})
      */
@@ -98,6 +140,6 @@ class ReclamationController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('reclamation_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('reclamation_indexreclamFront', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -12,6 +12,7 @@
 				<th>Id reclamation</th>
 				<th>Description reclamation</th>
 				<th>Date reclamation</th>
+				<th>user</th>
 
 				<th></th>
 			</tr>
@@ -22,12 +23,10 @@
 					<td>{{ reclamation.id }}</td>
 					<td>{{ reclamation.descriptionReclamation }}</td>
 					<td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
-
+					<td>{{ reclamation.user }}</td>
 					<div>
 						<td>
 							<a href="{{ path('reclamation_show', {'id': reclamation.id}) }}" class="btn btn-primary">consulter</a>
-							<a href="{{ path('reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-primary">modifier</a>
-							<a href="{{ path('reclamation_new') }}" class="btn btn-primary">Creer</a>
 
 
 						</td>
