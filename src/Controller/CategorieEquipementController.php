@@ -17,12 +17,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategorieEquipementController extends AbstractController
 {
     /**
-     * @Route("/", name="categorie_equipement_index", methods={"GET"})
+     * @Route("/affiche", name="categorie_equipement_index", methods={"GET"})
      */
     public function index(CategorieEquipementRepository $categorieEquipementRepository): Response
     {
         return $this->render('categorie_equipement/index.html.twig', [
             'categorie_equipements' => $categorieEquipementRepository->findAll(),
+        ]);
+    }
+    /**
+     * param CategorieEquipementRepository $Repository
+     * return use Symfony\Component\HttpFoundation\Response;
+     * @Route("/display")
+     */
+    public function indexback(CategorieEquipementRepository $Repository)
+    {
+        $categorie=$Repository->findAll ();
+        return $this->render('categorie_equipement/indexback.html.twig', [
+            'equipements' => $categorie,
         ]);
     }
 
