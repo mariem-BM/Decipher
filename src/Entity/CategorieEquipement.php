@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CategorieEquipementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,11 +20,12 @@ class CategorieEquipement
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Choice(
      *      choices = {"metaliques", "plastiques","nourriture","vestimentaires"},
      *     message = "Choose a valid category."
+     * )
      */
     private $nom_categorie_equipement;
 
