@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserType1;
+
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,7 +49,28 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/newC", name="user_new", methods={"GET", "POST"})
+     */
+    public function newC(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = new User();
+        $form = $this->createForm(UserType1::class, $user);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_showC', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/account.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+    
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      */
@@ -56,6 +79,14 @@ class UserController extends AbstractController
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
+    }
+    /**
+     * @Route("showC", name="user_showC", methods={"GET"})
+     */
+    public function showClient(UserRepository $userRepository): Response
+    {
+        return $this->render('user/showinfo.html.twig', [
+            'users' => $userRepository->findBy(array(),array('id'=>'DESC'),1,0)]);
     }
 
     /**

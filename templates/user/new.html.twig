@@ -1,14 +1,17 @@
 {% extends ('baseback/base.html.twig') %}
-{% block body %}Gestion des Users
+{% block body %}
 
 <!DOCTYPE html>
 
 <title>New User</title>
 
 
-    <h1>Create new User</h1>
+  <div align="center" class="container">
+      <h1>Create new User</h1>
 
     {{ include('user/_form.html.twig') }}
 
     <a href="{{ path('user_index') }}">back to list</a>
+        </div>
+
 {% endblock %}

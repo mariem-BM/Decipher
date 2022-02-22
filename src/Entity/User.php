@@ -33,7 +33,7 @@ class User
      */
     private $prenom_utilisateur;
 
-    /**
+    /**     * @Assert\NotBlank(message="adresse is required") 
      * @ORM\Column(type="string", length=255)
      */
     private $adresse_utilisateur;
@@ -45,12 +45,15 @@ class User
      */
     private $mail_utilisateur;
 
-    /**
+    /**   
+     *  @Assert\NotBlank(message=" A sudoname is required") 
+
      * @ORM\Column(type="string", length=255)
      */
     private $sudo_utilisateur;
 
     /**
+     * @Assert\NotBlank(message=" Password is required")
      * @ORM\Column(type="string", length=255)
      */
     private $mdp_utilisateur;
@@ -62,17 +65,21 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="A Phone Number is required")
      */
     private $Numero_utilisateur;
+     //@Assert\LessThan("-18 years")
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="BirthDate is required")
      */
     private $DateN_utilisateur;
 
-    /**
+    /** 
      * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="User")
      */
+     
     private $post;
 
     /**
