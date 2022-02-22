@@ -19,11 +19,14 @@ class Equipement
 
     /**
      * @ORM\Column(type="string", length=255)
+      * @Assert\Type("string")
      */
     private $nom_equipement;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * *     choices = {"new", "used"},
+     *     message = "Choose a valid state."
      */
     private $etat_equipement;
 

@@ -21,6 +21,8 @@ class CategorieEquipement
 
     /**
      * @ORM\Column(type="string", length=255)
+     *      choices = {"metaliques", "plastiques","nourriture","vestimentaires"},
+     *     message = "Choose a valid category."
      */
     private $nom_categorie_equipement;
 

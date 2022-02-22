@@ -34,7 +34,7 @@ class CategorieEquipementController extends AbstractController
     {
         $categorie=$Repository->findAll ();
         return $this->render('categorie_equipement/indexback.html.twig', [
-            'equipements' => $categorie,
+            'categorie_equipements' => $categorie,
         ]);
     }
 
