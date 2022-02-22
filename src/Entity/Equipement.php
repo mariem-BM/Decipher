@@ -21,21 +21,24 @@ class Equipement
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\NotBlank
       * @Assert\Type("string")
      */
     private $nom_equipement;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\NotBlank
      *  @Assert\Choice(
      *     choices = {"new", "used"},
-     *     message = "Choose a valid state."
+     *     message = "Choose a valid state(new,used)."
      * )
      */
     private $etat_equipement;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank
      */
     private $description_equipement;
 

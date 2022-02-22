@@ -22,9 +22,10 @@ class CategorieEquipement
     private $id;
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      * @Assert\Choice(
      *      choices = {"metaliques", "plastiques","nourriture","vestimentaires"},
-     *     message = "Choose a valid category."
+     *     message = "Choose a valid category( metaliques,plastiques,nourriture, vestimentaires)."
      * )
      */
     private $nom_categorie_equipement;
