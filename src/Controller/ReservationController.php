@@ -65,7 +65,7 @@ class ReservationController extends AbstractController
             $entityManager->persist($reservation);
             $entityManager->flush();
             $this->addFlash('success', 'Reserved Successfully!');
-            return $this->redirectToRoute('reservation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('reservation/new.html.twig', [
@@ -115,7 +115,7 @@ class ReservationController extends AbstractController
             }
             $entityManager->flush();
             $this->addFlash('success', 'Reservation Edited!');
-            return $this->redirectToRoute('reservation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('reservation/edit.html.twig', [
@@ -134,7 +134,7 @@ class ReservationController extends AbstractController
             $entityManager->flush();
         }
         $this->addFlash('success', 'Reservation Deleted!');
-        return $this->redirectToRoute('reservation_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
