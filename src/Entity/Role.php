@@ -39,7 +39,7 @@ class Role
     private $tacherole;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="nom_role")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="nom_role",cascade={"persist", "remove"})
      */
     private $userRoles;
 
