@@ -15,7 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 /**
  * @Route("/reservation")
  */
@@ -85,7 +86,7 @@ class ReservationController extends AbstractController
         ]);
     }
     
-
+    
     /**
      * @Route("/new", name="reservation_new", methods={"GET", "POST"})
      */
@@ -129,6 +130,7 @@ class ReservationController extends AbstractController
             'reservation' => $reservation,
         ]);
     }
+
      /**
      * @Route("/showfront/{id}", name="reservationfront_show", methods={"GET"})
      */
@@ -148,6 +150,8 @@ class ReservationController extends AbstractController
             'reservation' => $reservation,
         ]);
     }
+    
+
 
     /**
      * @Route("/{id}/edit", name="reservation_edit", methods={"GET", "POST"})
@@ -179,7 +183,41 @@ class ReservationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+ /**
+     * @Route("/Ticketpdf/{id}", name="Ticketpdf", methods={"GET"})
+     */
+    public function Ticketpdf(Reservation $reservation): Response
+    {
+      
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('reservation/ReservationBillet.html.twig', [
+            'reservation' => $reservation
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
 
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => false
+        ]);
+        return $this->render('reservation/ReservationBillet.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
     /**
      * @Route("/{id}", name="reservation_delete", methods={"POST"})
      */
@@ -193,6 +231,5 @@ class ReservationController extends AbstractController
         return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
     }
  
-     
-   
+    
 }
