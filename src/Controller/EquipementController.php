@@ -49,6 +49,17 @@ class EquipementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file=$equipement->getImageEquipement();
+            $filename=md5(uniqid()).'.'.$file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $filename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            $equipement->setImageEquipement($filename);
             $entityManager->persist($equipement);
             $entityManager->flush();
 

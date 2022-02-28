@@ -6,6 +6,8 @@ use App\Entity\Equipement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class EquipementType extends AbstractType
 {
@@ -16,6 +18,10 @@ class EquipementType extends AbstractType
             ->add('etat_equipement')
             ->add('description_equipement')
             ->add('categorieEquipement')
+            ->add('image_equipement',FileType::class, [
+                'label' =>false
+
+                ])
         ;
     }
 

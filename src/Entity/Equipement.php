@@ -47,6 +47,13 @@ class Equipement
      */
     private $categorieEquipement;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please Upload image")
+     * @Assert\File(mimeTypes={"image/jpeg"})
+     */
+    private $image_equipement;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -96,6 +103,18 @@ class Equipement
     public function setCategorieEquipement(?CategorieEquipement $categorieEquipement): self
     {
         $this->categorieEquipement = $categorieEquipement;
+
+        return $this;
+    }
+
+    public function getImageEquipement()
+    {
+        return $this->image_equipement;
+    }
+
+    public function setImageEquipement( $image_equipement)
+    {
+        $this->image_equipement = $image_equipement;
 
         return $this;
     }

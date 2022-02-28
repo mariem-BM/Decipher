@@ -15,6 +15,7 @@
                 <th>Etat_equipement</th>
                 <th>Description_equipement</th>
                 <th>Categorie_equipement</th>
+                <th>Image_equipement</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -26,6 +27,8 @@
                 <td>{{ equipement.etatEquipement }}</td>
                 <td>{{ equipement.descriptionEquipement }}</td>
                 <td>{{ equipement.categorieEquipement }}</td>
+                <td><img src ="{{ asset('uploads/' ~ equipement.imageEquipement) }}"
+                ></td>
                 <td>
                     <a href="{{ path('equipement_show', {'id': equipement.id}) }}">show</a>
                     <a href="{{ path('equipement_edit', {'id': equipement.id}) }}">edit</a>
