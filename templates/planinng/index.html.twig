@@ -15,7 +15,6 @@
 				<th>DateDebut</th>
 				<th>DateFin</th>
 				<th>Destination</th>
-				<th>Activites</th>
 				<th>Description</th>
 				<th>Periode</th>
 				<th>Prix</th>
@@ -30,7 +29,6 @@
 					<td>{{ planinng.dateDebutPlanning ? planinng.dateDebutPlanning|date('Y-m-d') : '' }}</td>
 					<td>{{ planinng.dateFinPlanning ? planinng.dateFinPlanning|date('Y-m-d') : '' }}</td>
 					<td>{{ planinng.destinationPlanning }}</td>
-					<td>{{ planinng.activitesPlanning }}</td>
 					<td>{{ planinng.descriptionPlanning }}</td>
 					<td>{{ planinng.periodePlanning }}</td>
 					<td>{{ planinng.prixPlanning }}</td>
@@ -49,4 +47,8 @@
 	</table>
 
 	<a href="{{ path('planinng_new') }}"class="btn btn-primary">Create new</a>
+	<a href="{{ path('listPlanByDate') }}"class="btn btn-primary">Trier Planinng par Date</a>
+		<a href="{{ path('listPlanByPeriode') }}"class="btn btn-primary">Trier Planinng par Periode</a>
+
+
 {% endblock %}

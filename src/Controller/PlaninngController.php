@@ -11,7 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
+use Symfony\Component\Serializer\SerializerInterface;
 /**
  * @Route("/planinng")
  */
@@ -22,6 +26,7 @@ class PlaninngController extends AbstractController
      */
     public function index(PlaninngRepository $planinngRepository): Response
     {
+        
         return $this->render('planinng/index.html.twig', [
             'planinngs' => $planinngRepository->findAll(),
         ]);
@@ -35,6 +40,44 @@ class PlaninngController extends AbstractController
             'planinngs' => $planinngRepository->findAll(),
         ]);
     }
+
+//Tri par date
+
+     /**
+     * @Route("/listPlanByDate", name="listPlanByDate", methods={"GET"})
+     */
+    public function listPlanByDate(PlaninngRepository $repo)
+    {
+
+        $planinngsByDate = $repo->orderByDatePlan();
+
+        //orderByDate();
+        return $this->render('planinng/listByDatePlan.html.twig', [
+            "planinngsByDate" => $planinngsByDate,
+        ]);
+    }
+
+
+
+
+    //Tri par periode
+
+     /**
+     * @Route("/listPlanByPeriode", name="listPlanByPeriode", methods={"GET"})
+     */
+    public function listPlanByPeriode(PlaninngRepository $repos)
+    {
+
+        $planinngsByPeriode = $repos->orderByPeriodePlan();
+
+        //orderByPeriode();
+        return $this->render('planinng/listByPeriodePlan.html.twig', [
+            "planinngsByPeriode" => $planinngsByPeriode,
+        ]);
+    }
+
+
+
     /**
      * @Route("/new", name="planinng_new", methods={"GET", "POST"})
      */
@@ -72,6 +115,20 @@ class PlaninngController extends AbstractController
         ]);
     }
 
+/////JSON//////////////////////////////////////////
+/**
+     * @Route("/APlaninng", name="APlaninng", methods={"GET"})
+     */
+    public function JSONindex(PlaninngRepository $PlaninngRepository,SerializerInterface $serializer): Response
+    {
+        $result = $PlaninngRepository->findAll();
+        /* $n = $normalizer->normalize($result, null, ['groups' => 'livreur:read']);
+        $json = json_encode($n); */
+        $json = $serializer->serialize($result, 'json', ['groups' => 'Planinng:read']);
+        return new JsonResponse($json, 200, [], true);
+    }
+
+   
     /**
      * @Route("/plans", name="planinng_show", methods={"GET"})
      */
@@ -81,7 +138,7 @@ class PlaninngController extends AbstractController
             'planinng' => $planinng,
         ]);
     }
-
+    
      /**
      * @Route("/{id}", name="planinng_showfront", methods={"GET"})
      */

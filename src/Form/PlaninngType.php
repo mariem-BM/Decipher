@@ -16,7 +16,6 @@ class PlaninngType extends AbstractType
             ->add('dateDebut_planning')
             ->add('dateFin_planning')
             ->add('destination_planning')
-            ->add('activites_planning')
             ->add('description_planning')
             ->add('periode_planning')
             ->add('prix_planning')

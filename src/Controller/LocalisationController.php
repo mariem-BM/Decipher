@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/localisation")
@@ -63,7 +64,7 @@ class LocalisationController extends AbstractController
      */
     public function showfront(Localisation $localisation): Response
     {
-        return $this->render('localisation/showfront.html.twig', [
+        return $this->render('planinng/showfront.html.twig', [
             'localisation' => $localisation,
         ]);
     }

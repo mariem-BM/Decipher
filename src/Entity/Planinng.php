@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=PlaninngRepository::class)
  */
@@ -16,6 +17,7 @@ class Planinng
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("Planinng:read")
      */
     private $id;
 
@@ -33,43 +35,38 @@ class Planinng
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("Planinng:read")
      */
     private $dateDebut_planning;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("Planinng:read")
      */
     private $dateFin_planning;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("Planinng:read")
      */
     private $destination_planning;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups("Planinng:read")
      */
-    private $activites_planning;
-
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Do not leave empty"),
-     * @Assert\Length(
-     * min = 20,
-     * max = 100,
-     * minMessage = "Le description_planning doit comporter au moins {{ limit }} caractères",
-     * maxMessage = "Le description_planning doit comporter au plus {{ limit }} caractères"
-     * )
-     */
+    
     private $description_planning;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("Planinng:read")
      */
     private $periode_planning;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups("Planinng:read")
      */
     private $prix_planning;
 
@@ -137,17 +134,6 @@ class Planinng
         return $this;
     }
 
-    public function getActivitesPlanning(): ?string
-    {
-        return $this->activites_planning;
-    }
-
-    public function setActivitesPlanning(string $activites_planning): self
-    {
-        $this->activites_planning = $activites_planning;
-
-        return $this;
-    }
 
     public function getDescriptionPlanning(): ?string
     {

@@ -6,6 +6,7 @@ use App\Repository\LocalisationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=LocalisationRepository::class)
@@ -50,11 +51,6 @@ class Localisation
      * @ORM\Column(type="string", length=255)
      */
     private $fusee;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Planinng::class, mappedBy="localisation")
-     */
-    private $Planinng;
 
     /**
      * @ORM\OneToMany(targetEntity=Billet::class, mappedBy="localisation")
@@ -132,36 +128,7 @@ class Localisation
         return $this;
     }
 
-    /**
-     * @return Collection|Planinng[]
-     */
-    public function getPlaninng(): Collection
-    {
-        return $this->Planinng;
-    }
-
-    public function addPlaninng(Planinng $planinng): self
-    {
-        if (!$this->Planinng->contains($planinng)) {
-            $this->Planinng[] = $planinng;
-            $planinng->setLocalisation($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlaninng(Planinng $planinng): self
-    {
-        if ($this->Planinng->removeElement($planinng)) {
-            // set the owning side to null (unless already changed)
-            if ($planinng->getLocalisation() === $this) {
-                $planinng->setLocalisation(null);
-            }
-        }
-
-        return $this;
-    }
-
+   
     /**
      * @return Collection|Billet[]
      */

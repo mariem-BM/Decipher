@@ -20,7 +20,7 @@ class PlaninngRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Planinng[] Returns an array of Planinng objects
+      //* @return Planinng[] Returns an array of Planinng objects
     //  */
     /*
     public function findByExampleField($value)
@@ -47,4 +47,22 @@ class PlaninngRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function orderByDatePlan()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.dateDebut_planning', 'DESC')
+
+           // ->setMaxResults(3)
+            ->getQuery()->getResult();
+    }
+
+    public function orderByPeriodePlan()
+    {
+        return $this->createQueryBuilder('pr')
+            ->orderBy('pr.periode_planning', 'ASC')
+
+           // ->setMaxResults(3)
+            ->getQuery()->getResult();
+    }
 }
