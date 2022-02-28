@@ -17,13 +17,32 @@
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
             </tr>
         
-           <tr>
-                <th>User</th>
-                <td>{{ reservation.user }}</td>
+         <tr>
+                <th>User Name</th>
+                <td>{{ reservation.user.prenomUtilisateur }} {{ reservation.user.nomUtilisateur }}</td>
+            </tr>
+             <tr>
+                <th>User Email</th>
+                <td>{{ reservation.user.mailUtilisateur  }}</td>
+            </tr>
+             <tr>
+                <th>Ticket ID</th>
+                <td>{{ reservation.billet.id }}</td>
+              
             </tr>
             <tr>
-                <th>billet</th>
-                <td>{{ reservation.billet.id }}</td>
+                <th>Seat</th>
+                <td>{{ reservation.billet.chairBillet }}</td>
+              
+            </tr>
+            <tr>
+                <th>Voyage number</th>
+                <td> {{ reservation.billet.voyageNum }}</td>
+              
+            </tr>
+             <tr>
+                <th>Boarding Time</th>
+                <td>{{ reservation.billet.embarquement ? reservation.billet.embarquement|date('Y-m-d') : '' }}</td>
               
             </tr>
         </tbody>

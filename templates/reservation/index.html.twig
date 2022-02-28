@@ -10,7 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Date_reservation</th>
-                <th>user</th>
+                <th>user full name</th>
+                <th>user mail</th>
                 <th>billet</th>
                 <th>actions</th>
             </tr>
@@ -20,11 +21,13 @@
             <tr>
                 <td>{{ reservation.id }}</td>
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
-            
-                <td>{{ reservation.user }}</td>
+            <td>{{ reservation.user.prenomUtilisateur }} {{ reservation.user.nomUtilisateur }}</td>
+                <td>{{ reservation.user.mailUtilisateur }}</td>
+                
                 <td>{{ reservation.billet.id }}</td>
                 <td>
                     <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
+                     <a href="{{ path('ReservationBillet', {'id': reservation.id}) }}">Ticket</a>
 
                     
                   
@@ -37,6 +40,6 @@
         {% endfor %}
         </tbody>
     </table>
-<a href="{{ path('listReservationByDate') }}">List Reservation By Date</a>
+<a href="{{ path('listReservationByDate') }}">List Reservation By Order</a>
     
 {% endblock %}

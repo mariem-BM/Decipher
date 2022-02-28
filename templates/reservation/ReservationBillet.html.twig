@@ -1,0 +1,65 @@
+ <link rel="stylesheet" href="{{ asset ('Front/css/Ticket.css')}}">
+ <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<div class="box">
+  <ul class="left">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  
+  <ul class="right">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <div class="ticket">
+    <span class="airline">Celestial</span>
+    <span class="airline airlineslip">Celestial</span>
+    <span class="boarding">Boarding pass</span>
+    <div class="content">
+      <span class="jfk">JFK</span>
+      <span class="plane"><?xml version="1.0" ?><img src="{{ asset ('Front/img/travel.png')}}" width="70" height="70"></span>
+      <span class="sfo">SFO</span>
+      
+      <span class="jfk jfkslip">JFK</span>
+      <span class="plane planeslip"><?xml version="1.0" ?><img src="{{ asset ('Front/img/travel.png')}}"width="60" height="60" ></span>
+      <span class="sfo sfoslip">SFO</span>
+      <div class="sub-content">
+        <span class="watermark">Celestial</span>
+        <span class="name">PASSENGER NAME<br><span>{{ reservation.user.prenomUtilisateur }} {{ reservation.user.nomUtilisateur }}</span></span>
+        <span class="flight">FLIGHT N&deg;<br><span>{{ reservation.billet.voyageNum }}</span></span>
+        <span class="gate">GATE<br><span>{{ reservation.billet.portail }}</span></span>
+        <span class="seat">SEAT<br><span>45A</span></span>
+        <span class="boardingtime">BOARDING TIME<br><span>{{ reservation.billet.embarquement ? reservation.billet.embarquement|date('Y-m-d') : '' }}</span></span>
+            
+         <span class="flight flightslip">FLIGHT N&deg;<br><span>{{ reservation.billet.voyageNum }}</span></span>
+          <span class="seat seatslip">SEAT<br><span>{{ reservation.billet.chairBillet }}</span></span>
+         <span class="name nameslip">PASSENGER NAME<br><span>{{ reservation.user.prenomUtilisateur }} {{ reservation.user.nomUtilisateur }}</span></span>
+      </div>
+    </div>
+    <div class="barcode"></div>
+    <div class="barcode slip"></div>
+  </div>
+</div>

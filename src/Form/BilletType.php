@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Billet;
 use App\Entity\Reservation;
+use App\Entity\localisation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,12 +20,12 @@ class BilletType extends AbstractType
             ->add('terminal')
             ->add('portail')
             ->add('embarquement')
-           ->add('localisation')
-          /*  ->add('localisation',EntityType::class,[
+          // ->add('localisation')
+            ->add('localisation',EntityType::class,[
                 'class' => Localisation::class,
-                'choice_label' => 'id',
+                'choice_label' => 'positionArivee_planning',
                  'label' => 'Localisation']
-                 )*/
+                 )
         ;
     }
 

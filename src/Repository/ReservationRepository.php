@@ -59,16 +59,6 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function listReservationByUser($id)
-    {
-        return $this->createQueryBuilder('r')
-            ->join('r.user', 'u')
-            ->addSelect('u')
-            ->where('u.id=:id')
-            ->setParameter('id',$id)
-            ->getQuery()
-            ->getResult();
-    }
     public function orderByMail()
     {
         return $this->createQueryBuilder('r')
@@ -78,8 +68,8 @@ class ReservationRepository extends ServiceEntityRepository
     public function searchReservation($id)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.user LIKE :user')
-            ->setParameter('user', '%'.$user.'%')
+            ->andWhere('r.id LIKE :id')
+            ->setParameter('id', '%'.$id.'%')
             ->getQuery()
             ->execute();
     }
@@ -87,7 +77,7 @@ class ReservationRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->orderBy('r.date_reservation', 'DESC')
-            ->setMaxResults(3)
+         //   ->setMaxResults(3)
             ->getQuery()->getResult();
     }
 

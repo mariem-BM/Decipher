@@ -97,7 +97,11 @@
         <div class="swiper-pagination py-3 d-block d-lg-none"></div>-->
       </div>
     </section>
-    
+    {% for message in app.flashes('success') %}
+						<div class="alert alert-success">
+							{{ message }}
+						</div>
+					{% endfor %}
         {% block body %}{% endblock %}
 
           <!-- Scroll Top Button--><a class="scroll-top" href="#"><i class="fas fa-long-arrow-alt-up"></i></a>

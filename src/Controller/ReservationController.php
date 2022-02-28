@@ -6,13 +6,14 @@ use App\Entity\Reservation;
 use App\Entity\User;
 use App\Entity\Billet;
 use App\Form\ReservationType;
+use App\Form\SearchReservationType;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -31,6 +32,24 @@ class ReservationController extends AbstractController
     }
 
 
+    
+    
+    /**
+     * @Route("/listReservationByDate", name="listReservationByDate", methods={"GET"})
+     */
+    public function listReservationByDate(ReservationRepository $repo)
+    {
+        //list of reservations order By Date
+        $reservationsByDate = $repo->orderByDate();
+        //list of reservations order By Mail
+        $reservationsByMail = $repo->orderByMail();
+        //orderByDate();
+        return $this->render('reservation/listByDate.html.twig', [
+            "reservationsByDate" => $reservationsByDate,
+            "reservationsByMail" => $reservationsByMail
+        ]);
+    }
+
     /**
      * @Route("/listReservationWithSearch", name="listReservationWithSearch", methods={"GET"})
      */
@@ -38,52 +57,34 @@ class ReservationController extends AbstractController
     {
         //All of reservations
         $reservations = $repository->findAll();
-        //list of reservations order By Mail
-        $reservationsByMail = $repository->orderByMail();
         //search
         $searchForm = $this->createForm(SearchReservationType::class);
         $searchForm->add("Recherche", SubmitType::class);
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted()) {
-            $nsc = $searchForm['user']->getData();
-            $resultOfSearch = $repository->searchReservation($user);
+            $id = $searchForm['id']->getData();
+            $resultOfSearch = $repository->searchReservation($id);
             return $this->render('reservation/searchReservation.html.twig', array(
                 "resultOfSearch" => $resultOfSearch,
                 "searchReservation" => $searchForm->createView()));
         }
         return $this->render('reservation/listWithSearch.html.twig', array(
             "reservations" => $reservations,
-            "reservationsByMail" => $reservationsByMail,
             "searchReservation" => $searchForm->createView()));
     }
-    
-    /**
-     * @Route("/listReservationByDate", name="listReservationByDate", methods={"GET"})
-     */
-    public function listReservationByDate(ReservationRepository $repo)
-    {
-
-        $reservationsByDate = $repo->orderByDate();
-
-        //orderByDate();
-        return $this->render('reservation/listByDate.html.twig', [
-            "reservationsByDate" => $reservationsByDate,
-        ]);
-    }
-
  
 
      /**
      * @Route("/mesreservations", name="reservation_front", methods={"GET"})
      */
     public function indexfront(ReservationRepository $reservationRepository): Response
-    { /*  $user = new User(); 
-        $user = $this->getUser()->getReservations();*/
+    { 
 
         return $this->render('reservation/indexfront.html.twig', [
             'reservations' => $reservationRepository->findAll(),
         ]);
     }
+    
 
     /**
      * @Route("/new", name="reservation_new", methods={"GET", "POST"})
@@ -109,7 +110,7 @@ class ReservationController extends AbstractController
             }
             $entityManager->persist($reservation);
             $entityManager->flush();
-            $this->addFlash('success', 'Reserved Successfully!');
+            $this->addFlash('success', 'Reserved Successfully! please await for a confirmation email');
             return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -134,6 +135,16 @@ class ReservationController extends AbstractController
     public function showfront(Reservation $reservation): Response
     {
         return $this->render('reservation/showfront.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
+
+     /**
+     * @Route("/ReservationBillet/{id}", name="ReservationBillet", methods={"GET"})
+     */
+    public function ReservationBillet(Reservation $reservation): Response
+    {
+        return $this->render('reservation/ReservationBillet.html.twig', [
             'reservation' => $reservation,
         ]);
     }
@@ -181,18 +192,7 @@ class ReservationController extends AbstractController
         $this->addFlash('success', 'Reservation Deleted!');
         return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
     }
-/***************************************************************************************************************************/
-     /**
-     * @Route("/myreservation/{id}", name="showreservationbyuser", methods={"GET"})
-     */
-    public function showBillet($id)
-    {
-      $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-      $reservations= $this->getDoctrine()->getRepository(Reservation::class)->listReservationByUser($user->getId());
-      return $this->render('reservation/showreservationbyuser.html.twig', [
-          "user" => $user,
-          "reservations"=>$reservations]);
-     } 
+ 
      
    
 }

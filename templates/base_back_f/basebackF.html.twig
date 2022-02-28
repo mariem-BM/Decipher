@@ -382,6 +382,11 @@
 				<div class="col-lg-6 mb-4"></div>
 			</div><!-- Main Content --><div
 				id="content">
+				{% for message in app.flashes('success') %}
+						<div class="alert alert-success">
+							{{ message }}
+						</div>
+					{% endfor %}
 				<!-- /.container-fluid -->
 				{% block body %}{% endblock %}
 			</div><!-- End of Main Content -->{% block footer %}

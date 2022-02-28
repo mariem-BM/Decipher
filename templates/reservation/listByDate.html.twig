@@ -4,9 +4,11 @@
 {% block title %}Reservations by date{% endblock %}
 
 {% block body %}
+<h1>Reservations by date order By date</h1>
 <table class="table" border="2">
     <tr>
         <td>ID</td>
+        <td>User Full Name</td>
         <td>User Email</td>
         <td>Reservation date</td>
         <td>Billet</td>
@@ -15,11 +17,34 @@
     {% for reservation in reservationsByDate %}
         <tr>
             <td>{{ reservation.id }}</td>
-            <td>{{ reservation.user }}</td>
+             <td>{{ reservation.user.prenomUtilisateur }} {{ reservation.user.nomUtilisateur }}</td>
+                <td>{{ reservation.user.mailUtilisateur }}</td>
+            <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
+            <td>{{ reservation.billet.id }}</td>
+            <td><a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
+                    </td>
+        </tr>
+    {% endfor %}
+</table>
+<h1>Reservations by date order By Mail</h1>
+<table class="table" border="2">
+    <tr>
+        <td>ID</td>
+         <td>User Full Name</td>
+        <td>User Email</td>
+        <td>Reservation date</td>
+        <td>Billet</td>
+        <td>Action</td>
+    </tr>
+    {% for reservation in reservationsByMail %}
+         <tr>
+            <td>{{ reservation.id }}</td>
+            <td>{{ reservation.user.prenomUtilisateur }} {{ reservation.user.nomUtilisateur }}</td>
+                <td>{{ reservation.user.mailUtilisateur }}</td>
             <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
             <td>{{ reservation.billet.id }}</td>
             <td><a href="{{ path('reservationfront_show', {'id': reservation.id}) }}">show</a>
-                    </td>
+                  </td>
         </tr>
     {% endfor %}
 </table>

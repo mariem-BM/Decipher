@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Reservation;
 use App\Entity\Billet;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +21,12 @@ class ReservationType extends AbstractType
                 // this is actually the default format for single_text
                 'format' => 'yyyy-MM-dd',
             ])
-            ->add('user')
+          //  ->add('user')
+            ->add('user',EntityType::class,[
+                'class' => User::class,
+                'choice_label' => 'mail_utilisateur',
+                 'label' => 'User']
+                 )
                     ->add('billet',EntityType::class,[
                         'class' => Billet::class,
                         'choice_label' => 'id',
