@@ -1,42 +1,22 @@
-{% extends ('basefront/base.html.twig') %}
-{% block title %}Reservations of {{ user.nom_utilisateur }}{% endblock %}
-{% block body %}
+<h4>Reservation:#{{ reservations.billet.id }}_{{ reservations.dateReservation ? reservations.dateReservation|date('Y-m-d') : '' }}</h4>
 
 
-
-
-    <h1>Reservation index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
+<table border="1">
+     <tr>
                 <th>Id</th>
-                <th>Date_reservation</th>
-                <th>user</th>
-                <th>billet</th>
-                <th>actions</th>
+                <th>Email</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Actions</th>
             </tr>
-        </thead>
-        <tbody>
-        {% for reservation in reservations %}
-            <tr>
-                <td>{{ reservation.id }}</td>
-                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.mail_utilisateur }}</td>
+            <td>{{ user.prenom_utilisateur }}</td>
+            <td>{{ user.nom_utilisateur }}</td>
             
-                <td>{{ reservation.user }}</td>
-                <td>{{ reservation.billet.id }}</td>
-                <td>
-                    <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('reservation_new') }}">Create new</a>
-{% endblock %}
+            
+        </tr>
+    {% endfor %}
+</table>

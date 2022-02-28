@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+//use Symfony\Component\Serilaize\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=BilletRepository::class)
@@ -19,10 +20,7 @@ class Billet
      * @ORM\Column(type="integer")
      */
     private $id;
- /* public function __toString()
-    {
-        return $this->id;
-    }*/
+ 
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank(message="Do not leave empty"),

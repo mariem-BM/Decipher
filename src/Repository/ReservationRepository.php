@@ -19,9 +19,9 @@ class ReservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reservation::class);
     }
 
-    // /**
-    //  * @return Reservation[] Returns an array of Reservation objects
-    //  */
+    /**
+      * @return Reservation[] Returns an array of Reservation objects
+      */
     /*
     public function findByExampleField($value)
     {
@@ -47,24 +47,65 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
     */
-   /* public function listReservationByBillet($id)
-    {
+   
+/***************************************************************************************************************************/
+  
+    public function listReservation(){
         return $this->createQueryBuilder('r')
-            ->join('r.billet', 'b')
-            ->addSelect('b')
-            ->where('b.id=:id')
-            ->setParameter('id',$id)
+            ->where('r.id LIKE ?1')
+            ->andWhere('r.user LIKE ?2')
+            ->setParameter('1', 'L%')
+            ->setParameter('2', '%V%')
             ->getQuery()
             ->getResult();
-    }*/
+    }
     public function listReservationByUser($id)
     {
         return $this->createQueryBuilder('r')
-            ->join('r.billet', 'u')
+            ->join('r.user', 'u')
             ->addSelect('u')
             ->where('u.id=:id')
             ->setParameter('id',$id)
             ->getQuery()
             ->getResult();
+    }
+    public function orderByMail()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.user', 'ASC')
+            ->getQuery()->getResult();
+    }
+    public function searchReservation($id)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.user LIKE :user')
+            ->setParameter('user', '%'.$user.'%')
+            ->getQuery()
+            ->execute();
+    }
+    public function orderByDate()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.date_reservation', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()->getResult();
+    }
+
+    
+    //Question 1 -DQL
+    public function ReservationsPerDate($dateOne,$dateTwo){
+        $entityManager=$this->getEntityManager();
+        $query=$entityManager
+            ->createQuery("SELECT r FROM APP\Entity\Reservation r WHERE r.date_reservation BETWEEN :dateOne AND :dateTwo")
+            ->setParameters(['dateOne'=>$dateOne,'dateTwo'=>$dateTwo]);
+        return $query->getResult();
+
+        /**
+         * Solution avec QueryBuilder
+         */
+        /*$qb= $this->createQueryBuilder('r');
+        $qb ->where('r.date_reservation BETWEEN :dateOne AND :dateTwo');
+        $qb->setParameters(['dateOne'=>$dateOne,'dateTwo'=>$dateTwo]);
+        return $qb->getQuery()->getResult();*/
     }
 }
