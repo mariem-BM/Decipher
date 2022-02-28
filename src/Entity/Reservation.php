@@ -22,7 +22,9 @@ class Reservation
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\NotBlank(message="Do not leave empty")
+     * @Assert\Date()
+     * @Assert\GreaterThan("Yesterday")
+     * @Assert\LessThan("tomorrow")
      */
     private $date_reservation;
 
@@ -40,6 +42,10 @@ class Reservation
     private $billet;
 
 
+    public function __construct()
+    {
+    $this->date_reservation = new \DateTime('now');
+    }
 
     public function getId(): ?int
     {

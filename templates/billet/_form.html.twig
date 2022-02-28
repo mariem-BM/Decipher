@@ -5,37 +5,37 @@
 	<div class="input-field col s12 m12 l12">
 	{{ form_label(form.chair_billet,"Chair") }}
     {{ form_widget(form.chair_billet, {'attr': {'placeholder': 'Chair'}}) }}
-	{{ form_errors(form.chair_billet) }}
+	
 	</div>
 	<br>
 	<div class="input-field col s12 m6 l6">
 	{{ form_label(form.voyage_num,"Voyage num") }}
     {{ form_widget(form.voyage_num, {'attr': {'placeholder': 'Voyage num'}}) }}
-	{{ form_errors(form.voyage_num) }}
+	
 	</div>
 <br>	
 	<div class="input-field col s12 m12 l12">
 		{{ form_label(form.terminal,"Terminal") }}
 		{{ form_widget(form.terminal, {'attr': {'placeholder': 'Terminal'}}) }}
-		{{ form_errors(form.terminal) }}
+		
 	</div>
 <br>
 	<div class="input-field col s12 m12 l12">
 	{{ form_label(form.portail,"Portail") }}
     {{ form_widget(form.portail, {'attr': {'placeholder': 'Portail'}}) }}
-	{{ form_errors(form.portail) }}
+	
 	</div>
 <br>
 	<div class="input-field col s12 m12 l12">
 	{{ form_label(form.embarquement,"Embarquement") }}
     {{ form_widget(form.embarquement, {'attr': {'placeholder': 'Embarquement'}}) }}
-	{{ form_errors(form.embarquement) }}
+	
 	</div>
 <br>
 	<div class="input-field col s12 m12 l12">
 	{{ form_label(form.localisation,"Localisation") }}
     {{ form_widget(form.localisation, {'attr': {'placeholder': 'Localisation'}}) }}
-	{{ form_errors(form.localisation) }}
+	
     </div>
 <br>
     <button class="btn">{{ button_label|default('Save') }}</button>
