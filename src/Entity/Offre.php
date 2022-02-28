@@ -74,11 +74,11 @@ class Offre
 
 
 
-
-
-
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     * @Assert\GreaterThan("Yesterday")
+     * @Assert\LessThan("tomorrow")
      
      */
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ReclamationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ReclamationRepository::class)
@@ -15,6 +16,7 @@ class Reclamation
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("reclamation:read")
      */
     private $id;
 
@@ -29,6 +31,7 @@ class Reclamation
      * minMessage = "Le description_offre doit comporter au moins {{ limit }} caractères",
      * maxMessage = "Le description_offre doit comporter au plus {{ limit }} caractères"
      * )
+     * @Groups("reclamation:read")
      
      */
 
@@ -38,7 +41,10 @@ class Reclamation
 
     /**
      * @ORM\Column(type="date")
-    
+    * @Assert\Date()
+     * @Assert\GreaterThan("Yesterday")
+     * @Assert\LessThan("tomorrow")
+     * @Groups("reclamation:read")
      
      */
     private $date_reclamation;

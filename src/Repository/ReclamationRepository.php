@@ -19,9 +19,9 @@ class ReclamationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reclamation::class);
     }
 
-    // /**
-    //  * @return Reclamation[] Returns an array of Reclamation objects
-    //  */
+     /**
+      * @return Reclamation[] Returns an array of Reclamation objects
+      */
     /*
     public function findByExampleField($value)
     {
@@ -47,4 +47,13 @@ class ReclamationRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function orderByDateReclam()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.date_reclamation', 'DESC')
+           // ->setMaxResults(3)
+            ->getQuery()->getResult();
+    }
+
 }

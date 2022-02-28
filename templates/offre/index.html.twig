@@ -4,10 +4,9 @@
 
 {% block body %}
 
-
 	<h1>Gestion des Offres</h1>
-
-	<table class="table">
+	
+	<table class=" table">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -24,7 +23,8 @@
 		</thead>
 		<tbody>
 			<a href="{{ path('offre_new') }}" class="btn btn-primary">Creer</a>
-			{%  for offre in offres %}
+			
+		{%  for offre in offres %}
 				<tr>
 					<td>{{ offre.id }}</td>
 					<td>{{ offre.nomOffre }}</td>
@@ -36,10 +36,8 @@
 					<td>
 						<a href="{{ path('offre_show', {'id': offre.id}) }}" class="btn btn-primary">consulter</a>
 						<a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-primary">modifier</a>
-					
 
-
-					</td>
+		</td>
 				</tr>
 			</a>
 		</tbody>
@@ -47,4 +45,8 @@
 </tr>{% else %}
 <tr>
 	<td colspan="5">no records found</td>
-</tr>{% endfor %}</tbody></table>{% endblock %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

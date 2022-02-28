@@ -44,6 +44,23 @@ class OffreController extends AbstractController
         ]);
     }
 
+    
+      //Tri par Reduction
+
+     /**
+     * @Route("/listOffreByReduction", name="listOffreByReduction", methods={"GET"})
+     */
+    public function listOffreByReduction(OffreRepository $repo)
+    {
+
+        $offresByReduction = $repo->orderByReductionOffre();
+
+        //orderByDate();
+        return $this->render('offre/listByReductionOffre.html.twig', [
+            "offresByReduction" => $offresByReduction,
+        ]);
+    }
+
     /**
      * @Route("/new", name="offre_new", methods={"GET", "POST"})
      */
@@ -96,8 +113,9 @@ class OffreController extends AbstractController
     /**
      * @Route("/{id}", name="offre_show", methods={"GET"})
      */
-    public function show(Offre $offre): Response
+    public function show(Offre $offre)
     {
+
         return $this->render('offre/show.html.twig', [
             'offre' => $offre,
         ]);
@@ -169,5 +187,39 @@ class OffreController extends AbstractController
         }
 
         return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /**********************************Search lezm tetsala7 */
+    /******************hetha li yet7at f index */
+    /**<form method="post" action="{{ path(<'search') }}">
+		<label>Rechercher</label>
+		<input type="text" name="search">
+		<input type="submit" value="Rechercher" class="btn btn-success">
+	</form>
+     */ //
+    /**
+     * @Route("/search", name="search")
+     */
+
+    /* function search(OffreRepository $repository, Request $request)
+    {
+        $data = $request->get('search');
+        $offre = $repository->findBy(['nom_offre' => $data]);
+
+        return $this->render('offre/show.html.twig', [
+            'offre' => $offre,
+        ]);
+    }*/
+
+      /**
+       * @param OffreRepository $repository
+       * @return Response
+     * @Route("/ListDQL", name="search")
+     */
+
+    function OrderByNameDQL(OffreRepository $repository) {
+$offre=$repository->OrderByName();
+return $this->render('offre/index.html.twig', [
+    'offre' => $offre
+]); 
     }
 }

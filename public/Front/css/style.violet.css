@@ -395,6 +395,7 @@ button:not(:disabled),
 [type="reset"]:not(:disabled),
 [type="submit"]:not(:disabled) {
   cursor: pointer;
+  
 }
 
 ::-moz-focus-inner {
@@ -1003,6 +1004,7 @@ progress {
   .col-sm-12 {
     flex: 0 0 auto;
     width: 100%;
+    margin-left: 12px;
   }
   .offset-sm-0 {
     margin-left: 0;
@@ -1990,6 +1992,7 @@ progress {
   margin-bottom: 0;
   font-size: inherit;
   line-height: 1.5;
+  margin-left: 12px;
 }
 
 .col-form-label-lg {
@@ -2223,6 +2226,7 @@ progress {
 
 textarea.form-control {
   min-height: calc(1.5em + 1.5rem + 2px);
+ /* margin-left: 12px;*/
 }
 
 textarea.form-control-sm {
@@ -7667,6 +7671,7 @@ fieldset:disabled .btn {
 
 .mb-2 {
   margin-bottom: 0.5rem !important;
+  margin-left: 12px;
 }
 
 .mb-3 {
@@ -12354,4 +12359,13 @@ STYLE SWITCHER FOR DEMO
 
 #style-switch h4, #style-switch .h4 {
   color: #495057;
+}
+
+.wrapper {
+  text-align: center;
+}
+
+.button {
+  position: absolute;
+  top: 50%;
 }

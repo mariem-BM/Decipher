@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Reclamation;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class ReclamationType extends AbstractType
 {
@@ -13,9 +16,19 @@ class ReclamationType extends AbstractType
     {
         $builder
             ->add('description_reclamation')
-            ->add('date_reclamation')
+            ->add('date_reclamation',DateType::class, [
+                'widget' => 'single_text',
+                // this is actually the default format for single_text
+                'format' => 'yyyy-MM-dd',
+            ] )
 
-            ->add('user');
+
+
+            ->add('user'
+            ,EntityType::class,[
+                'class' => User::class,
+                'choice_label' => 'mail_utilisateur',
+                 'label' => 'User']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -23,5 +36,7 @@ class ReclamationType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Reclamation::class,
         ]);
+
+       
     }
 }

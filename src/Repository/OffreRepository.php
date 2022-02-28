@@ -19,9 +19,9 @@ class OffreRepository extends ServiceEntityRepository
         parent::__construct($registry, Offre::class);
     }
 
-    // /**
-    //  * @return Offre[] Returns an array of Offre objects
-    //  */
+     /**
+  * @return Offre[] Returns an array of Offre objects
+      */
     /*
     public function findByExampleField($value)
     {
@@ -47,4 +47,23 @@ class OffreRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function OrderByName() {
+        $em=$this->getEntityManager();
+        $query=$em->createQuery('
+            select o from App\Entity\Offre o order by o.offre_name ASC');
+            return $query->getResult();
+
+    }
+
+
+
+    public function orderByReductionOffre()
+    {
+        return $this->createQueryBuilder('o')
+            ->orderBy('o.reduction', 'DESC')
+           // ->setMaxResults(3)
+            ->getQuery()->getResult();
+    }
+
 }
