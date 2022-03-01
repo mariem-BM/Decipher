@@ -2027,7 +2027,7 @@ progress {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  border-radius: 0;
+  border-radius: 15px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -2228,6 +2228,7 @@ progress {
 textarea.form-control {
   min-height: calc(1.5em + 1.5rem + 2px);
  /* margin-left: 12px;*/
+ border-radius: 15px;
 }
 
 textarea.form-control-sm {
