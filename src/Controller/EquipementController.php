@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 
 /**
  * @Route("/equipementt")
@@ -115,23 +117,36 @@ class EquipementController extends AbstractController
 
         return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
     }
+     /**
+   * Creates a new ActionItem entity.
+   *
+   * @Route("/search", name="ajax_search")
+   * @Method("GET")
+   */
     public function searchAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $requestString = $request->get('q');
-        $equipement =  $em->getRepository('AppBundle:Equipement')->findEntitiesByString($requestString);
-        if(!$equipement) {
-            $result['equipement']['error'] = "Equipement Not found :( ";
-        } else {
-            $result['equipement'] = $this->getRealEntities($equipement);
-        }
-        return new Response(json_encode($result));
-    }
-    public function getRealEntities($equipement){
-        foreach ($equipement as $equipements){
-            $realEntities[$equipement->getNomEquipement()] = [$equipement->getEtatEquipement(),$posts->getCategorieEquipement()];
+  {
+      $em = $this->getDoctrine()->getManager();
 
-        }
-        return $realEntities;
-    }
+      $requestString = $request->get('q');
+
+      $Equipements =  $em->getRepository('AppBundle:Equipement')->findEntitiesByString($requestString);
+
+      if(!$entities) {
+          $result['Equipements']['error'] = "Equipement not found ";
+      } else {
+          $result['Equipements'] = $this->getRealEntities($Equipements);
+      }
+
+      return new Response(json_encode($result));
+  }
+
+  public function getRealEntities($Equipements){
+
+      foreach ($Equipements as $Equipement){
+          $realEntities[$Equipement->getId()] = [$Equipement->getNomEquipement(),$posts->getCategorieEquipement()];
+      }
+
+      return $realEntities;
+  }
+
 }

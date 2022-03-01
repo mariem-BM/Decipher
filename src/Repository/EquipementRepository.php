@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Equipement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
+
 
 /**
  * @method Equipement|null find($id, $lockMode = null, $lockVersion = null)
