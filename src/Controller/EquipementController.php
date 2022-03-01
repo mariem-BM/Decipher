@@ -143,7 +143,7 @@ class EquipementController extends AbstractController
   public function getRealEntities($Equipements){
 
       foreach ($Equipements as $Equipement){
-          $realEntities[$Equipement->getId()] = [$Equipement->getNomEquipement(),$posts->getCategorieEquipement()];
+          $realEntities[$Equipement->getId()] = $Equipement->getNomEquipement();
       }
 
       return $realEntities;
