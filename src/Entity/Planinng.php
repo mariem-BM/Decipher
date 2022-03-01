@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 /**
  * @ORM\Entity(repositoryClass=PlaninngRepository::class)
  */
@@ -35,21 +37,38 @@ class Planinng
 
     /**
      * @ORM\Column(type="date")
+      * @Assert\Date()
+
      * @Groups("Planinng:read")
+  
      */
     private $dateDebut_planning;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date()
      * @Groups("Planinng:read")
      */
     private $dateFin_planning;
 
     /**
+    
      * @ORM\Column(type="string", length=255)
      * @Groups("Planinng:read")
+     
      */
     private $destination_planning;
+
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context, $payload){
+        if ($this->dateDebut_planning > $this->dateFin_planning){
+            $context->buildViolation('start date must be earlier than end date')
+            ->atPath('dateDebut_planning')
+            ->addViolation();
+        }
+    }
 
     /**
      * @ORM\Column(type="text")
@@ -114,7 +133,6 @@ class Planinng
     {
         return $this->dateFin_planning;
     }
-
     public function setDateFinPlanning(\DateTimeInterface $dateFin_planning): self
     {
         $this->dateFin_planning = $dateFin_planning;

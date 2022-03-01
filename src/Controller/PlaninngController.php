@@ -12,9 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 use Symfony\Component\Serializer\SerializerInterface;
 /**
  * @Route("/planinng")
@@ -102,6 +100,7 @@ class PlaninngController extends AbstractController
                 return $this->render('planning/_form.html.twig', [
                     'errors' => $errors,
                 ]);
+                
             }
             $entityManager->persist($planinng);
             $entityManager->flush();

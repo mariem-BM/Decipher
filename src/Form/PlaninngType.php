@@ -6,6 +6,7 @@ use App\Entity\Planinng;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class PlaninngType extends AbstractType
 {
@@ -13,13 +14,13 @@ class PlaninngType extends AbstractType
     {
         $builder
             ->add('nom_planning')
-            ->add('dateDebut_planning')
-            ->add('dateFin_planning')
+            ->add('dateDebut_planning',DateType::class)
+            ->add('dateFin_planning',DateType::class)
             ->add('destination_planning')
             ->add('description_planning')
             ->add('periode_planning')
             ->add('prix_planning')
-            ->add('localisation')
+            
         ;
     }
 
