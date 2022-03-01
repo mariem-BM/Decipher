@@ -6,25 +6,105 @@
 
 
     <h1>Equipement index</h1>
-    
-<table align="center">
+ <div class="album py-5 bg-light">
+ <h2>Search A Equipement !!</h2>
+
+            <div class="sidebar-search">
+
+                <div class="input-group custom-search-form">
+
+                    <input type="text" id="search" class="form-control" placeholder="Search here">
+                </div>
+                <!-- /input-group -->
+            </div>
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="#"> Entities<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level" id="entitiesNav">
+                    </ul>
+                </li>
+            </ul><br><br><br><br>
+
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    var searchRequest = null;
+                    $("#search").keyup(function() {
+                        var minlength = 1;
+                        var that = this;
+                        var value = $(this).val();
+                        var entitySelector = $("#entitiesNav").html('');
+                        if (value.length >= minlength ) {
+                            if (searchRequest != null)
+                                searchRequest.abort();
+                            searchRequest = $.ajax({
+                                type: "GET",
+                                url: "{{ path('ajax_search') }}",
+                                data: {
+                                    'q' : value
+                                },
+                                dataType: "text",
+                                success: function(msg){
+                                    //we need to check if the value is the same
+                                    if (value===$(that).val()) {
+                                        var result = JSON.parse(msg);
+                                        $.each(result, function(key, arr) {
+                                            $.each(arr, function(id, value) {
+                                                if (key === 'equipements') {
+                                                    if (id !== 'error') {
+                                                        console.log(value[1]);
+                                                        entitySelector.append('<li><b>'+value[1]+'</b><a href="/equipement_show/'+id+'">'+'<img src="/uploads/'+value[0]+'" style="width: 50px; height: 50px"/>'+'</a></li>');
+                                                    } else {
+                                                        entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                });
+            </script>
+        <div class="container">
+        <div class="row">
 
 {% for equipement in equipements %}
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
+                                    <div class="featured-box">
+                                        <figure>
+                                            <a href="{{ path('equipement_show',{'id': equipement.id}) }}"><img class="img-fluid" src="{{ asset('uploads/' ~ equipement.imageEquipement) }}" alt=""></a>
+                                            </figure>
+                                        <div class="content-wrapper">
+                                            <div class="feature-content">
+                                                <h4><a href="{{ path('equipement_show',{'id': equipement.id}) }}">{{ equipement.nomEquipement }}</a></h4>
+                                                <p class="listing-tagline">Description: {{ equipement.descriptionEquipement|trim }}</p>
+                                                <div class="meta-tag">
+                                                    <div class="listing-review">
+                                                        <span class="review-avg">4.52 Ratings</span>
+                                                        
+                                                    </div>
+                                                    <div class="user-name">
+                                                        <p><i class="lni-user"></i>{{ equipement.etatEquipement }}</p>
+                                                    </div>
+                                                    <div class="listing-category">
+                                                        <p><i class="lni-alarm-clock"></i>{{ equipement.categorieEquipement }} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="listing-bottom clearfix">
+                                                <div class="btn-group">
 
-<td>
-<div  class="card text-white bg-dark mb-3"style="width: 18rem;" align="center">
-  
-  <div class="card-body" >
-   
-    <h5 class="card-title">Equipement {{ equipement.id }}</h5>
-        <p class="card-text">Nom :  {{ equipement.nomEquipement }}</p>
-            <p class="card-text">Etat :{{ equipement.etatEquipement }}</p>
-                        <p class="card-text">Description : {{ equipement.descriptionEquipement }}</p>
-                                                <p class="card-text">Categorie : {{ equipement.categorieEquipement }}</p>
+                                                    
+                                                    
 
-                        
-                        
- 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
         {% else %}
             <tr>
                 <td colspan="5">no records found</td>

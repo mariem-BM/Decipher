@@ -115,4 +115,23 @@ class EquipementController extends AbstractController
 
         return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
     }
+    public function searchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $equipement =  $em->getRepository('AppBundle:Equipement')->findEntitiesByString($requestString);
+        if(!$equipement) {
+            $result['equipement']['error'] = "Equipement Not found :( ";
+        } else {
+            $result['equipement'] = $this->getRealEntities($equipement);
+        }
+        return new Response(json_encode($result));
+    }
+    public function getRealEntities($equipement){
+        foreach ($equipement as $equipements){
+            $realEntities[$equipement->getNomEquipement()] = [$equipement->getEtatEquipement(),$posts->getCategorieEquipement()];
+
+        }
+        return $realEntities;
+    }
 }
