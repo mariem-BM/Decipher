@@ -6,7 +6,7 @@ use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,6 +18,7 @@ class Role
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
@@ -25,11 +26,12 @@ class Role
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="nom is required")
+     * @Groups("post:read")
      */
     private $nom_role;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
     public $description_role;
 
@@ -51,12 +53,21 @@ class Role
         $this->userRoles = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
     }
+    public function getDescriptionRole(): ?string
+    {
+        return $this->description_role;
+    }
 
+    public function setDescriptionRole(string $description_role): self
+    {
+        $this->description_role = $description_role;
+
+        return $this;
+    }
 
     public function getNomRole(): ?string
     {

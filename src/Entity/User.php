@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -20,24 +22,28 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="nom is required") 
+     * @Assert\NotBlank(message="nom is required")
+     * @Groups("post:read") 
      */
     private $nom_utilisateur;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="prenom is required") 
+     * @Groups("post:read")
      */
     private $prenom_utilisateur;
 
     /**     * @Assert\NotBlank(message="adresse is required") 
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      */
     private $adresse_utilisateur;
 
@@ -45,28 +51,32 @@ class User
      * @ORM\Column(type="string", length=255)
      *  @Assert\NotBlank(message="Email is required") 
      * @Assert\Email(message = "The email '{{ value }}' is not a valid  email.") 
+     * @Groups("post:read")
      */
     private $mail_utilisateur;
 
     /**   
      *  @Assert\NotBlank(message=" A sudoname is required") 
-
+     * @Groups("post:read")
      * @ORM\Column(type="string", length=255)
      */
     private $sudo_utilisateur;
 
     /**
+     * @Groups("post:read")
      * @Assert\NotBlank(message=" Password is required")
      * @ORM\Column(type="string", length=255)
      */
     private $mdp_utilisateur;
 
     /**
+     * @Groups("post:read")
      * @ORM\Column(type="string", length=255)
      */
     private $Etat_Compte;
 
     /**
+     * @Groups("post:read")
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="A Phone Number is required")
      */
@@ -74,6 +84,7 @@ class User
      //@Assert\LessThan("-18 years")
 
     /**
+     * @Groups("post:read")
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="BirthDate is required")
      */

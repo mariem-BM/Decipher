@@ -10,6 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/role")
@@ -89,5 +92,30 @@ class RoleController extends AbstractController
         }
 
         return $this->redirectToRoute('role_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route("/Allroles/json", name="AllRoles")
+     */
+    public function AllRoles(RoleRepository $rep,SerializerInterface $serilazer):Response
+    {
+        $roles= $rep->findAll();
+
+        $json= $serilazer->serialize($roles,'json',['groups'=>"post:read"]);
+        return new JsonResponse($json,200,[],true);
+    }
+ /**
+     * @Route("/Addroles/json", name="AddRoles")
+     */
+    public function AddRolesJSON(Request $request,NormalizerInterface $Normalizer)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $Role = new Role();
+        $Role->setNomRole($request->get('nom_role'));
+        $Role->setDescriptionRole($request->get('description_role'));
+        $em->persist($Role);
+        $em->flush();
+
+        $jsonContent= $Normalizer->normalize($Role,'json',['groups'=>"post:read"]);
+        return new Response(json_encode($jsonContent));;
     }
 }
