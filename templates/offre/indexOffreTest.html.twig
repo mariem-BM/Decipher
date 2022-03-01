@@ -10,7 +10,8 @@
 				</h2>
 			</header>
 
-			<div class="row text-center gy-4">
+			<div class="row text-center gy-4" id="Mytable">
+			
 				{% for offre in offres %}
 					<div class="col-lg-4"><img src="{{ asset ('Front/img/travel.png')}}" alt="..." width="100">
 						<br>
@@ -46,4 +47,7 @@
 			<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReduction') }}">Trier les offres selon la promotion</a>
 		</div>
 		</section>
+		
+	
+
 	{% endblock %}

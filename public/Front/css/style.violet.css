@@ -2034,6 +2034,7 @@ progress {
 @media (prefers-reduced-motion: reduce) {
   .form-control {
     transition: none;
+    border-radius: 20px;
   }
 }
 
@@ -2231,6 +2232,7 @@ textarea.form-control {
 
 textarea.form-control-sm {
   min-height: calc(1.5em + 0.75rem + 2px);
+  border-radius: 20px;
 }
 
 textarea.form-control-lg {
@@ -2947,6 +2949,7 @@ fieldset:disabled .btn {
   color: #fff;
   background-color: #82658b;
   border-color: #82658b;
+  border-radius: 20px;
 }
 
 .btn-primary:hover {
@@ -12369,3 +12372,6 @@ STYLE SWITCHER FOR DEMO
   position: absolute;
   top: 50%;
 }
+
+#btn-1{
+width: 90%;}

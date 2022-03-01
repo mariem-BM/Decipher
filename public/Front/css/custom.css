@@ -53,15 +53,15 @@
 }
 
 input[type='text'] {
-    width: 100%;
+    width: 30%;
     height: 40px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     padding: 0 9px;
     box-sizing: border-box;
     outline: 0;
-    margin-bottom: 15px;
-    margin-top: 10px;
+    /*margin-bottom: 15px;
+    margin-top: 10px;*/
     font-size: 12px;
     transition: all 0.5s
 }

@@ -69,6 +69,22 @@ class ReclamationController extends AbstractController
             "reclamationsByDate" => $reclamationsByDate,
         ]);
     }
+
+    
+    /*************Search***************** */
+
+      /**
+     * @Route("/reclamation_search", name="reclamation_search")
+     */
+/*public function searchReclamation(Request $request)
+{
+
+    $serachReclamForm = $this->createFormBuilder(SearchReclamType::class);
+   return $this->render('reclamation/searchReclamation.html.twig',[
+       "searchForm" => $serachReclamForm ->createView(),
+   ]) ;
+}*/
+
     /*****reclamation/indexreclamFront.html.twig*/
     /**************************ADD Back************************************ */
 
@@ -191,6 +207,7 @@ class ReclamationController extends AbstractController
     }
 
     /********************************Te3 Front*************************************** */
+    
     /**
      * @Route("/{id}/edit", name="reclamation_editFront", methods={"GET", "POST"})
      */

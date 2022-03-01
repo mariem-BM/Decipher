@@ -5,7 +5,10 @@
 
 {% block body %}
 	<h1>Reclamations</h1>
-
+	<a style="margin-left: 80px" class="btn btn-primary" id="btn-1" </a>
+			<input  id="myInput"  type="text" placeholder="Search.." >
+			<br>
+			<br>
 	<table class="table">
 		<thead>
 			<tr>
@@ -16,7 +19,8 @@
 				<th></th>
 			</tr>
 		</thead>
-		<tbody>
+				
+		<tbody  id="myTable">
 			{% for reclamation in reclamations %}
 				<tr>
 					<td>{{ reclamation.id }}</td>
@@ -30,9 +34,12 @@
 
 							<a href="{{ path('reclamation_editFront', {'id': reclamation.id}) }}" class="btn btn-primary">modifier</a>
 
+								
+						{#	<a href="{{ path('reclamation_search')}}" class="btn btn-primary">Search</a>
+
 							
 
-							{#	<a class="btn btn-outline-primary px-4" href="{{ path('reclamation_newFront') }}">reclam</a>#}
+							<a class="btn btn-outline-primary px-4" href="{{ path('reclamation_newFront') }}">reclam</a> #}
 
 
 						</td>
@@ -43,7 +50,24 @@
 					<td colspan="5">no records found</td>
 				</tr>
 			{% endfor %}
+		
 		</tbody>
+		
 	</table>
+	
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+						
+	
 {% endblock %}
