@@ -2,26 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Role;
+use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RoleType extends AbstractType
+class TaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom_role')
-            ->add('description_role')
+            ->add('Title')
             ->add('Description')
+            ->add('Deadline')
+            ->add('Status')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Role::class,
+            'data_class' => Task::class,
         ]);
     }
 }

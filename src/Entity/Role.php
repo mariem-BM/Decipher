@@ -31,17 +31,20 @@ class Role
     /**
      * @ORM\Column(type="text")
      */
-    private $description_role;
+    public $description_role;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $tacherole;
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="nom_role",cascade={"persist", "remove"})
      */
     private $userRoles;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="roles")
+     */
+    public $Description;
+
+    
 
     public function __construct()
     {
@@ -67,18 +70,7 @@ class Role
         return $this;
     }
 
-    public function getDescriptionRole(): ?string
-    {
-        return $this->description_role;
-    }
-
-    public function setDescriptionRole(string $description_role): self
-    {
-        $this->description_role = $description_role;
-
-        return $this;
-    }
-
+  
     public function getTacherole(): ?string
     {
         return $this->tacherole;
@@ -124,4 +116,18 @@ class Role
 {
     return (string) $this->nom_role; 
 }
+
+    public function getDescription(): ?Task
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(?Task $Description): self
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
+   
 }

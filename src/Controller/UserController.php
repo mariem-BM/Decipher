@@ -5,20 +5,51 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\UserType1;
-
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 /**
  * @Route("/user")
  */
 class UserController extends AbstractController
-{
+{ 
+    // /**
+   // * @Route("/A", name="AllUsers", methods={"GET"})
+    //*/
     /**
+   public function AllUsers( NormalizerInterface $Normalizer)
+   {
+       $repository = $this->getDoctrine()->getRepository(User::class);
+       $users = $repository->findAll();
+       $jsonContent = $Normalizer->normalize($users,'json',['groups'=>'post:read']);
+       return $this->render('user/allUserJSON.html.twig',['data'=>$jsonContent]);
+   } */
+/**
+    * @Route("/B/{id}", name="AllUsers", methods={"GET"})
+    */
+  /** public function UserId(Request $request,$id,NormalizerInterface $Normalizer)
+{$em =$this->getDoctrine()->getManager();
+$user= $em->getRepository(User::class)->find($id);
+$jsonContent = $Normalizer->normalize($user,'json',['groups'=>'post:read']);
+return new Response(json_encode($jsonContent));
+}
+public function addUserJSON(Request $request,NormalizeInterface $Normalizer)
+{
+    $em =$this->getDoctrine()->getManager();
+    $user = new User();
+    $user->setMailUtilisateur($request->get('email'));
+    $em->persist($user);
+    $em->flush();
+    $jsonContent = $Normalizer->normalize($user,'json',['groups'=>'post:read']);
+return new Response(json_encode($jsonContent));
+}   
+ */
+
+/**
      * @Route("/", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository): Response
@@ -121,4 +152,5 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
+   
 }
