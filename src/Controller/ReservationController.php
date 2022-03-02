@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Billet;
 use App\Form\ReservationType;
 use App\Form\SearchReservationType;
+use App\Form\ReservationEmailType;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -191,8 +192,15 @@ class ReservationController extends AbstractController
       
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
-        
+        //$pdfOptions->set('defaultFont', 'Arial');
+  
+        $pdfOptions->setIsPhpEnabled(true);
+        $pdfOptions->setIsHtml5ParserEnabled(true); // For combining multiple pdf outputs
+        $pdfOptions->setIsFontSubsettingEnabled(true);
+        $pdfOptions->setDefaultPaperSize('A4');
+        $pdfOptions->setDebugCss(true);
+        $pdfOptions->setDebugLayout(true);
+        $pdfOptions->setDpi(72);
         // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);
         
@@ -218,6 +226,45 @@ class ReservationController extends AbstractController
             'reservation' => $reservation,
         ]);
     }
+
+     /**
+     * @Route("/MailingReservationBillet/{id}", name="MailingReservationBillet", methods={"GET", "POST"})
+     */
+    public function MailingReservationBillet(Request $request,Reservation $reservation, \Swift_Mailer $mailer): Response
+    {
+        $form = $this->createForm(ReservationEmailType::class, $reservation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contactFormData = $form->getData();
+       
+            dump($contactFormData);
+           foreach ($contactFormData as $email) {
+    $message = (new \Swift_Message('Hello Email'))
+       
+        ->setFrom('pawp6703@gmail.com')
+       ->setTo($contactFormData['user'])
+       // ->setTo('zeinebeyarahmani@gmail.com')
+        ->setBody(
+            $this->renderView(
+                'reservation/ReservationBillet.html.twig',
+                ['reservation' => $reservation]
+            ),
+            'text/html'
+        );
+        
+    $mailer->send($message);
+    }
+    $this->addFlash('success', 'It sent!');
+    return $this->redirectToRoute('reservation_index');
+        }
+    return $this->render('reservation/mail.html.twig', [
+        'reservation' => $reservation,
+        'our_form' => $form,
+        'our_form' => $form->createView(),
+    ]);
+  //  return $this->render(...);
+    }
+
     /**
      * @Route("/{id}", name="reservation_delete", methods={"POST"})
      */

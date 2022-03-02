@@ -22,9 +22,6 @@ class Reservation
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\Date()
-     * @Assert\GreaterThan("Yesterday")
-     * @Assert\LessThan("tomorrow")
      */
     private $date_reservation;
 

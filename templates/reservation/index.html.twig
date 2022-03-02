@@ -5,7 +5,20 @@
 {% block body %}
   
 
-    <table class="table" border="2">
+    <table  class="table" border="2">
+      <!--  <a style="margin-left: 80px" class="btn btn-primary" id="btn-1" />
+			<input  id="myInput"  type="text" placeholder="Search.." >
+ Topbar Search-->
+				<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+					<div class="input-group">
+						<input id="myInput" type="text" class="form-control bg-light border-0 small" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-primary" type="button">
+								<i class="fas fa-search fa-sm"></i>
+							</button>
+						</div>
+					</div>
+				</form> 
         <thead>
             <tr>
                 <th>Id</th>
@@ -16,7 +29,7 @@
                 <th>actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable tr">
         {% for reservation in reservations %}
             <tr>
                 <td>{{ reservation.id }}</td>
@@ -28,7 +41,7 @@
                 <td>
                     <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
                      <a href="{{ path('ReservationBillet', {'id': reservation.id}) }}">Ticket</a>
-
+                <a href="{{ path('MailingReservationBillet', {'id': reservation.id}) }}">Confirmation</a>
                     
                   
                 </td>
@@ -40,6 +53,19 @@
         {% endfor %}
         </tbody>
     </table>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 <a href="{{ path('listReservationByDate') }}">List Reservation By Order</a>
     
+   
+   
 {% endblock %}
