@@ -37,12 +37,15 @@ class Reservation
      * @ORM\JoinColumn(nullable=false)
      */
     private $billet;
-
-
+   
+ 
+    
+    
     public function __construct()
     {
     $this->date_reservation = new \DateTime('now');
     }
+
 
     public function getId(): ?int
     {

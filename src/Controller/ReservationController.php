@@ -81,12 +81,13 @@ class ReservationController extends AbstractController
      */
     public function indexfront(ReservationRepository $reservationRepository): Response
     { 
-
+       
         return $this->render('reservation/indexfront.html.twig', [
             'reservations' => $reservationRepository->findAll(),
         ]);
     }
-    
+  
+  
     
     /**
      * @Route("/new", name="reservation_new", methods={"GET", "POST"})
@@ -279,5 +280,18 @@ class ReservationController extends AbstractController
         return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
     }
  
-    
+    /**
+    * @Route("/listReservationSearchDate", name="listReservationSearchDate")
+    */
+   public function listReservationSearchDate(ReservationRepository $em)
+   {
+       //$repository = $this->getDoctrine()->getRepository(Student::class);
+       //Show all students
+       $reservations = $em->ReservationsPerDate(new \DateTime('2000-11-02'), new \DateTime('2020-11-02 00:00:00'));
+
+
+       return $this->render('reservation/listWithSearchDate.html.twig', ['reservations' => $reservations]);
+   }
+
+
 }

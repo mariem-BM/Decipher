@@ -22,32 +22,19 @@ class ReservationRepository extends ServiceEntityRepository
     /**
       * @return Reservation[] Returns an array of Reservation objects
       */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Reservation
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
+
    
+    /*public function findPostbyname($nom)
+    {
+        return $this->createQueryBuilder('post')
+            ->where('post.nom LIKE :nom')
+            ->setParameter('nom', '%'.$nom.'%')
+            ->getQuery()
+            ->getResult();
+    }*/
+
 /***************************************************************************************************************************/
   
     public function listReservation(){
@@ -59,12 +46,17 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function orderByMail()
+    public function getallbyuser($id)
     {
         return $this->createQueryBuilder('r')
-            ->orderBy('r.user', 'ASC')
-            ->getQuery()->getResult();
+            ->join('r.user', 'u')
+            ->addSelect('u')
+            ->where('u.id=:id')
+            ->setParameter('id',$id)
+            ->getQuery()
+            ->getResult();
     }
+
     public function searchReservation($id)
     {
         return $this->createQueryBuilder('r')
@@ -73,6 +65,13 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+    public function orderByMail()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.user', 'ASC')
+            ->getQuery()->getResult();
+    }
+   
     public function orderByDate()
     {
         return $this->createQueryBuilder('r')
