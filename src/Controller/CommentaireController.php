@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/commentaire")
  */
@@ -19,13 +23,20 @@ class CommentaireController extends AbstractController
     /**
      * @Route("/", name="commentaire_index", methods={"GET"})
      */
-    public function index(CommentaireRepository $commentaireRepository): Response
+    public function index(Request $request,CommentaireRepository $commentaireRepository, PaginatorInterface $paginator): Response
     {
+        $donnes=$commentaireRepository->findAll();
+        $comments=$paginator->paginate(
+            $donnes,
+            $request->query->getInt('page',1),
+            2
+        );
+
         return $this->render('commentaire/index.html.twig', [
-            'commentaires' => $commentaireRepository->findAll(),
+            'commentaires' => $comments,
         ]);
     }
-
+    
     /**
      * @Route("/new", name="commentaire_new", methods={"GET", "POST"})
      */
@@ -101,5 +112,16 @@ class CommentaireController extends AbstractController
         }
 
         return $this->redirectToRoute('commentaire_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route("/Allcomments/Json", name="Allcommentaire", methods={"GET"})
+     */
+    public function JSONindex(CommentaireRepository $Rep,SerializerInterface $serializer): Response
+    {
+        $result = $Rep->findAll();
+        /* $n = $normalizer->normalize($result, null, ['groups' => 'livreur:read']);
+        $json = json_encode($n); */
+        $json = $serializer->serialize($result, 'json', ['groups' => 'commentaire:read']);
+        return new JsonResponse($json, 200, [], true);
     }
 }

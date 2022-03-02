@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\CategoriePost;
 use App\Entity\Post;
+use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\PostRepository;
 
 class BasefrontController extends AbstractController
 {
@@ -100,16 +103,23 @@ class BasefrontController extends AbstractController
           /**
      * @Route("/tblog/{id}", name="tblog" )
      */
-    public function tblog($id): Response
+    public function tblog($id,Request $request,PostRepository $postRepository, PaginatorInterface $paginator): Response
     {
         $em=$this->getDoctrine();
         $categorypost=$em->getRepository(CategoriePost::class)->findAll();
         $idcategory = (int) $id ;
         $postes=$em->getRepository(Post::class)->getallbycategory($idcategory);    
+        $donnes=$postRepository->findAll();
+        $postes=$paginator->paginate(
+            $donnes,
+            $request->query->getInt('page',1),
+            4
+        );
         return $this->render('basefront/blog.html.twig', [
             'controller_name' => 'BasefrontController',
             'categoryPost' => $categorypost,
             'postes'=> $postes,
         ]);
+       
     }
 }

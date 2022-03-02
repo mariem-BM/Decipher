@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/categorie/post")
@@ -20,13 +23,29 @@ class CategoriePostController extends AbstractController
     /**
      * @Route("/", name="categorie_post_index", methods={"GET"})
      */
-    public function index(CategoriePostRepository $categoriePostRepository): Response
+    public function index(CategoriePostRepository $categoriePostRepository,Request $request,PaginatorInterface $paginator): Response
     {
+        $donnes=$categoriePostRepository->findAll();
+        $categ=$paginator->paginate(
+            $donnes,
+            $request->query->getInt('page',1),
+            2
+        );
         return $this->render('categorie_post/index.html.twig', [
-            'categorie_posts' => $categoriePostRepository->findAll(),
+            'categorie_posts' => $categ,
         ]);
     }
-
+/**
+     * @Route("/Allcategorie/Json", name="Allcategorie", methods={"GET"})
+     */
+    public function JSONindex(CategoriePostRepository $categoriePostRepository,SerializerInterface $serializer): Response
+    {
+        $result = $categoriePostRepository->findAll();
+        /* $n = $normalizer->normalize($result, null, ['groups' => 'livreur:read']);
+        $json = json_encode($n); */
+        $json = $serializer->serialize($result, 'json', ['groups' => 'categorie:read']);
+        return new JsonResponse($json, 200, [], true);
+    }
     /**
      * @Route("/new", name="categorie_post_new", methods={"GET", "POST"})
      */

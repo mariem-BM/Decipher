@@ -15,15 +15,15 @@
             </tr>
             <tr>
                 <th>Nom_post</th>
-                <td>{{ post.nomPost }}</td>
+                <td>{{ post.nom }}</td>
             </tr>
             <tr>
                 <th>Img_post</th>
-                <td><img src={{asset('uploads/images/'~post.imgPost)}}></td>
+                <td><img src={{asset('uploads/images/'~post.getImgPost())}}></td>
             </tr>
             <tr>
                 <th>Description_post</th>
-                <td>{{ post.descriptionPost }}</td>
+                <td>{{ post.getDescriptionPost() }}</td>
             </tr>
 		</tbody>
 	</table>

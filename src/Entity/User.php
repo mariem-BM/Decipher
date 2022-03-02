@@ -65,11 +65,7 @@ class User
      */
     private $DateN_utilisateur;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Post::class, inversedBy="User")
-     */
-    private $post;
-
+   
     /**
      * @ORM\OneToMany(targetEntity=Reclamation::class, mappedBy="user")
      */
@@ -80,10 +76,16 @@ class User
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Post::class, mappedBy="user")
+     */
+    private $posts;
+
     public function __construct()
     {
         $this->Reclamation = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,6 +93,9 @@ class User
         return $this->id;
     }
 
+    public function __toString(){
+        return $this->nom_utilisateur;
+    }
 
     public function getNomUtilisateur(): ?string
     {
@@ -200,17 +205,7 @@ class User
         return $this;
     }
 
-    public function getPost(): ?Post
-    {
-        return $this->post;
-    }
-
-    public function setPost(?Post $post): self
-    {
-        $this->post = $post;
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection|Reclamation[]
@@ -271,4 +266,35 @@ class User
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Post>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getUser() === $this) {
+                $post->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

@@ -32,6 +32,8 @@
         {% endfor %}
         </tbody>
     </table>
+    {{ knp_pagination_render(commentaires) }}
+
 
     <a href="{{ path('commentaire_new') }}">Create new</a>
 {% endblock %}
