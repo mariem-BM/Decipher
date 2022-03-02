@@ -53,17 +53,7 @@ class Offre
      */
     private $prix_offre;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Assert\NotBlank(message="Do not leave empty"),
-     * @Assert\Type(
-     *     type="float",
-     *     message="The value {{ value }} is not a valid {{ type }}."
-     * )
-     * @Assert\Positive
-     */
-    private $duree_offre;
-
+    
     /**
      * @ORM\Column(type="float", nullable=true)
      * 
@@ -77,8 +67,10 @@ class Offre
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Assert\Date()
-     * @Assert\GreaterThan("Yesterday")
-     * @Assert\LessThan("tomorrow")
+     * @Assert\GreaterThanOrEqual("Today")
+     * @Assert\LessThan("+364 days")
+     * Assert\NotNull()
+     *Assert\NotBlank()
      
      */
 
@@ -90,6 +82,18 @@ class Offre
      * @ORM\JoinColumn(nullable=false)
      */
     private $planning;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @Assert\Date()
+     * @Assert\GreaterThan("Yesterday")
+     * @Assert\LessThan("+364 days")
+     * Assert\NotNull()
+     *Assert\NotBlank()
+     */
+    private $date_fin_offre;
+
+ 
 
     public function getId(): ?int
     {
@@ -132,17 +136,7 @@ class Offre
         return $this;
     }
 
-    public function getDureeOffre(): ?float
-    {
-        return $this->duree_offre;
-    }
-
-    public function setDureeOffre(float $duree_offre): self
-    {
-        $this->duree_offre = $duree_offre;
-
-        return $this;
-    }
+    
 
     public function getReduction(): ?float
     {
@@ -183,4 +177,18 @@ class Offre
 
         return $this;
     }
+
+    public function getDateFinOffre(): ?\DateTimeInterface
+    {
+        return $this->date_fin_offre;
+    }
+
+    public function setDateFinOffre(?\DateTimeInterface $date_fin_offre): self
+    {
+        $this->date_fin_offre = $date_fin_offre;
+
+        return $this;
+    }
+
+    
 }

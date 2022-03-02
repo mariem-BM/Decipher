@@ -6,6 +6,10 @@
 {% block body %}
 	<h1>Gestion des reclamations</h1>
 
+	<a href="{{ path('listReclamByDate') }}" class="btn btn-primary" style="float:right;">Trier Reclamation par Date</a>
+<br>
+<br>
+
 	<table class="table">
 		<thead>
 			<tr>
@@ -39,5 +43,5 @@
 			{% endfor %}
 		</tbody>
 	</table>
-<a href="{{ path('listReclamByDate') }}">Trier Reclamation par Date</a>
+
 {% endblock %}

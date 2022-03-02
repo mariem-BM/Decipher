@@ -21,13 +21,18 @@ class OffreType extends AbstractType
 
             ->add('description_offre', TextareaType::class)
             ->add('prix_offre')
-            ->add('duree_offre')
             ->add('reduction')
             ->add('planning', EntityType::class, [
                 'class' => Planinng::class,
                 'choice_label' => 'nom_planning',
             ])
             ->add('date_debut_offre',DateType::class, [
+                'widget' => 'single_text',
+                // this is actually the default format for single_text
+                'format' => 'yyyy-MM-dd',
+            ])
+
+            ->add('date_fin_offre',DateType::class, [
                 'widget' => 'single_text',
                 // this is actually the default format for single_text
                 'format' => 'yyyy-MM-dd',
