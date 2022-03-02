@@ -18,12 +18,7 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date_reservation',DateType::class, [
-                'widget' => 'single_text',
-                // this is actually the default format for single_text
-                'format' => 'yyyy-MM-dd',
-            ])
-          //  ->add('user')
+           
             ->add('user',EntityType::class,[
                 'class' => User::class,
                 'choice_label' => 'mail_utilisateur',

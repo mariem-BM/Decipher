@@ -111,6 +111,7 @@ class ReservationController extends AbstractController
                 return new Response($errorsString);
             }
             $entityManager->persist($reservation);
+            $reservation->setDateReservation(new \DateTime());
             $entityManager->flush();
             $this->addFlash('success', 'Reserved Successfully! please await for a confirmation email');
             return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);

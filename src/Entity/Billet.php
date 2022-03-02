@@ -69,6 +69,8 @@ class Billet
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Do not leave empty")
+     * @Assert\Date()
+     * @Assert\GreaterThan("today")
      */
     private $embarquement;
 
