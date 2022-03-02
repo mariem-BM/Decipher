@@ -9,7 +9,13 @@
 				<h2 class="text-uppercase">Nos offres
 				</h2>
 			</header>
-
+<br>
+<br>
+<div class="wrapper">
+			<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReduction') }}">Trier les offres selon la promotion</a>
+		</div>
+		<br>
+		<br>
 			<div class="row text-center gy-4" id="Mytable">
 			
 				{% for offre in offres %}
@@ -43,9 +49,7 @@
 			</div>
 			<br>
 			<br>
-			<div class="wrapper">
-			<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReduction') }}">Trier les offres selon la promotion</a>
-		</div>
+			
 		</section>
 		
 	

@@ -1,42 +1,32 @@
-{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
-   {# {{ form_widget(form) }}
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}}
+) }}
+{# {{ form_widget(form) }}
     {{ form_errors(form) }} #}
-   <div class="form-group row">
- <div class="col-sm-12 col-form-label>
-	{{ form_label(form.description_reclamation,"Description reclamation") }}
-	 <div class="col-sm-10" >
-    {{ form_widget(form.description_reclamation, {'attr': {'placeholder': ' je veux reclamer...'}}) }}
-</div>
-	</div>
-	</div>
-	<br>
-
-
-	<div class="form-group row">
+<div class="form-group row">
 	<div class="col-sm-12 col-form-label">
-	{{ form_label(form.date_reclamation,"Date Reclamation") }}
-	   <div class="col-sm-10">
-    {{ form_widget(form.date_reclamation, {'attr': {'placeholder': 'Date Reclamation'}}) }}
-
-	
-</div>
-</div>
-</div>
-	<br>
-
-	<div class="form-group row">
-	<div class="col-sm-12 col-form-label">
-	{{ form_label(form.user,"user") }}
-	<div class="col-sm-10">
-    {{ form_widget(form.user, {'attr': {'placeholder': 'user'}}) }}
-	</div>
+		{{ form_label(form.description_reclamation,"Description reclamation") }}
+		<div class="col-sm-10">
+			{{ form_widget(form.description_reclamation, {'attr': {'placeholder': ' je veux reclamer...'}}) }}
+		</div>
 	</div>
 </div>
+<br>
+
 
 <br>
+
+<div class="form-group row">
+	<div class="col-sm-12 col-form-label">
+		{{ form_label(form.user,"user") }}
+		<div class="col-sm-10">
+			{{ form_widget(form.user, {'attr': {'placeholder': 'user'}}) }}
+		</div>
+	</div>
+</div>
+
 <div class="col-md-4 mb-2">
 
-    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-	</div>
-	
+	<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+</div>
+
 {{ form_end(form) }}
