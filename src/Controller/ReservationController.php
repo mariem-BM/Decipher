@@ -87,7 +87,35 @@ class ReservationController extends AbstractController
         ]);
     }
   
-  
+     /**
+     * @Route("/imprimerlistreservation", name="imprimerlistreservation",  methods={"GET"})
+     */
+    public function imprimerlistreservation(Request $request,ReservationRepository $reservationRepository): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $reservations = $reservationRepository->findAll();
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('reservation/imprimerlistreservation.html.twig', [
+            'reservations' => $reservations,
+        ]);
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+        // Render the HTML as PDF
+        $dompdf->render();
+        // Output the generated PDF to Browser (inline view)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => false
+        ]);
+        return $this->render('reservation/imprimerlistreservation.html.twig', [
+            'reservations' => $reservations,
+        ]);
+    }
     
     /**
      * @Route("/new", name="reservation_new", methods={"GET", "POST"})
@@ -186,7 +214,7 @@ class ReservationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
- /**
+    /**
      * @Route("/Ticketpdf/{id}", name="Ticketpdf", methods={"GET"})
      */
     public function Ticketpdf(Reservation $reservation): Response
@@ -196,13 +224,7 @@ class ReservationController extends AbstractController
         $pdfOptions = new Options();
         //$pdfOptions->set('defaultFont', 'Arial');
   
-        $pdfOptions->setIsPhpEnabled(true);
-        $pdfOptions->setIsHtml5ParserEnabled(true); // For combining multiple pdf outputs
-        $pdfOptions->setIsFontSubsettingEnabled(true);
-        $pdfOptions->setDefaultPaperSize('A4');
-        $pdfOptions->setDebugCss(true);
-        $pdfOptions->setDebugLayout(true);
-        $pdfOptions->setDpi(72);
+       
         // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);
         
@@ -215,7 +237,7 @@ class ReservationController extends AbstractController
         $dompdf->loadHtml($html);
         
         // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
+       // $dompdf->setPaper('A4', 'portrait');
 
         // Render the HTML as PDF
         $dompdf->render();
@@ -228,6 +250,7 @@ class ReservationController extends AbstractController
             'reservation' => $reservation,
         ]);
     }
+    
 
      /**
      * @Route("/MailingReservationBillet/{id}", name="MailingReservationBillet", methods={"GET", "POST"})
