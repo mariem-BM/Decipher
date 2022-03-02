@@ -117,33 +117,28 @@ class EquipementController extends AbstractController
 
         return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
     }
-     /**
-   * Creates a new ActionItem entity.
-   *
-   * @Route("/search", name="ajax_search")
-   * @Method("GET")
-   */
+    
+    /**
+     * @Route("/recherche_equipement", name="ajax_search")
+     */
     public function searchAction(Request $request)
-  {
-      $em = $this->getDoctrine()->getManager();
-
-      $requestString = $request->get('q');
-
-      $Equipements =  $em->getRepository('AppBundle:Equipement')->findEntitiesByString($requestString);
-
-      if(!$entities) {
-          $result['Equipements']['error'] = "Equipement not found ";
-      } else {
-          $result['Equipements'] = $this->getRealEntities($Equipements);
-      }
-
-      return new Response(json_encode($result));
-  }
+    {
+        $em = $this->getDoctrine()->getManager();
+        $requestString = $request->get('q');
+        $equipement = $em->getRepository(Equipement::class)->findEntitiesByString($requestString);
+        if (!$equipement) {
+            $equipement['equipements']['error'] = "product introuvable 🙁 ";
+        } else {
+            $equipement['equipements'] = $this->getRealEntities($equipement);
+        }
+        return new Response(json_encode($result));
+    }
+    
 
   public function getRealEntities($Equipements){
 
       foreach ($Equipements as $Equipement){
-          $realEntities[$Equipement->getId()] = $Equipement->getNomEquipement();
+          $realEntities[$Equipement->getId()] = [$Equipement->getNomEquipement() ,$Equipement->getEtatEquipement(),$Equipement->getDescriptionEquipement() ,$Equipement->getCategorieEquipement(),$Equipement->getImageEquipement()];
       }
 
       return $realEntities;

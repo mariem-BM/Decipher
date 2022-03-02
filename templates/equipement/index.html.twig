@@ -2,14 +2,14 @@
 {% block body %}
 <!DOCTYPE html>
 
-<title>Equipement index</title>
+<html>
 
 
-    <h1>Equipement index</h1>
- <div class="album py-5 bg-light">
- <h2>Search A Equipement !!</h2>
-
-            <div class="sidebar-search">
+<head>
+	<title></title>
+</head>
+<body>
+  <div class="sidebar-search">
       <div class="input-group custom-search-form">
           <input type="text" id="search" class="form-control" placeholder="Suche...">
       </div>
@@ -32,7 +32,7 @@
     jQuery(document).ready(function() {
         var searchRequest = null;
         $("#search").keyup(function() {
-            var minlength = 3;
+            var minlength = 1;
             var that = this;
             var value = $(this).val();
             var entitySelector = $("#entitiesNav").html('');
@@ -48,13 +48,19 @@
                     dataType: "text",
                     success: function(msg){
                         //we need to check if the value is the same
+                        
                         if (value==$(that).val()) {
                             var result = JSON.parse(msg);
                             $.each(result, function(key, arr) {
                                 $.each(arr, function(id, value) {
-                                    if (key == 'Equipements') {
+                                    if (key == 'equipements') {
                                         if (id != 'error') {
-                                            entitySelector.append('<li><a href="/equipement_show/'+id+'">'+value+'</a></li>');
+                                             
+                                            console.log(id , value)
+                                            entitySelector.append('<li>' +
+                                                    '<a href="https://127.0.0.1:8000/equipementt/affiche'+id+'">' + '<h5><b>  '+value+  '</b></h5></a>'+'<a href="https://127.0.0.1:8000/equipementt/affiche/'+id+'">'+'<ul><img src="/uploads/'+value[4]+'" height="90" width="90"></ul>'+'  </a> </li>');
+                                                    
+                                                    
                                         } else {
                                             entitySelector.append('<li class="errorLi">'+value+'</li>');
                                         }

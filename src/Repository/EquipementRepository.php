@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repository;
-
+use Doctrine\ORM\EntityRepository;
 use App\Entity\Equipement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,44 +19,15 @@ class EquipementRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Equipement::class);
-    }
-
-    // /**
-    //  * @return Equipement[] Returns an array of Equipement objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    } 
+    
+    public function findEntitiesByString($str)
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Equipement
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-    public function findEntitiesByString($str){
         return $this->getEntityManager()
-            ->createQuery(
-                'SELECT e
-                FROM AppBundle:Equipement e
-                WHERE e.nom_equipement LIKE :str'
-            )
-            ->setParameter('str', '%'.$str.'%')
-            ->getResult();
+            ->createQuery('SELECT e
+            FROM App:Equipement e
+        WHERE e.nom_equipement LIKE :str or e.etat_equipement LIKE :str or e.description_equipement LIKE :str'
+
+            )->setParameter('str', '%'.$str.'%')->getResult();
     }
 }
