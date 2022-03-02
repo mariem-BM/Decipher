@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OffreRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @ORM\Entity(repositoryClass=OffreRepository::class)
@@ -65,7 +66,7 @@ class Offre
 
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(name="date_debut_offre", type="date", nullable=true)
      * @Assert\Date()
      * @Assert\GreaterThanOrEqual("Today")
      * @Assert\LessThan("+364 days")
@@ -84,7 +85,7 @@ class Offre
     private $planning;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(name="date_fin_offre", type="date", nullable=true)
      * @Assert\Date()
      * @Assert\GreaterThan("Yesterday")
      * @Assert\LessThan("+364 days")
@@ -93,8 +94,19 @@ class Offre
      */
     private $date_fin_offre;
 
- 
+    /**
+    * @Assert\Callback
+    */
+    public function validate(ExecutionContextInterface $context, $payload) {
+    if ($this->date_debut_offre > $this->date_fin_offre) {
+        $context->buildViolation('Start date must be earlier than end date')
+            ->atPath('date_debut_offre')
+            ->addViolation();
+    }
+    }
 
+
+  
     public function getId(): ?int
     {
         return $this->id;
