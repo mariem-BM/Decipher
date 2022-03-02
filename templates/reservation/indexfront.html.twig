@@ -1,24 +1,36 @@
 {% extends ('basefront/base.html.twig') %}
 {% block title %}My Reservations{% endblock %}
 
-
 {% block body %}
+
+
     <h1>My Reservations</h1>
-<a style="margin-left: 80px" class="btn btn-primary" id="btn-1">
-			<input  id="myInput"  type="text" placeholder="Search.." >
-</a>
-    <table class="table" border="2">
-        <thead>
-            <tr>
+    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+					<div class="input-group">
+						<input id="myInput" type="text" class="form-control bg-light border-0 small" placeholder="Rechercher..." aria-label="Search" aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-primary" type="button">
+								<i class="fas fa-search fa-sm"></i>
+							</button>
+						</div>
+					</div>
+				</form> 
+    
+<div class="container">
+  <div class="table-responsive">
+    <table class="basic-table table-headers table table-hover">
+      <thead >
+        <tr>
                 <th>Id</th>
                 <th>Date_reservation</th>
                 <th>user</th>
                 <th>billet</th>
                 <th>actions</th>
-            </tr>
-        </thead>
-        <tbody id="myTable">
-        {% for reservation in reservations %}
+        </tr>
+       
+      </thead>
+      <tbody id="myTable">
+       {% for reservation in reservations %}
             <tr>
                 <td>{{ reservation.id }}</td>
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
@@ -36,8 +48,11 @@
                 <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
+  </div>
+</div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -50,5 +65,5 @@
         });
     </script>
 
-    <a href="{{ path('reservation_new') }}">Create new</a>
+  
 {% endblock %}
