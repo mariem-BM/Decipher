@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Users;
-use App\Form\RegistrationFormType;
+use App\Entity\User;
+use App\Form\UserType1;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -29,8 +29,8 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager): Response
     {
-        $user = new Users();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $user = new User();
+        $form = $this->createForm(UserType1::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -55,11 +55,11 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('user_showC', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+        return $this->render('user/account.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

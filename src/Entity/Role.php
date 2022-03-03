@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
+
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,7 +33,8 @@ class Role
     private $nom_role;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
+     * @ORM\Column(type="text")
      */
     public $description_role;
 
@@ -64,7 +67,7 @@ class Role
 
     public function setDescriptionRole(string $description_role): self
     {
-        $this->description_role = $description_role;
+        $this->description_role= $description_role;
 
         return $this;
     }

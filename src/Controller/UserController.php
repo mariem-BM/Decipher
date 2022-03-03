@@ -1,17 +1,18 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\UserType1;
-use App\Repository\UserRepository;
+use App\Repository\UsersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 /**
  * @Route("/user")
  */
@@ -52,7 +53,7 @@ return new Response(json_encode($jsonContent));
 /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UsersRepository $userRepository): Response
     {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
@@ -62,13 +63,19 @@ return new Response(json_encode($jsonContent));
     /**
      * @Route("/new", name="user_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $userPasswordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -114,7 +121,7 @@ return new Response(json_encode($jsonContent));
     /**
      * @Route("showC", name="user_showC", methods={"GET"})
      */
-    public function showClient(UserRepository $userRepository): Response
+    public function showClient(UsersRepository $userRepository): Response
     {
         return $this->render('user/showinfo.html.twig', [
             'users' => $userRepository->findBy(array(),array('id'=>'DESC'),1,0)]);

@@ -2,21 +2,22 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\UsersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
- * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Entity(repositoryClass=UsersRepository::class)
  * @UniqueEntity(fields={"mail_utilisateur"}, message="There is already an account with this mail_utilisateur")
 
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -48,12 +49,12 @@ class User
     private $adresse_utilisateur;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      *  @Assert\NotBlank(message="Email is required") 
      * @Assert\Email(message = "The email '{{ value }}' is not a valid  email.") 
      * @Groups("post:read")
      */
-    private $mail_utilisateur;
+    public $mail_utilisateur;
 
     /**   
      *  @Assert\NotBlank(message=" A sudoname is required") 
@@ -61,14 +62,20 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $sudo_utilisateur;
+/**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     /**
-     * @Groups("post:read")
-     * @Assert\NotBlank(message=" Password is required")
-     * @ORM\Column(type="string", length=255)
+     * @var string The hashed password
+     * @ORM\Column(type="string")
      */
-    private $mdp_utilisateur;
-
+    private $password;
+/**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
     /**
      * @Groups("post:read")
      * @ORM\Column(type="string", length=255)
@@ -110,7 +117,7 @@ class User
      * @ORM\ManyToOne(targetEntity=Role::class, inversedBy="user")
      */
     private $nom_role;
-
+   
     public function __construct()
     {
         $this->Reclamation = new ArrayCollection();
@@ -183,17 +190,6 @@ class User
         return $this;
     }
 
-    public function getMdpUtilisateur(): ?string
-    {
-        return $this->mdp_utilisateur;
-    }
-
-    public function setMdpUtilisateur(string $mdp_utilisateur): self
-    {
-        $this->mdp_utilisateur = $mdp_utilisateur;
-
-        return $this;
-    }
 
     public function getEtatCompte(): ?string
     {
@@ -318,4 +314,82 @@ class User
 {
     return (string) $this->nom_role; 
 }
+/**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->mail_utilisateur;
+    }
+    public function setUsername(string $mail_utilisateur): string
+    {
+        return (string) $this->mail_utilisateur;
+    }
+     /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
 }
