@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Knp\Component\Pager\PaginatorInterface;
+use Mediumart\Orange\SMS\SMS;
+use Mediumart\Orange\SMS\Http\SMSClient;
 
 
 /**
@@ -61,6 +63,7 @@ class EquipementController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $file=$equipement->getImageEquipement();
             $filename=md5(uniqid()).'.'.$file->guessExtension();
+            
             try {
                 $file->move(
                     $this->getParameter('images_directory'),
@@ -72,6 +75,12 @@ class EquipementController extends AbstractController
             $equipement->setImageEquipement($filename);
             $entityManager->persist($equipement);
             $entityManager->flush();
+            $client = SMSClient::getInstance('2Yf3CBy0mWhiS0TcVCWonAOkEUXs6cLF', 'Bgflgfsi6lEN1e2V');
+            $sms = new SMS($client);
+            $sms->message('Check out our new equipment')
+            ->from('+21627300520')
+            ->to('+21628327313')
+            ->send();
 
             return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
         }
