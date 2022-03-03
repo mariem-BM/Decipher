@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -93,6 +94,13 @@ class Planinng
      * @ORM\ManyToOne(targetEntity=Localisation::class, inversedBy="Planinng")
      */
     private $localisation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Please upload image")
+     * @Assert\File(mimeTypes={"image/jpeg"})
+     */
+    private $img_planinng;
 
 
     public function __construct()
@@ -198,6 +206,18 @@ class Planinng
     {
         $this->localisation = $localisation;
 
+        return $this;
+    }
+
+    public function getimgPlaninng()
+    {
+        return $this->img_planinng;
+        
+    }
+
+    public function setimgPlaninng($img_planinng)
+    {
+        $this->img_planinng = $img_planinng;
         return $this;
     }
 

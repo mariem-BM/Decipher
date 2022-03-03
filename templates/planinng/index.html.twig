@@ -6,7 +6,8 @@
 
 {% block body %}
 	<h1>Gestion des Plannings</h1>
-
+<input id="searchbar" onkeyup="search_nom()" type="text"
+        name="search" placeholder="Search ..">
 	<table class="table">
 		<thead>
 			<tr>
@@ -31,6 +32,9 @@
 					<td>{{ planinng.descriptionPlanning }}</td>
 					<td>{{ planinng.periodePlanning }}</td>
 					<td>{{ planinng.prixPlanning }}</td>
+					<td>{{ planinng.imgPlaninng }}</td>
+                    <td><img src ="{{ asset('uploads/images/' ~ planinng.imgPlaninng)}}"
+					alt ="" style = "width: 80px"></td>
 					<td>
 						<a href="{{ path('planinng_show', {'id': planinng.id}) }}"class="btn btn-primary">show</a>
 						<a href="{{ path('planinng_edit', {'id': planinng.id}) }}"class="btn btn-primary">edit</a>
@@ -48,6 +52,7 @@
 	<a href="{{ path('planinng_new') }}"class="btn btn-primary">Create new</a>
 	<a href="{{ path('listPlanByDate') }}"class="btn btn-primary">Trier Planinng par Date</a>
 		<a href="{{ path('listPlanByPeriode') }}"class="btn btn-primary">Trier Planinng par Periode</a>
+
 
 
 {% endblock %}

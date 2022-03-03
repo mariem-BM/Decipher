@@ -8,6 +8,10 @@
 	<h1>PLanning</h1>
 
 	<table class="table">
+	<th></th>
+			<td><img src ="{{ asset('uploads/images/' ~ planinng.imgPlaninng)}}"
+					alt ="" style = "width: 690px"></td>
+		</tbody>
 		<tbody>
 			<tr>
 				<th>Id</th>
@@ -42,7 +46,7 @@
 				<th>Prix_planning</th>
 				<td>{{ planinng.prixPlanning }}</td>
 			</tr>
-		</tbody>
+			
 	</table>
 	   <div class="col-lg-3 text-lg-end"><a class="btn btn-outline-primary px-4" href="{{ path('planinng_showfront', {'id': planinng.id}) }}">VOIR LOCALISATION</a></div>
           </div>

@@ -65,4 +65,12 @@ class PlaninngRepository extends ServiceEntityRepository
            // ->setMaxResults(3)
             ->getQuery()->getResult();
     }
+
+public function search($nom_planning) {
+    return $this->createQueryBuilder('Planinng')
+        ->andWhere('Planinng.nom_planning LIKE :nom_planning')
+        ->setParameter('title', '%'.$nom_planning.'%')
+        ->getQuery()
+        ->execute();
+}
 }

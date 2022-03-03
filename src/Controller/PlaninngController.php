@@ -7,6 +7,7 @@ use App\Form\PlaninngType;
 use App\Repository\PlaninngRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -86,6 +87,22 @@ class PlaninngController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $planinng->getimgPlaninng();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            try{
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $fileName
+                );
+
+            }catch(FileException $e){
+
+            }
+            $entityManager = $this->getDoctrine()->getManager();
+            $planinng->setimgPlaninng($fileName);
+            $entityManager->persist($planinng);
+            $entityManager->flush();
+            return $this->redirectToRoute('planinng_index');
 
             $errors = $validator->validate($planinng);
             if (count($errors) > 0) {
@@ -104,6 +121,7 @@ class PlaninngController extends AbstractController
             }
             $entityManager->persist($planinng);
             $entityManager->flush();
+            
 
             return $this->redirectToRoute('planinng_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -194,4 +212,7 @@ class PlaninngController extends AbstractController
 
         return $this->redirectToRoute('planinng_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+   
 }
+
