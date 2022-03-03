@@ -3,14 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Equipement;
+use App\Entity\User;
 use App\Form\EquipementType;
 use App\Repository\EquipementRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Mediumart\Orange\SMS\SMS;
+use Mediumart\Orange\SMS\Http\SMSClient;
 
 
 /**
@@ -49,6 +53,7 @@ class EquipementController extends AbstractController
         $equipement = new Equipement();
         $form = $this->createForm(EquipementType::class, $equipement);
         $form->handleRequest($request);
+        $User = $this->getDoctrine()->getRepository(User::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file=$equipement->getImageEquipement();
@@ -64,6 +69,16 @@ class EquipementController extends AbstractController
             $equipement->setImageEquipement($filename);
             $entityManager->persist($equipement);
             $entityManager->flush();
+            foreach ($User as $User){
+
+                $client = SMSClient::getInstance('2Yf3CBy0mWhiS0TcVCWonAOkEUXs6cLF', 'Bgflgfsi6lEN1e2V');
+                $sms = new SMS($client);
+                $sms->message('Nous avons ajouté un nouveau Equipment '.$equipement->getNomEquipement().'
+'.$equipement->getDescriptionEquipement())
+                    ->from('+21627300520')
+                    ->to($User->getNumeroUtilisateur())
+                    ->send();
+            }
 
             return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
         }
