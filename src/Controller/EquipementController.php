@@ -14,6 +14,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Knp\Component\Pager\PaginatorInterface;
 use Mediumart\Orange\SMS\SMS;
 use Mediumart\Orange\SMS\Http\SMSClient;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 
 
 /**
@@ -36,6 +39,41 @@ class EquipementController extends AbstractController
         return $this->render('equipement/index.html.twig', [
             'equipements' => $equipement,
         ]);
+    }
+    /**
+     * @Route("/list", name="equipement_list", methods={"GET"})
+     */
+    public function list(EquipementRepository $equipementRepository, Request $request): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $equipement=$equipementRepository->findAll();
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('equipement/list.html.twig', [
+            'equipements' => $equipement,
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A3', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("Equipements.pdf", [
+            "Attachment" => false
+        ]);
+
+    
+        
     }
     /**
      * param EquipementRepository $Repository

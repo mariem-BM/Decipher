@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 
 
 class EquipementType extends AbstractType
@@ -15,7 +17,12 @@ class EquipementType extends AbstractType
     {
         $builder
             ->add('nom_equipement')
-            ->add('etat_equipement')
+            ->add('etat_equipement', ChoiceType::class, [
+                'choices' => [
+                    'new' => 'new',
+                    'used' => 'used',
+                ],
+            ])
             ->add('description_equipement')
             ->add('categorieEquipement')
             ->add('image_equipement',FileType::class, [
