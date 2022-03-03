@@ -56,6 +56,34 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findByUser($value)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findOneByIdUser($idUser, $idRes)
+    {
+        return $this->createQueryBuilder('r')
+            // p.category refers to the "category" property on product
+            ->innerJoin('r.user', 'u')
+            // selects all the category data to avoid the query
+            ->addSelect('u')
+            ->andWhere('u.id = :idUser')
+            ->addSelect('u')
+            ->andWhere('r.id = :idRes')
+            ->setParameter('idUser', $idUser)
+            ->setParameter('idRes', $idRes)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 
     public function searchReservation($id)
     {

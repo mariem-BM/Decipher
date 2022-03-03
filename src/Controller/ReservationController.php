@@ -81,9 +81,10 @@ class ReservationController extends AbstractController
      */
     public function indexfront(ReservationRepository $reservationRepository): Response
     { 
-       
+        //$reservations = $reservationRepository->findOneByIdUser($this->getUser()->getId(),$reservationRepository->findAll());
         return $this->render('reservation/indexfront.html.twig', [
             'reservations' => $reservationRepository->findAll(),
+           // 'reservations' => $reservations,
         ]);
     }
   
@@ -120,31 +121,38 @@ class ReservationController extends AbstractController
     /**
      * @Route("/new", name="reservation_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager,ValidatorInterface $validator): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-       // $user = new User();
+       
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $validator->validate($reservation);
-            if (count($errors) > 0) {
-                /*
-                 * Uses a __toString method on the $errors variable which is a
-                 * ConstraintViolationList object. This gives us a nice string
-                 * for debugging.
-                 */
-                $errorsString = (string) $errors;
-        
-                return new Response($errorsString);
-            }
+            
             $entityManager->persist($reservation);
             $reservation->setDateReservation(new \DateTime());
             $entityManager->flush();
+
             $this->addFlash('success', 'Reserved Successfully! please await for a confirmation email');
             return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
         }
+     /*   $user = $this->getUser();
+        $reservation = new Reservation();
+        $reservation->setUser($user);
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+        dump($user);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('reservation_show', [
+                'reservation' => $reservation,
+            ]);
+        }*/
 
         return $this->render('reservation/new.html.twig', [
             'reservation' => $reservation,
@@ -187,23 +195,14 @@ class ReservationController extends AbstractController
     /**
      * @Route("/{id}/edit", name="reservation_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager,ValidatorInterface $validator): Response
+    public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $errors = $validator->validate($reservation);
-            if (count($errors) > 0) {
-                /*
-                 * Uses a __toString method on the $errors variable which is a
-                 * ConstraintViolationList object. This gives us a nice string
-                 * for debugging.
-                 */
-                $errorsString = (string) $errors;
-        
-                return new Response($errorsString);
-            }
+            
+            $reservation->setDateReservation(new \DateTime());
             $entityManager->flush();
             $this->addFlash('success', 'Reservation Edited!');
             return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
