@@ -5,6 +5,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Form\UserType1;
 use App\Repository\UsersRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,36 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * @Route("/user")
  */
 class UserController extends AbstractController
-{ 
+{   /**
+    * @Route("/search", name="ajax_search")
+    * @Method("GET")
+    */
+   public function searchAction(Request $request)
+   {
+       $em = $this->getDoctrine()->getManager();
+ 
+       $requestString = $request->get('q');
+ 
+       $User =  $em->getRepository(User::class)->findEntitiesByString($requestString);
+ 
+       if(!$User) {
+           $result['User']['error'] = "Not Found";
+       } else {
+           $result['User'] = $this->getRealEntities($User);
+       }
+ 
+       return new Response(json_encode($result));
+   }
+ 
+   public function getRealEntities($User){
+ 
+       foreach ($User as $User){
+           $realEntities[$User->getId()] = $User->getMailUtilisateur();
+       }
+ 
+       return $realEntities;
+   }
+    
     // /**
    // * @Route("/A", name="AllUsers", methods={"GET"})
     //*/
@@ -59,7 +89,6 @@ return new Response(json_encode($jsonContent));
             'users' => $userRepository->findAll(),
         ]);
     }
-
     /**
      * @Route("/new", name="user_new", methods={"GET", "POST"})
      */
@@ -159,5 +188,6 @@ return new Response(json_encode($jsonContent));
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
-   
+
+  
 }

@@ -64,4 +64,14 @@ class UsersRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findEntitiesByString($str){
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT e
+                FROM App:User e
+                WHERE e.mail_utilisateur LIKE :str'
+            )
+            ->setParameter('str', '%'.$str.'%')
+            ->getResult();
+    }
 }

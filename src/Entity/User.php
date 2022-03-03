@@ -29,21 +29,21 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="nom is required")
+     * @ORM\Column(type="string", length=255,nullable=true)
+     //* @Assert\NotBlank(message="nom is required")
      * @Groups("post:read") 
      */
     private $nom_utilisateur;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      * @Assert\NotBlank(message="prenom is required") 
      * @Groups("post:read")
      */
     private $prenom_utilisateur;
 
     /**     * @Assert\NotBlank(message="adresse is required") 
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      * @Groups("post:read")
      */
     private $adresse_utilisateur;
@@ -59,7 +59,7 @@ class User implements UserInterface
     /**   
      *  @Assert\NotBlank(message=" A sudoname is required") 
      * @Groups("post:read")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $sudo_utilisateur;
 /**
@@ -75,16 +75,20 @@ class User implements UserInterface
 /**
      * @ORM\Column(type="boolean")
      */
-    private $isVerified = false;
+    public $isVerified = false;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    public $isExpired = false;
     /**
      * @Groups("post:read")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $Etat_Compte;
 
     /**
      * @Groups("post:read")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      * @Assert\NotBlank(message="A Phone Number is required")
      */
     private $Numero_utilisateur;
@@ -92,7 +96,7 @@ class User implements UserInterface
 
     /**
      * @Groups("post:read")
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date",nullable=true)
      * @Assert\NotBlank(message="BirthDate is required")
      */
     private $DateN_utilisateur;
