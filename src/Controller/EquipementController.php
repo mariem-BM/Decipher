@@ -90,7 +90,7 @@ class EquipementController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="equipement_show", methods={"GET"} , requirements={"id":"\d+"})
+     * @Route("/{id}", name="equipement_show", methods={"GET"})
      */
     public function show(Equipement $equipement): Response
     {
@@ -142,18 +142,18 @@ class EquipementController extends AbstractController
         $requestString = $request->get('q');
         $equipement = $em->getRepository(Equipement::class)->findEntitiesByString($requestString);
         if (!$equipement) {
-            $result['equipements']['error'] = "product introuvable 🙁 ";
+            $equipement['equipements']['error'] = "product introuvable 🙁 ";
         } else {
-            $result['equipements'] = $this->getRealEntities($equipement);
+            $equipement['equipements'] = $this->getRealEntities($equipement);
         }
         return new Response(json_encode($result));
     }
     
 
-  public function getRealEntities($equipement){
+  public function getRealEntities($Equipements){
 
-      foreach ($equipement as $equipement){
-          $realEntities[$equipement->getId()] = [$equipement->getNomEquipement() ,$equipement->getEtatEquipement(),$equipement->getDescriptionEquipement() ,$equipement->getCategorieEquipement(),$equipement->getImageEquipement()];
+      foreach ($Equipements as $Equipement){
+          $realEntities[$Equipement->getId()] = [$Equipement->getNomEquipement() ,$Equipement->getEtatEquipement(),$Equipement->getDescriptionEquipement() ,$Equipement->getCategorieEquipement(),$Equipement->getImageEquipement()];
       }
 
       return $realEntities;
