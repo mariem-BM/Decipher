@@ -75,7 +75,7 @@ class EquipementController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="equipement_show", methods={"GET"} , requirements={"id":"\d+"})
+     * @Route("/{id}", name="equipement_show", methods={"GET"}, requirements={"id":"\d+"}))
      */
     public function show(Equipement $equipement): Response
     {

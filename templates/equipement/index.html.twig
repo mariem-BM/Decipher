@@ -1,69 +1,74 @@
 {% extends ('basefront/base.html.twig') %}
 {% block body %}
 <!DOCTYPE html>
-
 <html>
-
+<head>
+	<title></title>
+</head>
+<body>
+  <div class="sidebar-search">
+      <div class="input-group custom-search-form">
+          <input type="text" id="search" class="form-control" placeholder="Search item">
+      </div>
+      <!-- /input-group -->
+  </div>
+  <ul class="nav" id="side-menu">
+      <li>
+          <ul class="nav nav-second-level" id="entitiesNav">
+          </ul>
+      </li>
+  </ul>
 
 
 
 <!-- jQuery is necessary -->
-<h2>Search A Post !!</h2>
-
-            <div class="sidebar-search">
-
-                <div class="input-group custom-search-form">
-
-                      <input type="text" id="search" class="form-control" placeholder="Search here">
-                </div>
-                <!-- /input-group -->
-            </div>
-            <ul class="nav" id="side-menu">
-                <li>
-                    <ul class="nav nav-second-level" id="entitiesNav">
-                    </ul>
-                </li>
-            </ul><br><br><br><br>
-
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-            <script type="text/javascript">
-                jQuery(document).ready(function() {
-                    var searchRequest = null;
-                    $("#search").keyup(function() {
-                        var minlength = 1;
-                        var that = this;
-                        var value = $(this).val();
-                        var entitySelector = $("#entitiesNav").html('');
-                        if (value.length >= minlength ) {
-                            if (searchRequest != null)
-                                searchRequest.abort();
-                            searchRequest = $.ajax({
-                                type: "GET",
-                                url: "{{ path('ajax_search') }}",
-                                data: {
-                                    'q' : value
-                                },
-                                dataType: "text",
-                                success: function(msg){
-                                    //we need to check if the value is the same
-                                    if (value===$(that).val()) {
-                                        var result = JSON.parse(msg);
-                                        $.each(result, function(key, arr) {
-                                            $.each(arr, function(id, value) {
-                                                if (key === 'equipements') {
-                                                    if (id !== 'error') {
-                                                        console.log(value[1]);
-                                                        entitySelector.append('<li><b>'+value[0]+'</b><a href="/equipementt/'+id+'">'+'<img src="/uploads/'+value[4]+'" style="width: 50px; height: 50px"/>'+'</a></li>');
-                                                    } else {
-                                                        entitySelector.append('<li class="errorLi">'+value+'</li>');
-                                                    }
-                                                }
-                                            });
-                                        });
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        var searchRequest = null;
+        $("#search").keyup(function() {
+            var minlength = 1;
+            var that = this;
+            var value = $(this).val();
+            var entitySelector = $("#entitiesNav").html('');
+            if (value.length >= minlength ) {
+                if (searchRequest != null)
+                    searchRequest.abort();
+                searchRequest = $.ajax({
+                    type: "GET",
+                    url: "{{ path('ajax_search') }}",
+                    data: {
+                        'q' : value
+                    },
+                    dataType: "text",
+                    success: function(msg){
+                        //we need to check if the value is the same
+                        
+                        if (value==$(that).val()) {
+                            var result = JSON.parse(msg);
+                            $.each(result, function(key, arr) {
+                                $.each(arr, function(id, value) {
+                                    if (key == 'equipements') {
+                                        if (id != 'error') {
+                                             
+                                            console.log(id , value)
+                                            entitySelector.append('<li>' +
+                                                    '<a href="https://127.0.0.1:8000/equipementt/affiche/'+id+'">' + '<h5><b>  '+value[0]+  '</b></h5></a>'+'<a href="https://127.0.0.1:8000/equipementt/affiche/'+id+'">'+'<ul><img src="/uploads/'+value[4]+'" height="90" width="90"></ul>'+'  </a> </li>');
+                                                    
+                                                    
+                                        } else {
+                                            entitySelector.append('<li class="errorLi">'+value+'</li>');
                                         }
+                                    }
                                 });
-                                </script>
+                            });
+                        }
+                     }
+                });
+            }
+        });
+    });
+</script>
         <div class="container">
         <div class="row">
 
@@ -112,5 +117,7 @@
 
 <td/>
 <table/>
+</body>
+</html>
 {% endblock %}
 
