@@ -85,8 +85,26 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "guzzlehttp/guzzle": {
+        "version": "7.4.1"
+    },
+    "guzzlehttp/promises": {
+        "version": "1.5.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "2.1.0"
+    },
+    "knplabs/knp-components": {
+        "version": "v3.4.0"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.8.0"
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
+    },
+    "mediumart/orange-sms": {
+        "version": "2.0.0"
     },
     "monolog/monolog": {
         "version": "1.26.1"
@@ -150,11 +168,23 @@
     "psr/container": {
         "version": "1.1.2"
     },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/link": {
         "version": "1.0.0"
     },
     "psr/log": {
         "version": "1.1.4"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
@@ -569,6 +599,25 @@
             "version": "3.3",
             "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
         }
+    },
+    "symfony/webpack-encore-bundle": {
+        "version": "1.14",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.9",
+            "ref": "f466b6384e592cfda11ca2361bbf7c7287b58f55"
+        },
+        "files": [
+            "./assets/app.js",
+            "./assets/bootstrap.js",
+            "./assets/controllers.json",
+            "./assets/controllers/hello_controller.js",
+            "./assets/styles/app.css",
+            "./config/packages/webpack_encore.yaml",
+            "./package.json",
+            "./webpack.config.js"
+        ]
     },
     "symfony/yaml": {
         "version": "v4.4.37"

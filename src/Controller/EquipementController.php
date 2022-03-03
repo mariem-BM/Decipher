@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 /**
@@ -21,10 +22,17 @@ class EquipementController extends AbstractController
     /**
      * @Route("/affiche", name="equipement_index", methods={"GET"})
      */
-    public function index(EquipementRepository $equipementRepository): Response
+    public function index(EquipementRepository $equipementRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $equipement=$equipementRepository->findAll();
+        $equipement = $paginator->paginate(
+            $equipement, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            3 /*limit per page*/
+        );
+
         return $this->render('equipement/index.html.twig', [
-            'equipements' => $equipementRepository->findAll(),
+            'equipements' => $equipement,
         ]);
     }
     /**

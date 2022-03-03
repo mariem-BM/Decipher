@@ -2,6 +2,10 @@
 {% block body %}
 <!DOCTYPE html>
 <html>
+  <h1>Lists of Equipments !</h1>
+    <div class="album py-5 bg-light">
+        <div class="container">
+        <h2>Search An Equipment !!</h2>
 <head>
 	<title></title>
 </head>
@@ -52,8 +56,7 @@
                                         if (id != 'error') {
                                              
                                             console.log(id , value)
-                                            entitySelector.append('<li>' +
-                                                    '<a href="https://127.0.0.1:8000/equipementt/affiche/'+id+'">' + '<h5><b>  '+value[0]+  '</b></h5></a>'+'<a href="https://127.0.0.1:8000/equipementt/affiche/'+id+'">'+'<ul><img src="/uploads/'+value[4]+'" height="90" width="90"></ul>'+'  </a> </li>');
+                                            entitySelector.append('<li><b>'+value[0]+'</b><a href="/equipementt/'+id+'">'+'<img src="/uploads/'+value[4]+'" style="width: 50px; height: 50px"/>'+'</a></li>');
                                                     
                                                     
                                         } else {
@@ -76,7 +79,7 @@
 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4">
                                     <div class="featured-box">
                                         <figure>
-                                            <a href="{{ path('equipement_show',{'id': equipement.id}) }}"><img class="img-fluid" src="{{ asset('uploads/' ~ equipement.imageEquipement) }}" alt=""></a>
+                                            <a href="{{ path('equipement_show',{'id': equipement.id}) }}"><img class="img-fluid" src="{{ '../uploads/' ~ equipement.imageEquipement }}" alt=""></a>
                                             </figure>
                                         <div class="content-wrapper">
                                             <div class="feature-content">
@@ -112,6 +115,7 @@
             </tr>
        
   {% endfor %}
+  {{ knp_pagination_render(equipements) }}
   </div>
 </div>
 
