@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/categorie/equipement")
@@ -19,10 +20,16 @@ class CategorieEquipementController extends AbstractController
     /**
      * @Route("/affiche", name="categorie_equipement_index", methods={"GET"})
      */
-    public function index(CategorieEquipementRepository $categorieEquipementRepository): Response
+    public function index(CategorieEquipementRepository $categorieEquipementRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $categorie_equipement=$categorieEquipementRepository->findAll();
+        $categorie_equipement = $paginator->paginate(
+            $categorie_equipement, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            5 /*limit per page*/
+        );
         return $this->render('categorie_equipement/index.html.twig', [
-            'categorie_equipements' => $categorieEquipementRepository->findAll(),
+            'categorie_equipements' => $categorie_equipement,
         ]);
     }
     /**
