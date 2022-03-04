@@ -28,7 +28,7 @@ class CategorieEquipementController extends AbstractController
     /**
      * param CategorieEquipementRepository $Repository
      * return use Symfony\Component\HttpFoundation\Response;
-     * @Route("/display")
+     * @Route("/display", name="categorie_equipement_indexback", methods={"GET"})
      */
     public function indexback(CategorieEquipementRepository $Repository)
     {

@@ -77,7 +77,7 @@ class EquipementController extends AbstractController
     /**
      * param EquipementRepository $Repository
      * return use Symfony\Component\HttpFoundation\Response;
-     * @Route("/display")
+     * @Route("/display", name="equipement_indexback", methods={"GET"})
      */
     public function indexback(EquipementRepository $Repository)
     {
@@ -148,6 +148,19 @@ class EquipementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file=$equipement->getImageEquipement();
+            $filename=md5(uniqid()).'.'.$file->guessExtension();
+            
+            try {
+                $file->move(
+                    $this->getParameter('images_directory'),
+                    $filename
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            $equipement->setImageEquipement($filename);
+   
             $entityManager->flush();
 
             return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);

@@ -27,7 +27,10 @@ class EquipementType extends AbstractType
             ->add('description_equipement')
             ->add('categorieEquipement')
             ->add('image_equipement',FileType::class, [
-                'label' =>false
+                'label' =>false,
+                'required' => true,
+                             'data_class' => null
+                            
 
                 ])
                 ->add('captcha', CaptchaType::class)
