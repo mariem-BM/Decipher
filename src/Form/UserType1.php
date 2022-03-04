@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
+
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -42,7 +44,7 @@ class UserType1 extends AbstractType
             ])
             ->add('Numero_utilisateur')
             ->add('DateN_utilisateur', DateType::class)
-            
+            ->add('captcha', CaptchaType::class)
             
         ;
     }
