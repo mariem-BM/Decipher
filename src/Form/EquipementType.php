@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 
 
@@ -29,6 +30,7 @@ class EquipementType extends AbstractType
                 'label' =>false
 
                 ])
+                ->add('captcha', CaptchaType::class)
         ;
     }
 

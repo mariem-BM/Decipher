@@ -8,9 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=CategorieEquipementRepository::class)
+ * @UniqueEntity(fields={"nom_categorie_equipement"}, message="It looks like your already have a category!")
+
+
  */
 class CategorieEquipement
 {
@@ -21,12 +25,8 @@ class CategorieEquipement
      */
     private $id;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank
-     * @Assert\Choice(
-     *      choices = {"metaliques", "plastiques","nourriture","vestimentaires"},
-     *     message = "Choose a valid category( metaliques,plastiques,nourriture, vestimentaires)."
-     * )
      */
     private $nom_categorie_equipement;
 

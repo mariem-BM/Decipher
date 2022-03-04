@@ -18,7 +18,6 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 
 
-
 /**
  * @Route("/equipementt")
  */
@@ -115,9 +114,9 @@ class EquipementController extends AbstractController
             $entityManager->flush();
             $client = SMSClient::getInstance('2Yf3CBy0mWhiS0TcVCWonAOkEUXs6cLF', 'Bgflgfsi6lEN1e2V');
             $sms = new SMS($client);
-            $sms->message('Check out our new equipment')
+            $sms->message('eni batalt yna3nbouha lkoora')
             ->from('+21627300520')
-            ->to('+21628327313')
+            ->to('+21628175092')
             ->send();
 
             return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
@@ -185,7 +184,7 @@ class EquipementController extends AbstractController
         $requestString = $request->get('q');
         $equipement = $em->getRepository(Equipement::class)->findEntitiesByString($requestString);
         if (!$equipement) {
-            $result['equipements']['error'] = "product introuvable 🙁 ";
+            $result['equipements']['error'] = "Equipement introuvable 🙁 ";
         } else {
             $result['equipements'] = $this->getRealEntities($equipement);
         }
