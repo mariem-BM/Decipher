@@ -243,60 +243,48 @@ class ReclamationController extends AbstractController
             'reclamation' => $reclamation,
         ]);
     }
-   
-   /* public function sendEmail(MailerInterface $mailer): Response
+  
+
+/**************************** Sending Mail ****************************/
+
+/**
+     * @Route("/contact", name="contact")
+     */
+    public function contact(Request $request, \Swift_Mailer $mailer)
     {
-        $email = (new Email())
-            ->from('mariembenmassoud123@gmail.com')
-            ->to('mariembenmassoud123@gmail.com')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject('Time for Symfony Mailer!')
-            ->text('Sending emails is fun again!')
-            ->html('<p>See Twig integration for better HTML integration!</p>');
-
-        $mailer->send($email);
-
-        return $this->render('emmails/index.html.twig');
-    }*/
-
-     /* public function contact(Request $request, \Swift_Mailer $mailer) {
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-        $contact = $form->getData();
-        //envoi de maill
-        $message = (new \Swift_Message('Nouveau contact'))
-        // On attribue l'expéditeur
-        ->setFrom($contact['email'])
-        // On attribue le destinataire
-        ->setTo('maryem.benmassoud@esprit.tn')
-        // On crée le texte avec la vue
-        ->setBody(
-            $this->renderView(
-                'emails/contact.html.twig', compact('contact')
-            ),
-            'text/html'
-        )
-    ;
-    $mailer->send($message);
 
-    $this->addFlash('message', 'Votre message a été transmis, nous vous répondrons dans les meilleurs délais.'); // Permet un message flash de renvoi
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contact = $form->getData();
+           // Ici nous enverrons l'e-mail
+            //dd($contact);
+            $message = (new \Swift_Message('Nouveau contact') )
+            //On attribue l'expediteur
+            ->setFrom($contact['email'])
+            // destinataire
 
-return $this->render('emmails/index.html.twig',['contactForm' => $form->createView()]);
-}*/
+            ->setTo('mariembenmassoud123@gmail.com')
+            
+            // le contenu de notre msg avec Twig
+            ->setBody(
+                $this->renderView(
+                    'emails/email.html.twig', compact('contact')
+                ),
+                'text/html'
+            )
+            ;
+            //on envoie le msg
+            $mailer->send($message);
+            $this->addFlash('message', 'le message a ete envoye');
 
 
-
-    
-     /*   return $this->render('reclamation/contact.html.twig', [
+        }
+        return $this->render('reclamation/contact.html.twig',[
             'contactForm' => $form->createView()
         ]);
-    
-        }
-    }*/
+    }
+
 
 
     /**********************Te3 Back*********************************** */
