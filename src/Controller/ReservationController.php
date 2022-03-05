@@ -36,10 +36,10 @@ class ReservationController extends AbstractController
 
     
     
-    /**
-     * @Route("/listReservationByDate", name="listReservationByDate", methods={"GET"})
-     */
-    public function listReservationByDate(ReservationRepository $repo)
+  //  /**
+    // * @Route("/listReservationByDate", name="listReservationByDate", methods={"GET"})
+   //  */
+  /*  public function listReservationByDate(ReservationRepository $repo)
     {
         //list of reservations order By Date
         $reservationsByDate = $repo->orderByDate();
@@ -52,6 +52,46 @@ class ReservationController extends AbstractController
             "reservationsByDate" => $reservationsByDate,
             "reservationsByMail" => $reservationsByMail,
             "reservationsByEtat" => $reservationsByEtat
+        ]);
+    }*/
+        /**
+     * @Route("/listReservationByDate", name="listReservationByDate", methods={"GET"})
+     */
+    public function listReservationByDate(ReservationRepository $repo)
+    {
+        //list of reservations order By Date
+        $reservationsByDate = $repo->orderByDate();
+
+        return $this->render('reservation/listByDate.html.twig', [
+            "reservationsByDate" => $reservationsByDate,
+        ]);
+    }
+      /**
+     * @Route("/listReservationByMail", name="listReservationByMail", methods={"GET"})
+    */
+    public function listReservationByMail(ReservationRepository $repo)
+    {
+       
+        $reservationsByMail = $repo->orderByMail();
+    
+        return $this->render('reservation/listByDate.html.twig', [
+ 
+            "reservationsByMail" => $reservationsByMail,
+          
+        ]);
+    }
+         /**
+     * @Route("/listReservationByEtat", name="listReservationByEtat", methods={"GET"})
+    */
+    public function listReservationByEtat(ReservationRepository $repo)
+    {
+       
+        $reservationsByEtat = $repo->orderByEtat();
+    
+        return $this->render('reservation/listByDate.html.twig', [
+ 
+            "reservationsByEtat" => $reservationsByEtat,
+          
         ]);
     }
 

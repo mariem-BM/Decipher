@@ -3,8 +3,14 @@
 
 
 {% block body %}
-  
 
+
+<table class="table" border="2">
+<td><a href="{{ path('listReservationByDate') }}">List Reservation By Date</a></td>
+<td><a href="{{ path('listReservationByMail') }}">List Reservation By Mail</a></td>
+<td><a href="{{ path('listReservationByEtat') }}">List Reservation By Etat</a></td>
+<td><a href="{{ path('imprimerlistreservation') }}">Print List Reservation</a></td>
+</table>
     <table  class="table" border="2">
       <!--  <a style="margin-left: 80px" class="btn btn-primary" id="btn-1" />
 			<input  id="myInput"  type="text" placeholder="Search.." >
@@ -66,8 +72,7 @@
             });
         });
     </script>
-<a href="{{ path('listReservationByDate') }}">List Reservation By Order</a>
-<a href="{{ path('imprimerlistreservation') }}">Print List Reservation</a>
+
    
    
 {% endblock %}

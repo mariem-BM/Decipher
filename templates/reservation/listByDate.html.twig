@@ -1,9 +1,17 @@
 {% extends ('base_back_f/basebackF.html.twig') %}
 
 
-{% block title %}Reservations by date{% endblock %}
+{% block title %}Reservations by Order{% endblock %}
 
 {% block body %}
+<table class="table" border="2">
+<td><a href="{{ path('listReservationByDate') }}">List Reservation By Date</a></td>
+<td><a href="{{ path('listReservationByMail') }}">List Reservation By Mail</a></td>
+<td><a href="{{ path('listReservationByEtat') }}">List Reservation By Etat</a></td>
+</table>
+{% if app.request.get('_route') == 'listReservationByDate' %}
+ 
+
 <h1>Reservations by date order By date</h1>
 <table class="table" border="2">
     <tr>
@@ -28,6 +36,8 @@
         </tr>
     {% endfor %}
 </table>
+{% elseif app.request.get('_route') == 'listReservationByMail' %}
+    
 <h1>Reservations by date order By Mail</h1>
 <table class="table" border="2">
     <tr>
@@ -52,6 +62,9 @@
         </tr>
     {% endfor %}
 </table>
+{% elseif app.request.get('_route') == 'listReservationByEtat' %}
+    
+
 <h1>Reservations by date order By Etat</h1>
 <table class="table" border="2">
     <tr>
@@ -76,5 +89,6 @@
         </tr>
     {% endfor %}
 </table>
-
+{% endif %}
+ <a href="{{ path('reservation_index') }}">back to list</a>
 {% endblock %}
