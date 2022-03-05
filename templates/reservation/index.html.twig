@@ -36,7 +36,23 @@
 							</button>
 						</div>
 					</div>
-				</form> 
+				</form>
+                
+{#<div class="sidebar-search">
+      <div class="input-group custom-search-form">
+          <input type="text" id="search" class="form-control" placeholder="Search item">
+      </div>
+      <!-- /input-group -->
+  </div>
+  <ul class="nav" id="side-menu">
+      <li>
+          <ul class="nav nav-second-level" id="entitiesNav">
+          </ul>
+      </li>
+  </ul> #}
+      
+                
+  
         <thead>
             <tr>
                 <th>Id</th>
@@ -48,12 +64,12 @@
                 <th>actions</th>
             </tr>
         </thead>
-        <tbody id="myTable">
+        <tbody id="entitiesNav">
         {% for reservation in reservations %}
             <tr>
                 <td>{{ reservation.id }}</td>
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
-            <td>{{ reservation.user.prenomUtilisateur }} {{ reservation.user.nomUtilisateur }}</td>
+                 <td>{{ reservation.user.prenomUtilisateur }} {{ reservation.user.nomUtilisateur }}</td>
                 <td>{{ reservation.user.mailUtilisateur }}</td>
                 <td>{{ reservation.etatReservation }}</td>
                 <td>{{ reservation.billet.id }}</td>
@@ -73,18 +89,59 @@
         {% endfor %}
         </tbody>
     </table>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
             $("#myInput").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function() {
+                $("#entitiesNav tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
     </script>
+ {# <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
 
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        var searchRequest = null;
+        $("#search").keyup(function() {
+            var minlength = 3;
+            var that = this;
+            var value = $(this).val();
+            var entitySelector = $("#entitiesNav").html('');
+            if (value.length >= minlength ) {
+                if (searchRequest != null)
+                    searchRequest.abort();
+                searchRequest = $.ajax({
+                    type: "GET",
+                    url: "{{ path('ajax_searchreservation') }}",
+                    data: {
+                        'q' : value
+                    },
+                    dataType: "text",
+                    success: function(msg){
+                        //we need to check if the value is the same
+                        if (value==$(that).val()) {
+                            var result = JSON.parse(msg);
+                            $.each(result, function(key, arr) {
+                                $.each(arr, function(id, value) {
+                                    if (key == 'Reservation') {
+                                        if (id != 'error') {
+                                            entitySelector.append('<li><a href="/reservation/'+id+'">'+value+'</a></li>'+'<li><a href="/reservation/'+user+'">'+value+'</a></li>'+'<li><a href="/reservation/'+etatReservation +'">'+value+'</a></li>'+);
+                                        } else {
+                                            entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                     }
+                });
+            }
+        });
+    });
+</script>#}
    
    
 {% endblock %}

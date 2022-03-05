@@ -438,23 +438,26 @@ class ReservationController extends AbstractController
 
       $requestString = $request->get('q');
 
-      $reservations =  $em->getRepository('AppBundle:Reservation')->findReservationsByString($requestString);
+      $reservations =  $em->getRepository(Reservation::class)->findReservationsByString($requestString);
 
       if(!$reservations) {
           $result['reservations)']['error'] = "keine Einträge gefunden";
       } else {
-          $result['reservations)'] = $this->getRealReservations($reservations);
+          $result['reservations)'] = $this->getRealEntities($reservations);
       }
 
       return new Response(json_encode($result));
+      
   }
 
-  public function getRealReservations($reservations){
+  public function getRealEntities($reservations){
 
       foreach ($reservations as $reservation){
-          $realReservations[$reservation->getId()] = [$reservation->getDateReservation(),$reservation->getUser(),$reservation->getBillet()];
+          $realEntities[$reservation->getId()] = [$reservation->getDateReservation(),$reservation->getUser(),$reservation->getBillet(),$reservation->getEtatReservation()];
       }
 
-      return $realReservations;
-  }
+      return $realEntities;
+    }
+ 
+  
 }

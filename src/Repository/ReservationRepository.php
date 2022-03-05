@@ -138,11 +138,11 @@ class ReservationRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();*/
     }
     public function findReservationByString($str){
-        return $this->getReservationManager()
+        return $this->getEntityManager()
             ->createQuery(
                 'SELECT r
                 FROM AppBundle:Reservation r
-                WHERE r.date_reservation LIKE :stror r.user LIKE :str or r.billet LIKE :str'
+                WHERE r.date_reservation LIKE :str or r.user LIKE :str or r.billet LIKE :str or r.Etat_reservation LIKE :str'
             )
             ->setParameter('str', '%'.$str.'%')
             ->getResult();
