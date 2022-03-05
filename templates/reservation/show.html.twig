@@ -61,7 +61,7 @@
     <a href="{{ path('reservation_index') }}">back to list</a>
 <a href="{{ path('traiterreservation', {'id': reservation.id}) }}">Confirm</a>
 
-
+<a href="{{ path('MailingReservationBillet', {'id': reservation.id}) }}">mail</a>
    {# <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
 
     {{ include('reservation/_delete_form.html.twig') }}#}

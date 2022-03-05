@@ -201,6 +201,9 @@ class ReservationController extends AbstractController
         ]);
     }
     
+    
+    
+
     /**
      * @Route("/new", name="reservation_new", methods={"GET", "POST"})
      */
@@ -271,20 +274,38 @@ class ReservationController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $reservation->setEtatReservation("confirmed");
         $entityManager->flush();
-     $message = (new \Swift_Message('Celestial Reservation Confirmation ')) 
+     /*$message = (new \Swift_Message('Celestial Reservation Confirmation ')) 
      ->setFrom('pawp6703@gmail.com')
      ->setTo('zeinebeyarahmani@gmail.com')
      ->setBody("Your Reservation has been confirmed enjoy your trip!!! your reservation id is {$reservation->getid()}, ",'text/html') ;
         $mailer->send( $message);
          $this->addFlash('success', 'It sent!');
-        return $this->redirectToRoute('reservation_index');
-       // }
-    
-        return $this->render('reservation/show.html.twig', [
+        return $this->redirectToRoute('reservation_index');*/
+        $form = $this->createForm(ReservationEmailType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contact = $form->getData();
+           // Ici nous enverrons l'e-mail
+            $message = (new \Swift_Message('Nouveau contact') )
+            //On attribue l'expediteur
+            ->setFrom('pawp6703@gmail.com')
+            // destinataire
+            ->setTo($contact['email'])
+            // le contenu de notre msg avec Twig
+            ->setBody("Your Reservation has been confirmed enjoy your trip!!!",'text/html') ;
+            //on envoie le msg
+            $mailer->send($message);
+            $this->addFlash('message', 'le message a ete envoye');
+        $mailer->send($message);
+        
+         $this->addFlash('success', 'It sent!');
+         return $this->redirectToRoute('reservation_index');
+        }
+         return $this->render('reservation/mail.html.twig', [
             'reservation' => $reservation,
-           /* 'our_form' => $form,
-        'our_form' => $form->createView(),*/
-        ]);
+        'our_form' => $form,
+        'our_form' => $form->createView(),
+            ]);
     }
     /**
      * @Route("/cancelreservation/{id}",name="cancelreservation")
@@ -298,7 +319,41 @@ class ReservationController extends AbstractController
             'reservation' => $reservation,
         ]);
     }
+ /**
+     * @Route("/MailingReservationBillet/{id}", name="MailingReservationBillet")
+     */
+    public function MailingReservationBillet(Request $request, \Swift_Mailer $mailer,Reservation $reservation)
+    {
+        $form = $this->createForm(ReservationEmailType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contact = $form->getData();
+           // Ici nous enverrons l'e-mail
+          
+            $message = (new \Swift_Message('Nouveau contact') )
+            //On attribue l'expediteur
+           
+            ->setFrom('pawp6703@gmail.com')
+            // destinataire
 
+            ->setTo($contact['email'])
+            
+            // le contenu de notre msg avec Twig
+            ->setBody("Your Reservation has been confirmed enjoy your trip!!!",'text/html') ;
+            //on envoie le msg
+            $mailer->send($message);
+            $this->addFlash('message', 'le message a ete envoye');
+        $mailer->send($message);
+        
+         $this->addFlash('success', 'It sent!');
+         return $this->redirectToRoute('reservation_index');
+        }
+         return $this->render('reservation/mail.html.twig', [
+            'reservation' => $reservation,
+        'our_form' => $form,
+        'our_form' => $form->createView(),
+            ]);
+    }
      /**
      * @Route("/ReservationBillet/{id}", name="ReservationBillet", methods={"GET"})
      */
@@ -371,37 +426,6 @@ class ReservationController extends AbstractController
     }
     
 
-     /**
-     * @Route("/MailingReservationBillet/{id}", name="MailingReservationBillet", methods={"GET", "POST"})
-     */
-    public function MailingReservationBillet(Request $request,Reservation $reservation, \Swift_Mailer $mailer): Response
-    {
-        $form = $this->createForm(ReservationEmailType::class, $reservation);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $contactFormData = $form->getData();
-            $contactFormData = $request->request->get('user');
-            $contactFormData->setUser($contactFormData->user);
-            dump($contactFormData);
-         
-            $message = (new \Swift_Message('Hello Email'))
-       
-          ->setFrom('pawp6703@gmail.com')
-          ->setTo($contactFormData['user'])
-       // ->setTo('zeinebeyarahmani@gmail.com')
-       ->setBody('Your Reservation has been confirmed enjoy your trip!!','text/html') ;
-        
-        $mailer->send($message);
-        
-         $this->addFlash('success', 'It sent!');
-         return $this->redirectToRoute('reservation_index');
-        }
-         return $this->render('reservation/mail.html.twig', [
-        'reservation' => $reservation,
-        'our_form' => $form,
-        'our_form' => $form->createView(),
-            ]);
-    }
 
     /**
      * @Route("/{id}", name="reservation_delete", methods={"POST"})
