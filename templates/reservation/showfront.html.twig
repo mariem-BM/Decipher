@@ -50,7 +50,14 @@
                 <td>{{ reservation.etatReservation }}</td>
               
             </tr>
+            <tr>
+                <th>QR Code</th>
+              <td> <img src="{{ qr_code_url(app.request.uri)}}"/></td>
+            {#    <td> <img src="{{ qr_code_data_uri('ReservationBillet') }}" /></td>#}
+           
+            </tr>
         </tbody>
+               
     </table>
 
     <a href="{{ path('reservation_front') }}">back to list</a>
