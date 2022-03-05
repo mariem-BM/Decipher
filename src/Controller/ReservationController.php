@@ -45,10 +45,13 @@ class ReservationController extends AbstractController
         $reservationsByDate = $repo->orderByDate();
         //list of reservations order By Mail
         $reservationsByMail = $repo->orderByMail();
+        //list of reservations order By Etat
+        $reservationsByEtat = $repo->orderByEtat();
         //orderByDate();
         return $this->render('reservation/listByDate.html.twig', [
             "reservationsByDate" => $reservationsByDate,
-            "reservationsByMail" => $reservationsByMail
+            "reservationsByMail" => $reservationsByMail,
+            "reservationsByEtat" => $reservationsByEtat
         ]);
     }
 

@@ -106,7 +106,12 @@ class ReservationRepository extends ServiceEntityRepository
             ->orderBy('r.user', 'ASC')
             ->getQuery()->getResult();
     }
-   
+    public function orderByEtat()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.Etat_reservation', 'ASC')
+            ->getQuery()->getResult();
+    }
     public function orderByDate()
     {
         return $this->createQueryBuilder('r')
