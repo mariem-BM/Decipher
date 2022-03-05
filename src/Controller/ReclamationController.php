@@ -27,7 +27,8 @@ use Symfony\Component\Serializer\Normalizer\SeriInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Swift_Mailer;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 use Symfony\Flex\Unpack\Result;
@@ -125,7 +126,34 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+    /***************************Print*********************************** */
 
+   /**
+     * @Route("/listreclamation", name="listreclamation", methods={"GET"})
+     */
+    public function listreclamation(ReclamationRepository $reclamationRepository) : Response
+    {
+        $pdfOptions = new Options();
+        $dompdf = new Dompdf($pdfOptions);
+
+        
+        $reclamations = $reclamationRepository->findAll();
+
+        $html = $this->renderView('reclamation/listreclamation.html.twig', [
+            'reclamations' => $reclamations,
+        ]);
+
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream('mypdf.pdf', [
+            "Attachment" => true
+        ]);
+       
+        return new Response("the PDF file has benn succefully genrated");
+        
+    }
 
 
     /*******************JSON *******************/
