@@ -279,25 +279,25 @@ class ReservationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $contactFormData = $form->getData();
        
-            dump($contactFormData);
+            dump($contactFormData['user']);
            
-    $message = (new \Swift_Message('Hello Email'))
+            $message = (new \Swift_Message('Hello Email'))
        
-        ->setFrom('pawp6703@gmail.com')
-       ->setTo($contactFormData)
-       // ->setTo('zeinebeyarahmani@gmail.com')
-        ->setBody(
-            $this->renderView(
-                'reservation/ReservationBillet.html.twig',
-                ['reservation' => $reservation]
-            ),
-            'text/html'
-        );
+             ->setFrom('pawp6703@gmail.com')
+             ->setTo($contactFormData)
+             // ->setTo('zeinebeyarahmani@gmail.com')
+              ->setBody(
+                 $this->renderView(
+                    'reservation/ReservationBillet.html.twig',
+                    ['reservation' => $reservation]
+                    ),
+                    'text/html'
+                );
         
-    $mailer->send($message);
+            $mailer->send($message);
     
-    $this->addFlash('success', 'It sent!');
-    return $this->redirectToRoute('reservation_index');
+         $this->addFlash('success', 'It sent!');
+        return $this->redirectToRoute('reservation_index');
         }
     
         return $this->render('reservation/show.html.twig', [
