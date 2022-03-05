@@ -1,42 +1,29 @@
-{% extends ('base_back_f/basebackF.html.twig') %}
+{% extends ('basefront/base.html.twig') %}
 
 
 {% block title %}Reservations by Order{% endblock %}
 
 {% block body %}
-<div id="wrapper">
-<ul
-<li class="nav-item">
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reservation" aria-expanded="true" aria-controls="reservation">
-<i class="fa fa-cog"></i>
-<span>Functions</span>
-</a>
-<div id="reservation" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-<div class="bg-white py-2 collapse-inner rounded">
-<h6 class="collapse-header">Functions</h6>
-<a class="collapse-item" href="{{ path('listReservationByDate') }}">List Reservation By Date</a>
-<a class="collapse-item" href="{{ path('listReservationByMail') }}">List Reservation By Mail</a>
-<a class="collapse-item" href="{{ path('listReservationByEtat') }}">List Reservation By Etat</a>
-<a class="collapse-item" href="{{ path('reservation_index') }}">back to list</a>
-</div>
-</div>
-</li>
-</ul>
-</div>
+<table class="table" border="2">
+<td><a href="{{ path('listReservationByDatefront') }}">List Reservation By Date</a></td>
+<td><a href="{{ path('listReservationByMailfront') }}">List Reservation By Mail</a></td>
+<td><a href="{{ path('listReservationByEtatfront') }}">List Reservation By Etat</a></td>
+ <td><a href="{{ path('reservation_front') }}">back to list</a></td>
+</table>
 
-{% if app.request.get('_route') == 'listReservationByDate' %}
+{% if app.request.get('_route') == 'listReservationByDatefront' %}
  
 
 <h1>Reservations by date order By date</h1>
 <table class="table" border="2">
     <tr>
-        <td>ID</td>
-        <td>User Full Name</td>
-        <td>User Email</td>
-        <td>Reservation date</td>
+        <th>ID</th>
+        <th>User Full Name</th>
+        <th>User Email</th>
+        <th>Reservation date</th>
         <th>Etat</th>
-        <td>Billet</td>
-        <td>Action</td>
+        <th>Billet</th>
+        <th>Action</th>
     </tr>
     {% for reservation in reservationsByDate %}
         <tr>
@@ -47,24 +34,22 @@
               <td>{{ reservation.etatReservation }}</td>
             <td>{{ reservation.billet.id }}</td>
             <td><a href="{{ path('reservationfront_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
-                     <a href="{{ path('ReservationBillet', {'id': reservation.id}) }}">Ticket</a>
                     </td>
         </tr>
     {% endfor %}
 </table>
-{% elseif app.request.get('_route') == 'listReservationByMail' %}
+{% elseif app.request.get('_route') == 'listReservationByMailfront' %}
     
 <h1>Reservations by date order By Mail</h1>
 <table class="table" border="2">
     <tr>
-        <td>ID</td>
-         <td>User Full Name</td>
-        <td>User Email</td>
-        <td>Reservation date</td>
+      <th>ID</th>
+        <th>User Full Name</th>
+        <th>User Email</th>
+        <th>Reservation date</th>
         <th>Etat</th>
-        <td>Billet</td>
-        <td>Action</td>
+        <th>Billet</th>
+        <th>Action</th>
     </tr>
     {% for reservation in reservationsByMail %}
          <tr>
@@ -75,25 +60,23 @@
               <td>{{ reservation.etatReservation }}</td>
             <td>{{ reservation.billet.id }}</td>
             <td><a href="{{ path('reservationfront_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
-                     <a href="{{ path('ReservationBillet', {'id': reservation.id}) }}">Ticket</a>
                   </td>
         </tr>
     {% endfor %}
 </table>
-{% elseif app.request.get('_route') == 'listReservationByEtat' %}
+{% elseif app.request.get('_route') == 'listReservationByEtatfront' %}
     
 
 <h1>Reservations by date order By Etat</h1>
 <table class="table" border="2">
     <tr>
-        <td>ID</td>
-         <td>User Full Name</td>
-        <td>User Email</td>
-        <td>Reservation date</td>
+          <th>ID</th>
+        <th>User Full Name</th>
+        <th>User Email</th>
+        <th>Reservation date</th>
         <th>Etat</th>
-        <td>Billet</td>
-        <td>Action</td>
+        <th>Billet</th>
+        <th>Action</th>
     </tr>
     {% for reservation in reservationsByEtat %}
          <tr>
@@ -104,8 +87,6 @@
               <td>{{ reservation.etatReservation }}</td>
             <td>{{ reservation.billet.id }}</td>
             <td><a href="{{ path('reservationfront_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
-                     <a href="{{ path('ReservationBillet', {'id': reservation.id}) }}">Ticket</a>
                   </td>
         </tr>
     {% endfor %}

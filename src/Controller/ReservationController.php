@@ -94,6 +94,46 @@ class ReservationController extends AbstractController
           
         ]);
     }
+       /**
+     * @Route("/listReservationByDatefront", name="listReservationByDatefront", methods={"GET"})
+     */
+    public function listReservationByDatefront(ReservationRepository $repo)
+    {
+        //list of reservations order By Date
+        $reservationsByDate = $repo->orderByDate();
+
+        return $this->render('reservation/listByDatefront.html.twig', [
+            "reservationsByDate" => $reservationsByDate,
+        ]);
+    }
+      /**
+     * @Route("/listReservationByMailfront", name="listReservationByMailfront", methods={"GET"})
+    */
+    public function listReservationByMailfront(ReservationRepository $repo)
+    {
+       
+        $reservationsByMail = $repo->orderByMail();
+    
+        return $this->render('reservation/listByDatefront.html.twig', [
+ 
+            "reservationsByMail" => $reservationsByMail,
+          
+        ]);
+    }
+         /**
+     * @Route("/listReservationByEtatfront", name="listReservationByEtatfront", methods={"GET"})
+    */
+    public function listReservationByEtatfront(ReservationRepository $repo)
+    {
+       
+        $reservationsByEtat = $repo->orderByEtat();
+    
+        return $this->render('reservation/listByDatefront.html.twig', [
+ 
+            "reservationsByEtat" => $reservationsByEtat,
+          
+        ]);
+    }
 
     /**
      * @Route("/listReservationWithSearch", name="listReservationWithSearch", methods={"GET"})

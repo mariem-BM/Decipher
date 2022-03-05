@@ -3,7 +3,12 @@
 
 {% block body %}
 
-
+<table class="table" border="2">
+<td><a href="{{ path('listReservationByDatefront') }}">List Reservation By Date</a></td>
+<td><a href="{{ path('listReservationByMailfront') }}">List Reservation By Mail</a></td>
+<td><a href="{{ path('listReservationByEtatfront') }}">List Reservation By Etat</a></td>
+ <td><a href="{{ path('reservation_front') }}">back to list</a></td>
+</table>
    
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 					<div class="input-group">

@@ -3,14 +3,26 @@
 
 
 {% block body %}
+<div id="wrapper">
+<ul
+<li class="nav-item">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reservation" aria-expanded="true" aria-controls="reservation">
+<i class="fa fa-cog"></i>
+<span>Functions</span>
+</a>
+<div id="reservation" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+<div class="bg-white py-2 collapse-inner rounded">
+<h6 class="collapse-header">Functions</h6>
+<a class="collapse-item" href="{{ path('listReservationByDate') }}">List Reservation By Date</a>
+<a class="collapse-item" href="{{ path('listReservationByMail') }}">List Reservation By Mail</a>
+<a class="collapse-item" href="{{ path('listReservationByEtat') }}">List Reservation By Etat</a>
+<a class="collapse-item" href="{{ path('imprimerlistreservation') }}">Print List Reservation</a>
+</div>
+</div>
+</li>
+</ul>
+</div>
 
-
-<table class="table" border="2">
-<td><a href="{{ path('listReservationByDate') }}">List Reservation By Date</a></td>
-<td><a href="{{ path('listReservationByMail') }}">List Reservation By Mail</a></td>
-<td><a href="{{ path('listReservationByEtat') }}">List Reservation By Etat</a></td>
-<td><a href="{{ path('imprimerlistreservation') }}">Print List Reservation</a></td>
-</table>
     <table  class="table" border="2">
       <!--  <a style="margin-left: 80px" class="btn btn-primary" id="btn-1" />
 			<input  id="myInput"  type="text" placeholder="Search.." >
