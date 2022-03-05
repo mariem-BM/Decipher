@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Planinng;
 use App\Repository\OffreRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -106,7 +106,6 @@ class Offre
     }
 
 
-  
     public function getId(): ?int
     {
         return $this->id;
@@ -161,7 +160,7 @@ class Offre
 
         return $this;
     }
-
+    
 
 
 

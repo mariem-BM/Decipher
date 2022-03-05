@@ -86,8 +86,9 @@ class OffreController extends AbstractController
                     'errors' => $errors,
                 ]);
             }
-
+            
             $entityManager->persist($offre);
+            
             $entityManager->flush();
 
             return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);

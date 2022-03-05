@@ -47,7 +47,23 @@ class ReclamationRepository extends ServiceEntityRepository
         ;
     }
     */
+   /* public function findOneByIdUser($idUser, $idReclam)
+    {
+        return $this->createQueryBuilder('r')
+            // p.category refers to the "category" property on product
+            ->innerJoin('r.user', 'u')
+            // selects all the category data to avoid the query
+            ->addSelect('u')
+            ->andWhere('u.id = :idUser')
+            ->addSelect('u')
+            ->andWhere('r.id = :idRes')
+            ->setParameter('idUser', $idUser)
+            ->setParameter('idReclam', $idReclam)
 
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+*/
     public function orderByDateReclam()
     {
         return $this->createQueryBuilder('r')

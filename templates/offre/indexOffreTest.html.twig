@@ -9,20 +9,23 @@
 				<h2 class="text-uppercase">Nos offres
 				</h2>
 			</header>
-<br>
-<br>
-<div class="wrapper">
-			<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReduction') }}">Trier les offres selon la promotion</a>
+
+<div class="center wrapper"  >
+		<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReduction') }}">Trier les offres selon la promotion</a>
 		</div>
 		<br>
 		<br>
-			<div class="row text-center gy-4" id="Mytable">
+
+		<div class="row gy-4" id="Mytable">
 			
-				{% for offre in offres %}
-					<div class="col-lg-4"><img src="{{ asset ('Front/img/travel.png')}}" alt="..." width="100">
+			{% for offre in offres %}
+				
+					<div class="col-lg-4">
+					 <img src="{{ asset ('Front/img/travel.png')}}" alt="..." width="100" class="center">
+					
 						<br>
 						<br>
-						<h3 class=" col-lg-6 h5">{{ offre.nomOffre }}</h3>
+						<h3 class=" col-lg-5 h6">{{ offre.nomOffre }}</h3>
 						<br>
 						<p class="col-lg-6 text-muted">{{ offre.descriptionOffre }}</p>
 					
@@ -34,9 +37,11 @@
 						<p class=" col-lg-6 text-muted">{{offre.planning}}</p>
 
 						<h3 class=" col-lg-6 h5">	{{ offre.reduction }}%</h3>
+{#test $prixPlanning->getTotalReglements();#}
+					
 					
 						<br>
-						<div class="col-lg-6 text-center">
+						<div class="col-lg-6 " id="consulter">
 							<a class="btn btn-outline-primary px-4" href="{{ path('offre_showFront', {'id': offre.id}) }}">
 								Consulter offre</a>
 						</div>
@@ -44,7 +49,7 @@
 					</div>
 
 				{% endfor %}
-			</div>
+			
 			<br>
 			<br>
 			

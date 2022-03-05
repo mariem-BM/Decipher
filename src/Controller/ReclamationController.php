@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
+use App\Entity\User;
+use App\Form\ContactType;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Reflection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +25,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\SeriInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Swift_Mailer;
+
 
 use Symfony\Flex\Unpack\Result;
 
@@ -35,6 +42,8 @@ class ReclamationController extends AbstractController
      */
     public function index(ReclamationRepository $reclamationRepository): Response
     {
+        
+
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
         ]);
@@ -54,9 +63,9 @@ class ReclamationController extends AbstractController
 
 
 
-      //Tri par date
+    //Tri par date
 
-     /**
+    /**
      * @Route("/listReclamByDate", name="listReclamByDate", methods={"GET"})
      */
     public function listReclamByDate(ReclamationRepository $repo)
@@ -70,13 +79,13 @@ class ReclamationController extends AbstractController
         ]);
     }
 
-    
+
     /*************Search***************** */
 
-      /**
+    /**
      * @Route("/reclamation_search", name="reclamation_search")
      */
-/*public function searchReclamation(Request $request)
+    /*public function searchReclamation(Request $request)
 {
 
     $serachReclamForm = $this->createFormBuilder(SearchReclamType::class);
@@ -93,14 +102,18 @@ class ReclamationController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+       // $user = $this->getUser();
         $reclamation = new Reclamation();
+       // $reclamation->setUser($user);
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
+        //dump($user);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($reclamation);
             $reclamation->setDateReclamation(new \DateTime());
-
+           $reclamation->setEtatReclamation("envoyé");
             $entityManager->flush();
 
             return $this->redirectToRoute('reclamation_indexreclamFront', [], Response::HTTP_SEE_OTHER);
@@ -111,6 +124,9 @@ class ReclamationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+
 
     /*******************JSON *******************/
 
@@ -189,12 +205,70 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/reclamation/{id}", name="reclamation_showFront", methods={"GET"})
      */
-    public function showF(Reclamation $reclamation): Response
+    
+
+    public function showF(Reclamation $reclamation,ReclamationRepository $reclamationRepository): Response
     {
+      //  $reclamation = $reclamationRepository->findOneByIdUser($this->getUser()->getId(), $reclamation->getId());
+        $reclamation = $reclamationRepository->findOneBy(['id' => $reclamation->getId()]);
         return $this->render('reclamation/showFront.html.twig', [
             'reclamation' => $reclamation,
         ]);
     }
+   
+   /* public function sendEmail(MailerInterface $mailer): Response
+    {
+        $email = (new Email())
+            ->from('mariembenmassoud123@gmail.com')
+            ->to('mariembenmassoud123@gmail.com')
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject('Time for Symfony Mailer!')
+            ->text('Sending emails is fun again!')
+            ->html('<p>See Twig integration for better HTML integration!</p>');
+
+        $mailer->send($email);
+
+        return $this->render('emmails/index.html.twig');
+    }*/
+
+     /* public function contact(Request $request, \Swift_Mailer $mailer) {
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+        $contact = $form->getData();
+        //envoi de maill
+        $message = (new \Swift_Message('Nouveau contact'))
+        // On attribue l'expéditeur
+        ->setFrom($contact['email'])
+        // On attribue le destinataire
+        ->setTo('maryem.benmassoud@esprit.tn')
+        // On crée le texte avec la vue
+        ->setBody(
+            $this->renderView(
+                'emails/contact.html.twig', compact('contact')
+            ),
+            'text/html'
+        )
+    ;
+    $mailer->send($message);
+
+    $this->addFlash('message', 'Votre message a été transmis, nous vous répondrons dans les meilleurs délais.'); // Permet un message flash de renvoi
+
+return $this->render('emmails/index.html.twig',['contactForm' => $form->createView()]);
+}*/
+
+
+
+    
+     /*   return $this->render('reclamation/contact.html.twig', [
+            'contactForm' => $form->createView()
+        ]);
+    
+        }
+    }*/
 
 
     /**********************Te3 Back*********************************** */
@@ -209,7 +283,7 @@ class ReclamationController extends AbstractController
     }
 
     /********************************Te3 Front*************************************** */
-    
+
     /**
      * @Route("/{id}/edit", name="reclamation_editFront", methods={"GET", "POST"})
      */
@@ -229,6 +303,32 @@ class ReclamationController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /***************Traiter Reclam **********************/
+    
+    /**
+     * @Route("/traiter/{id}",name="traiter")
+     */
+   
+    public function traiter(int $id, ReclamationRepository $reclamationRepository, Reclamation $reclamation)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reclamation = $reclamationRepository->find($id);
+
+        $reclamation->setEtatReclamation("Treated");
+        $entityManager->flush();
+
+        return $this->redirectToRoute('reclamation_index');
+       /* return $this->render('reclamation/index.html.twig', [
+            'reclamations' => $reclamationRepository->find($id),
+        ]);*/
+     //   return $this->redirectToRoute('/');*/
+    
+    }
+
+    
+ 
+ 
     /********************************* Te3 Back************************ */
     /**
      * @Route("/{id}/edit", name="reclamation_edit", methods={"GET", "POST"})
@@ -265,6 +365,4 @@ class ReclamationController extends AbstractController
 
         return $this->redirectToRoute('reclamation_indexreclamFront', [], Response::HTTP_SEE_OTHER);
     }
-
-  
 }

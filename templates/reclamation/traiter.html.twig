@@ -22,7 +22,7 @@
 				<th>User</th>
 				{#<th>etat reclamation</th>#}
 
-				<th>Etat reclamation</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,7 +34,6 @@
 					
 					<td>{{ reclamation.user }}</td>
 					<td>{{ reclamation.etatReclamation }}</td>
-					
 					<div>
 						<td>
 							<a href="{{ path('reclamation_show', {'id': reclamation.id}) }}" class="btn btn-primary">consulter</a>

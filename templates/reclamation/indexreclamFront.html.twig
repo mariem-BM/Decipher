@@ -15,6 +15,7 @@
 				<th>Id reclamation</th>
 				<th>Description reclamation</th>
 				<th>Date reclamation</th>
+				<th>Etat reclamation</th>
 
 				<th></th>
 			</tr>
@@ -26,6 +27,7 @@
 					<td>{{ reclamation.id }}</td>
 					<td>{{ reclamation.descriptionReclamation }}</td>
 				<td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
+				<td>{{ reclamation.etatReclamation }}</td>
 
 					<div>
 						<td>
