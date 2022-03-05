@@ -134,9 +134,20 @@
                 <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('trips')}}">Trips</a></h6>
               </li>
 
-              <li class="mb-2">
+          <li class="mb-2">
                 <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('billet_front')}}">Reservation</a></h6>
-              </li>
+              </li
+
+          {#   <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="Reservation" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reservation
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="Reservation">
+           
+           <li><a class="dropdown-item" href="{{path('billet_front')}}">Billet</a></li>
+            <li><a class="dropdown-item" href="{{path('reservation_front')}}">My Reservations</a></li>
+          </ul>
+        </li>>#} 
 
               <li class="mb-2">
                 <h6 class="mb-1"> <a class="reset-anchor text-primary" href="{{path('equipement')}}">Equipement</a></h6>

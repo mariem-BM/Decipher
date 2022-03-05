@@ -279,12 +279,12 @@ class ReservationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $contactFormData = $form->getData();
        
-            dump($contactFormData['user']);
+            dump($contactFormData);
            
             $message = (new \Swift_Message('Hello Email'))
        
              ->setFrom('pawp6703@gmail.com')
-             ->setTo($contactFormData)
+             ->setTo($contactFormData['user'])
              // ->setTo('zeinebeyarahmani@gmail.com')
               ->setBody(
                  $this->renderView(
