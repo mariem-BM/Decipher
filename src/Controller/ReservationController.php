@@ -271,39 +271,19 @@ class ReservationController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $reservation->setEtatReservation("confirmed");
         $entityManager->flush();
-        /*return $this->render('reservation/show.html.twig', [
-            'reservation' => $reservation,
-        ]);*/
-        $form = $this->createForm(ReservationEmailType::class, $reservation);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $contactFormData = $form->getData();
-       
-            dump($contactFormData);
-           
-            $message = (new \Swift_Message('Hello Email'))
-       
-             ->setFrom('pawp6703@gmail.com')
-             ->setTo($contactFormData['user'])
-             // ->setTo('zeinebeyarahmani@gmail.com')
-              ->setBody(
-                 $this->renderView(
-                    'reservation/ReservationBillet.html.twig',
-                    ['reservation' => $reservation]
-                    ),
-                    'text/html'
-                );
-        
-            $mailer->send($message);
-    
+     $message = (new \Swift_Message('Celestial Reservation Confermation')) 
+     ->setFrom('pawp6703@gmail.com')
+     ->setTo('zeinebeyarahmani@gmail.com')
+     ->setBody("Your Reservation has been confirmed enjoy your trip!!! your reservation id is {$reservation->getid()}, ",'text/html') ;
+        $mailer->send( $message);
          $this->addFlash('success', 'It sent!');
         return $this->redirectToRoute('reservation_index');
-        }
+       // }
     
         return $this->render('reservation/show.html.twig', [
             'reservation' => $reservation,
-            'our_form' => $form,
-        'our_form' => $form->createView(),
+           /* 'our_form' => $form,
+        'our_form' => $form->createView(),*/
         ]);
     }
     /**
@@ -400,24 +380,19 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $contactFormData = $form->getData();
-       
+            $contactFormData = $request->request->get('user');
+            $contactFormData->setUser($contactFormData->user);
             dump($contactFormData);
-           foreach ($contactFormData as $email) {
+         
             $message = (new \Swift_Message('Hello Email'))
        
           ->setFrom('pawp6703@gmail.com')
-        ->setTo($contactFormData['user'])
+          ->setTo($contactFormData['user'])
        // ->setTo('zeinebeyarahmani@gmail.com')
-          ->setBody(
-            $this->renderView(
-                'reservation/ReservationBillet.html.twig',
-                ['reservation' => $reservation]
-            ),
-            'text/html'
-        );
+       ->setBody('Your Reservation has been confirmed enjoy your trip!!','text/html') ;
         
         $mailer->send($message);
-        }
+        
          $this->addFlash('success', 'It sent!');
          return $this->redirectToRoute('reservation_index');
         }
