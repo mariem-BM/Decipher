@@ -67,7 +67,14 @@ class ReservationRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-
+    public function findReservationbydate($date_reservation)
+    {
+        return $this->createQueryBuilder('reservation')
+            ->where('reservation.date_reservation LIKE :date_reservation')
+            ->setParameter('date_reservation', '%'.$date_reservation.'%')
+            ->getQuery()
+            ->getResult();
+    }
     public function findOneByIdUser($idUser, $idRes)
     {
         return $this->createQueryBuilder('r')
@@ -124,6 +131,16 @@ class ReservationRepository extends ServiceEntityRepository
         $qb ->where('r.date_reservation BETWEEN :dateOne AND :dateTwo');
         $qb->setParameters(['dateOne'=>$dateOne,'dateTwo'=>$dateTwo]);
         return $qb->getQuery()->getResult();*/
+    }
+    public function findReservationByString($str){
+        return $this->getReservationManager()
+            ->createQuery(
+                'SELECT r
+                FROM AppBundle:Reservation r
+                WHERE r.date_reservation LIKE :stror r.user LIKE :str or r.billet LIKE :str'
+            )
+            ->setParameter('str', '%'.$str.'%')
+            ->getResult();
     }
  
 }

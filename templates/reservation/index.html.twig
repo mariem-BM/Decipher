@@ -25,6 +25,7 @@
                 <th>Date_reservation</th>
                 <th>user full name</th>
                 <th>user mail</th>
+                <th>Etat</th>
                 <th>billet</th>
                 <th>actions</th>
             </tr>
@@ -36,12 +37,13 @@
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
             <td>{{ reservation.user.prenomUtilisateur }} {{ reservation.user.nomUtilisateur }}</td>
                 <td>{{ reservation.user.mailUtilisateur }}</td>
-                
+                <td>{{ reservation.etatReservation }}</td>
                 <td>{{ reservation.billet.id }}</td>
                 <td>
                     <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
                      <a href="{{ path('ReservationBillet', {'id': reservation.id}) }}">Ticket</a>
-                <a href="{{ path('MailingReservationBillet', {'id': reservation.id}) }}">Confirmation</a>
+              {# <a href="{{ path('MailingReservationBillet', {'id': reservation.id}) }}">Confirmation</a>#} 
+                 <a href="{{ path('traiterreservation', {'id': reservation.id}) }}">Confirm</a>
                     
                   
                 </td>

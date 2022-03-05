@@ -132,6 +132,7 @@ class ReservationController extends AbstractController
             
             $entityManager->persist($reservation);
             $reservation->setDateReservation(new \DateTime());
+            $reservation->setEtatReservation('waiting for a confirmation');
             $entityManager->flush();
 
             $this->addFlash('success', 'Reserved Successfully! please await for a confirmation email');
@@ -179,6 +180,49 @@ class ReservationController extends AbstractController
             'reservation' => $reservation,
         ]);
     }
+    /**
+     * @Route("/traiterreservation/{id}",name="traiterreservation")
+     */
+    public function traiterreservation(Request $request, ReservationRepository $Rep,Reservation $reservation, \Swift_Mailer $mailer ): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reservation->setEtatReservation("confirmed");
+        $entityManager->flush();
+        /*return $this->render('reservation/show.html.twig', [
+            'reservation' => $reservation,
+        ]);*/
+        $form = $this->createForm(ReservationEmailType::class, $reservation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contactFormData = $form->getData();
+       
+            dump($contactFormData);
+           
+    $message = (new \Swift_Message('Hello Email'))
+       
+        ->setFrom('pawp6703@gmail.com')
+       ->setTo($contactFormData)
+       // ->setTo('zeinebeyarahmani@gmail.com')
+        ->setBody(
+            $this->renderView(
+                'reservation/ReservationBillet.html.twig',
+                ['reservation' => $reservation]
+            ),
+            'text/html'
+        );
+        
+    $mailer->send($message);
+    
+    $this->addFlash('success', 'It sent!');
+    return $this->redirectToRoute('reservation_index');
+        }
+    
+        return $this->render('reservation/show.html.twig', [
+            'reservation' => $reservation,
+            'our_form' => $form,
+        'our_form' => $form->createView(),
+        ]);
+    }
 
      /**
      * @Route("/ReservationBillet/{id}", name="ReservationBillet", methods={"GET"})
@@ -203,6 +247,7 @@ class ReservationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $reservation->setDateReservation(new \DateTime());
+            $reservation->setEtatReservation('waiting for a confirmation');
             $entityManager->flush();
             $this->addFlash('success', 'Reservation Edited!');
             return $this->redirectToRoute('reservation_front', [], Response::HTTP_SEE_OTHER);
@@ -315,5 +360,32 @@ class ReservationController extends AbstractController
        return $this->render('reservation/listWithSearchDate.html.twig', ['reservations' => $reservations]);
    }
 
+   /**
+   * @Route("/searchreservation", name="ajax_searchreservation", methods={"GET"})
+   */
+  public function searchAction(Request $request)
+  {
+      $em = $this->getDoctrine()->getManager();
 
+      $requestString = $request->get('q');
+
+      $reservations =  $em->getRepository('AppBundle:Reservation')->findReservationsByString($requestString);
+
+      if(!$reservations) {
+          $result['reservations)']['error'] = "keine Einträge gefunden";
+      } else {
+          $result['reservations)'] = $this->getRealReservations($reservations);
+      }
+
+      return new Response(json_encode($result));
+  }
+
+  public function getRealReservations($reservations){
+
+      foreach ($reservations as $reservation){
+          $realReservations[$reservation->getId()] = [$reservation->getDateReservation(),$reservation->getUser(),$reservation->getBillet()];
+      }
+
+      return $realReservations;
+  }
 }
