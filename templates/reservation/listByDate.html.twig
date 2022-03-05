@@ -47,8 +47,7 @@
               <td>{{ reservation.etatReservation }}</td>
             <td>{{ reservation.billet.id }}</td>
             <td><a href="{{ path('reservationfront_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
-                     <a href="{{ path('ReservationBillet', {'id': reservation.id}) }}">Ticket</a>
+                    
                     </td>
         </tr>
     {% endfor %}
@@ -75,8 +74,7 @@
               <td>{{ reservation.etatReservation }}</td>
             <td>{{ reservation.billet.id }}</td>
             <td><a href="{{ path('reservationfront_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
-                     <a href="{{ path('ReservationBillet', {'id': reservation.id}) }}">Ticket</a>
+                    
                   </td>
         </tr>
     {% endfor %}
@@ -104,8 +102,7 @@
               <td>{{ reservation.etatReservation }}</td>
             <td>{{ reservation.billet.id }}</td>
             <td><a href="{{ path('reservationfront_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
-                     <a href="{{ path('ReservationBillet', {'id': reservation.id}) }}">Ticket</a>
+                   
                   </td>
         </tr>
     {% endfor %}

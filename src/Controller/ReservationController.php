@@ -306,6 +306,18 @@ class ReservationController extends AbstractController
         'our_form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/cancelreservation/{id}",name="cancelreservation")
+     */
+    public function cancelreservation(Request $request, ReservationRepository $Rep,Reservation $reservation): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $reservation->setEtatReservation("cancelled");
+        $entityManager->flush();
+        return $this->render('reservation/showfront.html.twig', [
+            'reservation' => $reservation,
+        ]);
+    }
 
      /**
      * @Route("/ReservationBillet/{id}", name="ReservationBillet", methods={"GET"})
@@ -391,12 +403,12 @@ class ReservationController extends AbstractController
        
             dump($contactFormData);
            foreach ($contactFormData as $email) {
-    $message = (new \Swift_Message('Hello Email'))
+            $message = (new \Swift_Message('Hello Email'))
        
-        ->setFrom('pawp6703@gmail.com')
-       ->setTo($contactFormData['user'])
+          ->setFrom('pawp6703@gmail.com')
+        ->setTo($contactFormData['user'])
        // ->setTo('zeinebeyarahmani@gmail.com')
-        ->setBody(
+          ->setBody(
             $this->renderView(
                 'reservation/ReservationBillet.html.twig',
                 ['reservation' => $reservation]
@@ -404,17 +416,16 @@ class ReservationController extends AbstractController
             'text/html'
         );
         
-    $mailer->send($message);
-    }
-    $this->addFlash('success', 'It sent!');
-    return $this->redirectToRoute('reservation_index');
+        $mailer->send($message);
         }
-    return $this->render('reservation/mail.html.twig', [
+         $this->addFlash('success', 'It sent!');
+         return $this->redirectToRoute('reservation_index');
+        }
+         return $this->render('reservation/mail.html.twig', [
         'reservation' => $reservation,
         'our_form' => $form,
         'our_form' => $form->createView(),
-    ]);
-  //  return $this->render(...);
+            ]);
     }
 
     /**
