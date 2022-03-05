@@ -271,7 +271,7 @@ class ReservationController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $reservation->setEtatReservation("confirmed");
         $entityManager->flush();
-     $message = (new \Swift_Message('Celestial Reservation Confermation')) 
+     $message = (new \Swift_Message('Celestial Reservation Confirmation ')) 
      ->setFrom('pawp6703@gmail.com')
      ->setTo('zeinebeyarahmani@gmail.com')
      ->setBody("Your Reservation has been confirmed enjoy your trip!!! your reservation id is {$reservation->getid()}, ",'text/html') ;
