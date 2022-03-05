@@ -259,7 +259,7 @@ class ReclamationController extends AbstractController
             $contact = $form->getData();
            // Ici nous enverrons l'e-mail
             //dd($contact);
-            $message = (new \Swift_Message('Nouveau contact') )
+            $message = (new \Swift_Message('Celestial Service') )
             //On attribue l'expediteur
             ->setFrom($contact['email'])
             // destinataire
@@ -276,8 +276,8 @@ class ReclamationController extends AbstractController
             ;
             //on envoie le msg
             $mailer->send($message);
-            $this->addFlash('message', 'le message a ete envoye');
-
+            $this->addFlash('success', 'Votre email a été bien envoyé');
+            return $this->redirectToRoute('reclamation_index');
 
         }
         return $this->render('reclamation/contact.html.twig',[
@@ -334,7 +334,7 @@ class ReclamationController extends AbstractController
         $reclamation->setEtatReclamation("Treated");
         $entityManager->flush();
 
-        return $this->redirectToRoute('reclamation_index');
+        return $this->redirectToRoute('contact');
        /* return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamationRepository->find($id),
         ]);*/
