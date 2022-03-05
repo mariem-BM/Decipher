@@ -1,17 +1,17 @@
 {% extends ('base_back_f/basebackF.html.twig') %}
 
 
-{% block title %}Offre
+{% block title %}Localisation
 {% endblock %}
 
 {% block body %}
 	<h1>Localisation</h1>
 
 	<table class="table">
-		<tbody>
+		<tr>
 			<th>Id</th>
 			<td>{{ localisation.id }}</td>
-		</tbody>
+		
 	</tr>
 	<tr>
 		<th>HeureDepart_localisation</th>
@@ -33,7 +33,12 @@
 		<th>Fusee</th>
 		<td>{{ localisation.fusee }}</td>
 	</tr>
-</tbody>
+	<tr>
+			<th>IdPlaninng</th>
+			<td>{{ localisation.planinng }}</td>
+		
+	</tr>
+
 </table>
 <a href="{{ path('localisation_index') }}"class="btn btn-primary">back to list</a>
 

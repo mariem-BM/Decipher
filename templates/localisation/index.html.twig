@@ -15,7 +15,6 @@
 				<th>PositionDepart</th>
 				<th>PositionArivee</th>
 				<th>Fusee</th>
-				<th>actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,6 +26,8 @@
 					<td>{{ localisation.positionDepartLocalisation }}</td>
 					<td>{{ localisation.positionAriveePlanning }}</td>
 					<td>{{ localisation.fusee }}</td>
+
+
 					<td>
 						<a href="{{ path('localisation_show', {'id': localisation.id}) }}"class="btn btn-primary">show</a>
 

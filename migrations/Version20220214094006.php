@@ -49,7 +49,7 @@ final class Version20220214094006 extends AbstractMigration
         $this->addSql('ALTER TABLE equipement DROP FOREIGN KEY FK_B8B4C6F383A0EE16');
         $this->addSql('ALTER TABLE post DROP FOREIGN KEY FK_5A8A6C8D140AAD8E');
         $this->addSql('ALTER TABLE billet DROP FOREIGN KEY FK_1F034AF6C68BE09C');
-        $this->addSql('ALTER TABLE planinng DROP FOREIGN KEY FK_4C0191CAC68BE09C');
+       // $this->addSql('ALTER TABLE planinng DROP FOREIGN KEY FK_4C0191CAC68BE09C');
         $this->addSql('ALTER TABLE commentaire DROP FOREIGN KEY FK_67F068BC4B89032C');
         $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D6494B89032C');
         $this->addSql('ALTER TABLE billet DROP FOREIGN KEY FK_1F034AF6B83297E7');
