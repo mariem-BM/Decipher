@@ -5,7 +5,7 @@
 {% block body %}
 
 	<h1>Gestion des Offres</h1>
-	
+<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReductionB') }}" style="float:right;">Trier les offres selon la promotion</a>
 	<table class=" table">
 		<thead>
 			<tr>
@@ -20,22 +20,22 @@
 			</tr>
 		</thead>
 		<tbody>
-			<a href="{{ path('offre_new') }}" class="btn btn-primary">Creer</a>
+			<a href="{{ path('offre_new') }}" class="btn btn-primary" style="float:right;">Creer</a>
+			
 			
 		{%  for offre in offres %}
 				<tr>
 					<td>{{ offre.id }}</td>
 					<td>{{ offre.nomOffre }}</td>
 					<td>{{ offre.descriptionOffre }}</td>
-					<td>{{ offre.prixOffre }}</td>
-					
-					<td>{{ offre.reduction }}</td>
+					<td>{{ offre.prixOffre }} TND</td>
+					<td>{{ offre.reduction }} %</td>
 					<td>{{ offre.planning }}</td>
 					<td>{{ offre.dateDebutOffre ? offre.dateDebutOffre|date('Y-m-d') : '' }}</td>
 					<td>{{ offre.dateFinOffre ? offre.dateFinOffre|date('Y-m-d') : '' }}</td>
 					<td>
-						<a href="{{ path('offre_show', {'id': offre.id}) }}" class="btn btn-primary">consulter</a>
-						<a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-primary">modifier</a>
+						<a href="{{ path('offre_show', {'id': offre.id}) }}" class="btn btn-primary">Consulter</a>
+						<a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-primary">Modifier</a>
 
 		</td>
 				</tr>

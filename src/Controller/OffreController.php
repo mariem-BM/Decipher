@@ -44,8 +44,24 @@ class OffreController extends AbstractController
         ]);
     }
 
+    //Tri par Reduction Front ASC
+
+     /**
+     * @Route("/listOffreByReductionA", name="listOffreByReductionA", methods={"GET"})
+     */
+    public function listOffreByReductionA(OffreRepository $repo)
+    {
+
+        $offresByReductionA = $repo->orderByReductionOffreA();
+
+        //orderByDate();
+        return $this->render('offre/listOffreByReductionA.html.twig', [
+            "offresByReductionA" => $offresByReductionA,
+        ]);
+    }
+
     
-      //Tri par Reduction
+      //Tri par Reduction Front DESC
 
      /**
      * @Route("/listOffreByReduction", name="listOffreByReduction", methods={"GET"})
@@ -60,6 +76,23 @@ class OffreController extends AbstractController
             "offresByReduction" => $offresByReduction,
         ]);
     }
+
+ //Tri par Reduction Back DESC
+
+     /**
+     * @Route("/listOffreByReductionB", name="listOffreByReductionB", methods={"GET"})
+     */
+    public function listOffreByReductionB(OffreRepository $repo)
+    {
+
+        $offresByReduction = $repo->orderByReductionOffre();
+
+        //orderByDate();
+        return $this->render('offre/listOffreByReductionB.html.twig', [
+            "offresByReduction" => $offresByReduction,
+        ]);
+    }
+
 
     /**
      * @Route("/new", name="offre_new", methods={"GET", "POST"})

@@ -10,25 +10,25 @@
 	<table class="table">
 		<tbody>
 			<tr>
-				<th>Id</th>
+				<th>Num reclamation</th>
 				<td>{{ reclamation.id }}</td>
 			</tr>
 			<tr>
-				<th>Description_reclamation</th>
+				<th>Description reclamation</th>
 				<td>{{ reclamation.descriptionReclamation }}</td>
 			</tr>
 			<tr>
-				<th>Date_reclamation</th>
+				<th>Date reclamation</th>
 				<td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
 			</tr>
 	<tr>
-				<th>User</th>
+				<th>Utilisateur</th>
 				<td>{{ reclamation.user }}</td>
 			</tr>
 		</tbody>
 	</table>
 	<div>
-		<a href="{{ path('reclamation_index') }}" class="btn btn-primary">back to list</a>
+		<a href="{{ path('reclamation_index') }}" class="btn btn-primary" style="float:right;">Retour a la liste</a>
 
 		
 

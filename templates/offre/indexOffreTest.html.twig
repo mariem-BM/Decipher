@@ -8,11 +8,23 @@
 				</p>
 				<h2 class="text-uppercase">Nos offres
 				</h2>
+		{#}	<div class="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Trier les offres
+			<div class="dopdown-menu" aria-labelledby="dropdownMenuButton">
+			<a class="dropdown-item"  href="{{ path('listOffreByReduction') }}"  style="float:right;">Trier les offres selon la promotion </a>
+			<a class="dropdown-item"  href="{{ path('listOffreByReductionA') }}"  style="float:right;">Trier les offres selon la promotion ASC</a>
+				
+				</div>	#}
+
+		<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReduction') }}" style="float:right;">Trier les offres selon la promotion</a>
+		<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReductionA') }}" style="float:right;">Trier les offres selon la promotion ASC</a>
+	
+		<br>
+		<br>
 			</header>
 
-<div class="center wrapper"  >
-		<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReduction') }}">Trier les offres selon la promotion</a>
-		</div>
+
 		<br>
 		<br>
 
@@ -25,6 +37,7 @@
 					
 						<br>
 						<br>
+						
 						<h3 class=" col-lg-5 h6">{{ offre.nomOffre }}</h3>
 						<br>
 						<p class="col-lg-6 text-muted">{{ offre.descriptionOffre }}</p>

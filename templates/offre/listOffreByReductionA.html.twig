@@ -1,21 +1,21 @@
 {% extends ('basefront/base.html.twig') %}
 
 
-{% block title %}Offres by date{% endblock %}
+{% block title %}Offres by Reduction{% endblock %}
 
 {% block body %}
 <table class="table" border="2">
     <tr>
                  <td>Id</td>
 				<td>Nom offre</td>
-				<td>Description offre</td>
+				<td>Details de l'offre</td>
 				<td>Prix</td>
 				<td>Date debut offre</td>
                 <td>Date fin offre</td>
 				<td>Reduction</td>
 				<td>ID Planning</td>
     </tr>
-    {% for offre in offresByReduction %}
+    {% for offre in offresByReductionA %}
         <tr>
 
                 	<td>{{ offre.id }}</td>

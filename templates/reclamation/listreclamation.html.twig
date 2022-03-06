@@ -3,8 +3,9 @@
 
 <br>
 <br>
-
-	<table class="table" >
+<div class="container">
+<div class="table-responsive">
+	<table class="basic-table table-headers table table-hover" >
 		<thead>
 			<tr>
 				<th>Id reclamation</th>
@@ -16,7 +17,7 @@
 				<th>Etat reclamation</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="myTable">
 			{% for reclamation in reclamations %}
 				<tr>
 					<td>{{ reclamation.id }}</td>
@@ -35,12 +36,14 @@
 			{% endfor %}
 		</tbody>
 	</table>
+	</div>
+	</div>
 <style>
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
-  margin-right: 100%
+  
 }
 
 td, th {

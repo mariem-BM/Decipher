@@ -9,47 +9,52 @@
 
 <table class="table">
 	<tbody>
+	
 		<tr>
-			<th>Id</th>
-			<td>{{ offre.id }}</td>
-		</tr>
-		<tr>
-			<th>Nom_offre</th>
+			<th>Offre</th>
 			<td>{{ offre.nomOffre }}</td>
 		</tr>
 		<tr>
-			<th>Description_offre</th>
+			<th>Details de l'offre</th>
 			<td>{{ offre.descriptionOffre }}</td>
 		</tr>
 		<tr>
-			<th>Prix_offre</th>
-			<td>{{ offre.prixOffre }}TND</td>
+			<th>Prix de l'offre</th>
+			<td>{{ offre.prixOffre }}  TND</td>
 		</tr>
 		
 			<tr>
-			<th>Duree_offre</th>
+			<th>Duree de l'offre</th>
 			<td> {{ offre.dateDebutOffre  ? offre.dateDebutOffre |date('Y-m-d') : '' }} Jours</td>
 	
 		</tr>
+			<tr>
+			<th>Date debut de l'offre</th>
+			<td> {{ offre.dateDebutOffre  ? offre.dateDebutOffre |date('Y-m-d') : '' }}  Jours </td>
+			
+		</tr>
+
 		<tr>
-			<th>date Fin Offre</th>
-			<td> {{ offre.dateFinOffre  ? offre.dateFinOffre |date('Y-m-d') : '' }}Jours </td>
+			<th>Date fin de l'offre</th>
+			<td> {{ offre.dateFinOffre  ? offre.dateFinOffre |date('Y-m-d') : '' }}  Jours </td>
 			
 		</tr>
 
         <tr>
-			<th>Reduction_offre</th>
+			<th>Reduction </th>
 			<td>{{ offre.reduction }}%</td>
 		</tr>
 
          <tr>
-			<th>Planning_offre</th>
+			<th>Planning offre</th>
 			<td>{{ offre.planning}}</td>
 		</tr>
 
 
 	</tbody>
+	
 </table>
-<a href="{{ path('offre_indexOffreTest') }}" class="btn btn-primary">back to list</a>
 <div>
-	 <div> {% endblock %}
+<a href="{{ path('offre_indexOffreTest') }}" class="btn btn-primary" >Retour aux offres</a>
+</div>
+ {% endblock %}

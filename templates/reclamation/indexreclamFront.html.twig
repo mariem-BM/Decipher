@@ -1,18 +1,24 @@
 {% extends ('basefront/base.html.twig') %}
-{% block title %}Reclamations
+
+{% block title %} Reclamations
 {% endblock %}
 
 
 {% block body %}
-	<h1>Reclamations</h1>
+
+<br>
+	<h1 style="text-align:center;">Reclamations</h1>
+	<br>
 	<a style="margin-left: 80px" class="btn btn-primary" id="btn-1" </a>
-			<input  id="myInput"  type="text" placeholder="Search.." >
+			<input  id="myInput"  type="text" placeholder="Rechercher..." style="float:right;" >
 			<br>
 			<br>
+			<br>
+			
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Id reclamation</th>
+				<th>Num reclamation</th>
 				<th>Description reclamation</th>
 				<th>Date reclamation</th>
 				<th>Etat reclamation</th>
@@ -24,7 +30,7 @@
 		<tbody  id="myTable">
 			{% for reclamation in reclamations %}
 				<tr>
-					<td>{{ reclamation.id }}</td>
+				<td>{{ reclamation.id }}</td>
 					<td>{{ reclamation.descriptionReclamation }}</td>
 				<td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d') : '' }}</td>
 				<td>{{ reclamation.etatReclamation }}</td>
@@ -32,9 +38,9 @@
 					<div>
 						<td>
 
-							<a href="{{ path('reclamation_showFront', {'id': reclamation.id}) }}" class="btn btn-primary">consulter</a>
+							<a href="{{ path('reclamation_showFront', {'id': reclamation.id}) }}" class="btn btn-primary">Consulter</a>
 
-							<a href="{{ path('reclamation_editFront', {'id': reclamation.id}) }}" class="btn btn-primary">modifier</a>
+							<a href="{{ path('reclamation_editFront', {'id': reclamation.id}) }}" class="btn btn-primary">Modifier</a>
 
 								
 						{#	<a href="{{ path('reclamation_search')}}" class="btn btn-primary">Search</a>
