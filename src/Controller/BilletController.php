@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-//use Symfony\Component\Sterilizer\Normalizer\NormalizerInterface;
+
 
 
 /**
@@ -27,8 +27,9 @@ class BilletController extends AbstractController
     /**
      * @Route("/", name="billet_index", methods={"GET"})
      */
-    public function index(BilletRepository $billetRepository): Response
+    public function index( BilletRepository $billetRepository): Response
     {
+        
         return $this->render('billet/index.html.twig', [
             'billets' => $billetRepository->findAll(),
         ]);

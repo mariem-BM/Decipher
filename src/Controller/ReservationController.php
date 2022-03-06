@@ -18,6 +18,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+// Include paginator interface
+use Knp\Component\Pager\PaginatorInterface;
+
 /**
  * @Route("/reservation")
  */
@@ -162,12 +165,29 @@ class ReservationController extends AbstractController
      /**
      * @Route("/mesreservations", name="reservation_front", methods={"GET"})
      */
-    public function indexfront(ReservationRepository $reservationRepository): Response
+    public function indexfront(Request $request,ReservationRepository $reservationRepository, PaginatorInterface $paginator): Response
     { 
-        //$reservations = $reservationRepository->findOneByIdUser($this->getUser()->getId(),$reservationRepository->findAll());
+      // Retrieve the entity manager of Doctrine
+      $em = $this->getDoctrine()->getManager();
+      // Get some repository of data, in our case we have an Billet entity
+      $reservationRepository = $em->getRepository(Reservation::class);
+      // Find all the data on the billets table, filter your query as you need
+      $allReservationQuery = $reservationRepository->createQueryBuilder('p')
+          ->where('p.Etat_reservation != :Etat_reservation')
+          ->setParameter('Etat_reservation', 'canceled')
+          ->getQuery();
+           // Paginate the results of the query
+        $reservations = $paginator->paginate(
+            // Doctrine Query, not results
+            $allReservationQuery,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            2
+        );
         return $this->render('reservation/indexfront.html.twig', [
-            'reservations' => $reservationRepository->findAll(),
-           // 'reservations' => $reservations,
+          //  'reservations' => $reservationRepository->findAll(),
+            'reservations' => $reservations,
         ]);
     }
   
