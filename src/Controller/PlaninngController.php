@@ -16,6 +16,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+
+use Symfony\Flex\Unpack\Result;
+
+
 /**
  * @Route("/planinng")
  */
@@ -132,6 +139,39 @@ class PlaninngController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+///////////////print///////////
+/**
+     * @Route("/listeplaninng", name="listeplaninng", methods={"GET"})
+     */
+    public function listeplaninng(PlaninngRepository $planinngRepository) : Response
+    {
+        $pdfOptions = new Options();
+        $dompdf = new Dompdf($pdfOptions);
+
+        
+        $planinngs = $planinngRepository->findAll();
+
+        $html = $this->renderView('planinng/listeplaninng.html.twig', [
+            'planinngs' => $planinngs,
+        ]);
+
+        $dompdf->loadHtml($html);
+
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream('mypdf.pdf', [
+            "Attachment" => true
+        ]);
+       
+        return new Response("the PDF file has benn succefully genrated");
+        
+    }
+
+
+
+
+
 
 /////JSON//////////////////////////////////////////
 /**
