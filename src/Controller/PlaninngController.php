@@ -206,6 +206,8 @@ class PlaninngController extends AbstractController
             'planinng' => $planinng,
         ]);
     }
+
+    
     /**
      * @Route("/{id}/edit", name="planinng_edit", methods={"GET", "POST"})
      */

@@ -31,6 +31,17 @@ class LocalisationController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @Route("/local", name="localisation_front", methods={"GET"})
+     */
+    public function indexfront(LocalisationRepository $localisationRepository): Response
+    {
+        return $this->render('localisation/showfront.html.twig', [
+            'localisations' => $localisationRepository->findAll(),
+        ]);
+    }
+
     /**
      * @Route("/new", name="localisation_new", methods={"GET", "POST"})
      */
@@ -54,7 +65,7 @@ class LocalisationController extends AbstractController
     }
 
     /**
-     * @Route("/localisation/plans/{id}", name="localisation_show", methods={"GET"})
+     * @Route("/local", name="localisation_show", methods={"GET"})
      */
     public function show(Localisation $localisation): Response
     {
@@ -68,7 +79,7 @@ class LocalisationController extends AbstractController
      */
     public function showfront(Localisation $localisation): Response
     {
-        return $this->render('planinng/showfront.html.twig', [
+        return $this->render('localisation/showfront.html.twig', [
             'localisation' => $localisation,
         ]);
     }

@@ -1,42 +1,39 @@
 {% extends ('basefront/base.html.twig') %}
 
 
-{% block title %}Offre
+{% block title %}Localisation
 {% endblock %}
 
 {% block body %}
 	<h1>Localisation</h1>
 
 	<table class="table">
+	  <th> </th>
 		<tbody>
-		<tr>
-				<th>id</th>
-				<td>{{ localisation.planning }}</td>
-			</tr>
-			<th>Id</th>
-			<td>{{ localisation.id }}</td>
 		</tbody>
-	</tr>
-	<tr>
+	  
+	   <tr>
 		<th>HeureDepart_localisation</th>
 		<td>{{ localisation.heureDepartLocalisation ? localisation.heureDepartLocalisation|date('H:i:s') : '' }}</td>
-	</tr>
-	<tr>
+	   </tr>
+	   <tr>
 		<th>HeureArrivee_loacalisation</th>
 		<td>{{ localisation.heureArriveeLoacalisation ? localisation.heureArriveeLoacalisation|date('H:i:s') : '' }}</td>
-	</tr>
-	<tr>
+	   </tr>
+	    <tr>
 		<th>PositionDepart_localisation</th>
 		<td>{{ localisation.positionDepartLocalisation }}</td>
-	</tr>
-	<tr>
+	   </tr>
+	   <tr>
 		<th>PositionArivee_planning</th>
 		<td>{{ localisation.positionAriveePlanning }}</td>
-	</tr>
-	<tr>
+	    </tr>
+	    <tr>
 		<th>Fusee</th>
 		<td>{{ localisation.fusee }}</td>
-	</tr>
-</tbody>
-</table>
+	    </tr>
+
+   </table>
+<div class="col-lg-3 text-lg-end"><a class="btn btn-outline-primary px-4" href="{{ path('localisation_showfront', {'id': localisation.id}) }}">VOIR LOCALISATION</a></div>
+          </div>
 {% endblock %}
