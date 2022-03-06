@@ -5,6 +5,12 @@
 
 {% block body %}
 	<h1>Gestion des reclamations</h1>
+
+	<a style="margin-left: 20px" class="btn btn-primary" id="btn-1" </a>
+			<input  id="myInput"  type="text" placeholder="Rechercher..." style="float:right;" >
+			
+			<br>
+	
 	 <a href="{{ path('listreclamation') }}" class="btn btn-primary" style="float:right;">  Imprimer</a>
 	<a href="{{ path('listReclamByDate') }}" class="btn btn-primary" style="float:right;margin-right: 20px;">Trier Reclamation par Date</a>
 	<a href="{{ path('contact') }}" class="btn btn-primary" style="float:right;margin-right: 20px;">Envoyer mail</a>
@@ -24,7 +30,7 @@
 				<th>Etat reclamation</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="myTable">
 			{% for reclamation in reclamations %}
 				<tr>
 					<td>{{ reclamation.id }}</td>
@@ -50,4 +56,15 @@
 		</tbody>
 	</table>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 {% endblock %}
