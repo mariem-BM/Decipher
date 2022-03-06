@@ -29,34 +29,32 @@ class ReservationController extends AbstractController
     /**
      * @Route("/", name="reservation_index", methods={"GET"})
      */
-    public function index(ReservationRepository $reservationRepository): Response
-    {
-        return $this->render('reservation/index.html.twig', [
-            'reservations' => $reservationRepository->findAll(),
-        ]);
+    public function index(Request $request,ReservationRepository $reservationRepository, PaginatorInterface $paginator): Response
+    {// Retrieve the entity manager of Doctrine
+        $em = $this->getDoctrine()->getManager();
+        // Get some repository of data, in our case we have an Billet entity
+        $reservationRepository = $em->getRepository(Reservation::class);
+        // Find all the data on the billets table, filter your query as you need
+        $allReservationQuery = $reservationRepository->createQueryBuilder('p')
+            ->where('p.Etat_reservation != :Etat_reservation')
+            ->setParameter('Etat_reservation', 'canceled')
+            ->getQuery();
+             // Paginate the results of the query
+          $reservations = $paginator->paginate(
+              // Doctrine Query, not results
+              $allReservationQuery,
+              // Define the page parameter
+              $request->query->getInt('page', 1),
+              // Items per page
+              2
+          );
+          return $this->render('reservation/index.html.twig', [
+            //  'reservations' => $reservationRepository->findAll(),
+              'reservations' => $reservations,
+          ]);
+       
     }
 
-
-    
-    
-  //  /**
-    // * @Route("/listReservationByDate", name="listReservationByDate", methods={"GET"})
-   //  */
-  /*  public function listReservationByDate(ReservationRepository $repo)
-    {
-        //list of reservations order By Date
-        $reservationsByDate = $repo->orderByDate();
-        //list of reservations order By Mail
-        $reservationsByMail = $repo->orderByMail();
-        //list of reservations order By Etat
-        $reservationsByEtat = $repo->orderByEtat();
-        //orderByDate();
-        return $this->render('reservation/listByDate.html.twig', [
-            "reservationsByDate" => $reservationsByDate,
-            "reservationsByMail" => $reservationsByMail,
-            "reservationsByEtat" => $reservationsByEtat
-        ]);
-    }*/
         /**
      * @Route("/listReservationByDate", name="listReservationByDate", methods={"GET"})
      */
