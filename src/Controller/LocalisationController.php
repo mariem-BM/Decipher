@@ -6,6 +6,7 @@ use App\Entity\Localisation;
 use App\Entity\Planinng;
 use App\Form\LocalisationType;
 use App\Form\PlaninngType;
+use App\Form\mailType;
 
 use App\Repository\LocalisationRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +16,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Flex\Unpack\Result;
+
 
 /**
  * @Route("/localisation")
@@ -74,6 +79,47 @@ class LocalisationController extends AbstractController
         ]);
     }
 
+
+/**
+     * @Route("/mail", name="mail")
+     */
+    public function mail(Request $request, \Swift_Mailer $mailer)
+    {
+        $form = $this->createForm(mailType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $mail = $form->getData();
+           // Ici nous enverrons l'e-mail
+            //dd($contact);
+            $message = (new \Swift_Message('Celestial Voyage') )
+            //On attribue l'expediteur
+            ->setFrom($mail['email'])
+            // destinataire
+
+            ->setTo('skanderrachah77@gmail.com')
+            
+            // le contenu de notre msg avec Twig
+            ->setBody(
+                $this->renderView(
+                    'emails/email.html.twig', compact('mail')
+                ),
+                'text/html'
+            )
+            ;
+            //on envoie le msg
+            $mailer->send($message);
+            $this->addFlash('success', 'Votre email a été bien envoyé');
+            return $this->redirectToRoute('localisation_index');
+
+        }
+        return $this->render('localisation/email.html.twig',[
+            'emailForm' => $form->createView()
+        ]);
+    }
+
+
+
     /**
      * @Route("/{id}", name="localisation_showfront", methods={"GET"})
      */
@@ -84,6 +130,9 @@ class LocalisationController extends AbstractController
         ]);
     }
 
+
+
+    
     /**
      * @Route("/{id}/edit", name="localisation_edit", methods={"GET", "POST"})
      */
@@ -116,4 +165,12 @@ class LocalisationController extends AbstractController
 
         return $this->redirectToRoute('localisation_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+
+
+
+
+
 }

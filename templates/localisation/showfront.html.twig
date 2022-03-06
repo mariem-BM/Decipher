@@ -13,27 +13,26 @@
 		</tbody>
 	  
 	   <tr>
-		<th>HeureDepart_localisation</th>
-		<td>{{ localisation.heureDepartLocalisation ? localisation.heureDepartLocalisation|date('H:i:s') : '' }}</td>
+		<th class="p-3 mb-2 bg-primary text-white">Heure de Depart</th>
+		<th>{{ localisation.heureDepartLocalisation ? localisation.heureDepartLocalisation|date('H:i:s') : '' }}</th>
 	   </tr>
 	   <tr>
-		<th>HeureArrivee_loacalisation</th>
-		<td>{{ localisation.heureArriveeLoacalisation ? localisation.heureArriveeLoacalisation|date('H:i:s') : '' }}</td>
+		<th>Heure d'Arrivee</th>
+		<th class="p-3 mb-2 bg-secondary text-white">{{ localisation.heureArriveeLoacalisation ? localisation.heureArriveeLoacalisation|date('H:i:s') : '' }}</th>
 	   </tr>
 	    <tr>
-		<th>PositionDepart_localisation</th>
-		<td>{{ localisation.positionDepartLocalisation }}</td>
+		<th class="p-3 mb-2 bg-primary text-white">Position du Depart</th>
+		<th>{{ localisation.positionDepartLocalisation }}</th>
 	   </tr>
 	   <tr>
-		<th>PositionArivee_planning</th>
-		<td>{{ localisation.positionAriveePlanning }}</td>
+		<th>Position d'Arivee</th>
+		<th class="p-3 mb-2 bg-secondary text-white">{{ localisation.positionAriveePlanning }}</th>
 	    </tr>
 	    <tr>
-		<th>Fusee</th>
-		<td>{{ localisation.fusee }}</td>
+		<th class="p-3 mb-2 bg-primary text-white">Fusee</th>
+		<th>{{ localisation.fusee }}</th>
 	    </tr>
 
    </table>
-<div class="col-lg-3 text-lg-end"><a class="btn btn-outline-primary px-4" href="{{ path('localisation_showfront', {'id': localisation.id}) }}">VOIR LOCALISATION</a></div>
-          </div>
+
 {% endblock %}
