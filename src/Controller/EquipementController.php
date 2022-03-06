@@ -68,7 +68,7 @@ class EquipementController extends AbstractController
 
         // Output the generated PDF to Browser (force download)
         $dompdf->stream("Equipements.pdf", [
-            "Attachment" => false
+            "Attachment" => true
         ]);
 
     
@@ -114,9 +114,9 @@ class EquipementController extends AbstractController
             $entityManager->flush();
             $client = SMSClient::getInstance('2Yf3CBy0mWhiS0TcVCWonAOkEUXs6cLF', 'Bgflgfsi6lEN1e2V');
             $sms = new SMS($client);
-            $sms->message('eni batalt yna3nbouha lkoora')
+            $sms->message('Une Categorie a ete ajoutee . Consulez notre site !')
             ->from('+21627300520')
-            ->to('+21628175092')
+            ->to('+21626061992')
             ->send();
 
             return $this->redirectToRoute('equipement_index', [], Response::HTTP_SEE_OTHER);
