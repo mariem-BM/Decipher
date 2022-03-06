@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class BilletType extends AbstractType
 {
@@ -19,7 +20,7 @@ class BilletType extends AbstractType
             ->add('voyage_num')
             ->add('terminal')
             ->add('portail')
-            ->add('embarquement')
+            ->add('embarquement',DateType::class)
           // ->add('localisation')
             ->add('localisation',EntityType::class,[
                 'class' => Localisation::class,

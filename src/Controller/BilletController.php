@@ -17,7 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-
+// Include paginator interface
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/billet")
@@ -27,11 +28,29 @@ class BilletController extends AbstractController
     /**
      * @Route("/", name="billet_index", methods={"GET"})
      */
-    public function index( BilletRepository $billetRepository): Response
-    {
+    public function index(Request $request, BilletRepository $billetRepository, PaginatorInterface $paginator): Response
+    {// Retrieve the entity manager of Doctrine
+        $em = $this->getDoctrine()->getManager();
+        // Get some repository of data, in our case we have an Billet entity
+        $billetRepository = $em->getRepository(Billet::class);
+        // Find all the data on the billets table, filter your query as you need
+        $allbilletQuery = $billetRepository->createQueryBuilder('p')
+            ->where('p.localisation != :localisation')
+            ->setParameter('localisation', 'canceled')
+            ->getQuery();
+             // Paginate the results of the query
+          $billets = $paginator->paginate(
+              // Doctrine Query, not results
+              $allbilletQuery,
+              // Define the page parameter
+              $request->query->getInt('page', 1),
+              // Items per page
+              3
+          );
         
         return $this->render('billet/index.html.twig', [
-            'billets' => $billetRepository->findAll(),
+          //  'billets' => $billetRepository->findAll(),
+            'billets' => $billets,
         ]);
        
     }
@@ -39,11 +58,31 @@ class BilletController extends AbstractController
     /**
      * @Route("/billets", name="billet_front", methods={"GET"})
      */
-    public function indexfront(BilletRepository $billetRepository): Response
-    {
+    public function indexfront(Request $request, BilletRepository $billetRepository, PaginatorInterface $paginator): Response
+    {// Retrieve the entity manager of Doctrine
+        $em = $this->getDoctrine()->getManager();
+        // Get some repository of data, in our case we have an Billet entity
+        $billetRepository = $em->getRepository(Billet::class);
+        // Find all the data on the billets table, filter your query as you need
+        $allbilletQuery = $billetRepository->createQueryBuilder('p')
+            ->where('p.localisation != :localisation')
+            ->setParameter('localisation', 'canceled')
+            ->getQuery();
+             // Paginate the results of the query
+          $billets = $paginator->paginate(
+              // Doctrine Query, not results
+              $allbilletQuery,
+              // Define the page parameter
+              $request->query->getInt('page', 1),
+              // Items per page
+              3
+          );
+        
         return $this->render('billet/indexfront.html.twig', [
-            'billets' => $billetRepository->findAll(),
+          //  'billets' => $billetRepository->findAll(),
+            'billets' => $billets,
         ]);
+        
     }
     /**
      * @Route("/new", name="billet_new", methods={"GET", "POST"})
