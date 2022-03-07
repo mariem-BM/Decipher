@@ -29,7 +29,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
+use Knp\Component\Pager\PaginatorInterface; 
 
 use Symfony\Flex\Unpack\Result;
 
@@ -55,16 +55,35 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/reclamation_indexreclamFront", name="reclamation_indexreclamFront", methods={"GET"})
      */
-    public function indexF(ReclamationRepository $reclamationRepository): Response
+    public function indexF(Request $request,ReclamationRepository $reclamationRepository, PaginatorInterface $paginator): Response
     {
+        $em = $this->getDoctrine()->getManager();
+        // Get some repository of data, in our case we have an Billet entity
+        $reclamationRepository = $em->getRepository(Reclamation::class);
+        // Find all the data on the billets table, filter your query as you need
+       
+        $allReclamationQuery = $reclamationRepository->createQueryBuilder('r')
+           // ->where('o.nom_offre = :nom_offre')
+          //  ->setParameter('id', 'canceled')
+            ->getQuery();
+             // Paginate the results of the query
+          $reclamations = $paginator->paginate(
+              // Doctrine Query, not results
+              $allReclamationQuery,
+              // Define the page parameter
+              $request->query->getInt('page', 1),
+              // Items per page
+              6
+          );
+          
         return $this->render('reclamation/indexreclamFront.html.twig', [
-            'reclamations' => $reclamationRepository->findAll(),
+            'reclamations' => $reclamations,
         ]);
     }
 
 
 
-    //Tri par date
+    //Tri par date backk
 
     /**
      * @Route("/listReclamByDate", name="listReclamByDate", methods={"GET"})
@@ -96,7 +115,8 @@ class ReclamationController extends AbstractController
 }*/
 
     /*****reclamation/indexreclamFront.html.twig*/
-    /**************************ADD Back************************************ */
+
+    /**************************ADD front************************************ */
 
     /**
      * @Route("/new", name="reclamation_new", methods={"GET", "POST"})

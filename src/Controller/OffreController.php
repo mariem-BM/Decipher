@@ -24,6 +24,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class OffreController extends AbstractController
 {
+
+
+    /******************Index Back*************** */
     /**
      * @Route("/", name="offre_index", methods={"GET"})
      */
