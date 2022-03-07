@@ -72,4 +72,12 @@ class ReclamationRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
+    public function orderByDateReclamA()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.date_reclamation', 'ASC')
+           // ->setMaxResults(3)
+            ->getQuery()->getResult();
+    }
+
 }

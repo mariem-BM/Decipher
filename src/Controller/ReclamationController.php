@@ -104,7 +104,7 @@ class ReclamationController extends AbstractController
 
 
 
-    //Tri par date backk
+    //Tri par date desc backk
 
     /**
      * @Route("/listReclamByDate", name="listReclamByDate", methods={"GET"})
@@ -119,8 +119,21 @@ class ReclamationController extends AbstractController
             "reclamationsByDate" => $reclamationsByDate,
         ]);
     }
+//Tri par date asc backk
 
+    /**
+     * @Route("/listReclamByDateA", name="listReclamByDateA", methods={"GET"})
+     */
+    public function listReclamByDateA(ReclamationRepository $repo)
+    {
 
+        $reclamationsByDateA = $repo->orderByDateReclamA();
+
+        //orderByDate();
+        return $this->render('reclamation/listByDateReclamA.html.twig', [
+            "reclamationsByDateA" => $reclamationsByDateA,
+        ]);
+    }
     /*************Search***************** */
 
     /**
