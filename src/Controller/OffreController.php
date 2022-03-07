@@ -9,6 +9,7 @@ use App\Form\PropertySearchType;
 use App\Form\OffreType;
 use App\Repository\OffreRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\From;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request; // Nous avons besoin d'accéder à
 use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @Route("/offre")
@@ -38,7 +40,7 @@ class OffreController extends AbstractController
      */
     public function indexF(Request $request,OffreRepository $offreRepository, PaginatorInterface $paginator): Response
     {
-      
+     
         $em = $this->getDoctrine()->getManager();
         // Get some repository of data, in our case we have an Billet entity
         $offreRepository = $em->getRepository(Offre::class);
@@ -55,8 +57,9 @@ class OffreController extends AbstractController
               // Define the page parameter
               $request->query->getInt('page', 1),
               // Items per page
-              3
-          );  return $this->render('offre/indexOffreTest.html.twig', [
+              6
+          );
+            return $this->render('offre/indexOffreTest.html.twig', [
             'offres' => $offres,
         ]);
     }
