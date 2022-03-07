@@ -5,7 +5,11 @@
 {% block body %}
 
 	<h1>Gestion des Offres</h1>
-<a class="btn btn-outline-primary px-4" href="{{ path('listOffreByReductionB') }}" style="float:right;">Trier les offres selon la promotion</a>
+
+<a class="btn btn-primary px-4" href="{{ path('listOffreByReductionB') }}" style="float:right;">Trier les offres selon la promotion</a>
+	<a href="{{ path('offre_new') }}" class="btn btn-primary" style="float:right;margin-right: 20px;">Creer</a>
+	<br>
+	<br>
 	<table class=" table">
 		<thead>
 			<tr>
@@ -20,7 +24,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<a href="{{ path('offre_new') }}" class="btn btn-primary" style="float:right;">Creer</a>
+			
 			
 			
 		{%  for offre in offres %}
@@ -35,7 +39,7 @@
 					<td>{{ offre.dateFinOffre ? offre.dateFinOffre|date('Y-m-d') : '' }}</td>
 					<td>
 						<a href="{{ path('offre_show', {'id': offre.id}) }}" class="btn btn-primary">Consulter</a>
-						<a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-primary">Modifier</a>
+						<a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-primary" >Modifier</a>
 
 		</td>
 				</tr>
