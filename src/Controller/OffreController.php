@@ -27,10 +27,30 @@ class OffreController extends AbstractController
     /**
      * @Route("/", name="offre_index", methods={"GET"})
      */
-    public function index(OffreRepository $offreRepository): Response
+    public function index(Request $request,OffreRepository $offreRepository, PaginatorInterface $paginator): Response
     {
-        return $this->render('offre/index.html.twig', [
-            'offres' => $offreRepository->findAll(),
+
+        $em = $this->getDoctrine()->getManager();
+        // Get some repository of data, in our case we have an Billet entity
+        $offreRepository = $em->getRepository(Offre::class);
+        // Find all the data on the billets table, filter your query as you need
+       
+        $allOffreQuery = $offreRepository->createQueryBuilder('o')
+           // ->where('o.nom_offre = :nom_offre')
+          //  ->setParameter('id', 'canceled')
+            ->getQuery();
+             // Paginate the results of the query
+          $offres = $paginator->paginate(
+              // Doctrine Query, not results
+              $allOffreQuery,
+              // Define the page parameter
+              $request->query->getInt('page', 1),
+              // Items per page
+              6
+          );
+          
+      return $this->render('offre/index.html.twig', [
+            'offres' => $offres,
         ]);
     }
     
