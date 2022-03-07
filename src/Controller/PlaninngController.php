@@ -67,7 +67,7 @@ class PlaninngController extends AbstractController
 
 
 
-    //Tri par periode
+//Tri par periode
 
      /**
      * @Route("/listPlanByPeriode", name="listPlanByPeriode", methods={"GET"})
@@ -80,6 +80,25 @@ class PlaninngController extends AbstractController
         //orderByPeriode();
         return $this->render('planinng/listByPeriodePlan.html.twig', [
             "planinngsByPeriode" => $planinngsByPeriode,
+        ]);
+    }
+
+
+    /////Tri par prix 
+
+
+
+/**
+     * @Route("/listPlanByPrix", name="listPlanByPrix", methods={"GET"})
+     */
+    public function listPlanByPrix(PlaninngRepository $reposs)
+    {
+
+        $planinngsByPrix = $reposs->orderByPriXPlan();
+
+        //orderByPrice();
+        return $this->render('planinng/listByPrixPlan.html.twig', [
+            "planinngsByPrix" => $planinngsByPrix,
         ]);
     }
 

@@ -7,6 +7,8 @@
 {% block body %}
 	<h1>Gestion des Plannings</h1>
 		 <a href="{{ path('listeplaninng') }}" class="btn btn-primary" style="float:right;">  Imprimer</a>
+		     <div id="calendar-holder"></div>
+
 
 			<input  id="myInput"  type="text" placeholder="Search.." >
 	<table class="table">
@@ -52,7 +54,9 @@
 
 	<a href="{{ path('planinng_new') }}"class="btn btn-primary">Create new</a>
 	<a href="{{ path('listPlanByDate') }}"class="btn btn-primary">Trier Planinng par Date</a>
-		<a href="{{ path('listPlanByPeriode') }}"class="btn btn-primary">Trier Planinng par Periode</a>
+	<a href="{{ path('listPlanByPeriode') }}"class="btn btn-primary">Trier Planinng par Periode</a>
+	<a href="{{ path('listPlanByPrix') }}"class="btn btn-primary">Trier Planinng par Prix</a>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -65,5 +69,7 @@
             });
         });
     </script>
+
+
 
 {% endblock %}

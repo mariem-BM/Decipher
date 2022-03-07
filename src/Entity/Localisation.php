@@ -138,7 +138,7 @@ class Localisation
         return $this;
     }
    
-
+    
    
     /**
      * @return Collection|Billet[]
