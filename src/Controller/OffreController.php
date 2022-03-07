@@ -18,14 +18,25 @@ use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Pagin
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
+use App\Notifications\CreationOffreNotification;
 /**
  * @Route("/offre")
  */
 class OffreController extends AbstractController
 {
 
+    /**
+     * @var CreationOffreNotification
+     */
+    private $notify_creation ;
 
+    public function __construct(CreationOffreNotification $notify_creation) {
+
+        $this->notify_creation = $notify_creation;
+    }
+
+
+   
     /******************Index Back*************** */
     /**
      * @Route("/", name="offre_index", methods={"GET"})
@@ -174,6 +185,8 @@ class OffreController extends AbstractController
             $entityManager->persist($offre);
             
             $entityManager->flush();
+            //envoyer mail ajout offre au client
+            $this->notify_creation->notify();
 
             return $this->redirectToRoute('offre_index', [], Response::HTTP_SEE_OTHER);
         }
