@@ -323,7 +323,7 @@ class ReclamationController extends AbstractController
             // le contenu de notre msg avec Twig
             ->setBody(
                 $this->renderView(
-                    'emails/email.html.twig', compact('contact')
+                    'contact/mailing.html.twig', compact('contact')
                 ),
                 'text/html'
             )
