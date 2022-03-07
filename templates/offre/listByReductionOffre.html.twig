@@ -4,7 +4,9 @@
 {% block title %}Offres by date{% endblock %}
 
 {% block body %}
-<table class="table" border="2">
+<br>
+<table  class="table table-striped">
+   	<thead >
     <tr>
                  <td>Id</td>
 				<td>Nom offre</td>
@@ -15,6 +17,8 @@
 				<td>Reduction</td>
 				<td>ID Planning</td>
     </tr>
+    	</thead>
+        <tbody  id="myTable">
     {% for offre in offresByReduction %}
         <tr>
 
@@ -28,11 +32,13 @@
 					<td>{{ offre.reduction }} %</td>
 					<td>{{ offre.planning }}</td>
             
-
+<div>
             <td><a href="{{ path('offre_showFront', {'id': offre.id}) }}">Afficher</a>
                     </td>
+                    </div>
         </tr>
     {% endfor %}
+    </tbody>
 </table>
-
+<br>
 {% endblock %}
