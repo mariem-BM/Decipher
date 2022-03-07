@@ -114,7 +114,7 @@ class ReclamationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($reclamation);
             $reclamation->setDateReclamation(new \DateTime());
-           $reclamation->setEtatReclamation("envoyé");
+            $reclamation->setEtatReclamation("envoyé");
             $entityManager->flush();
 
             return $this->redirectToRoute('reclamation_indexreclamFront', [], Response::HTTP_SEE_OTHER);

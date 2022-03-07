@@ -18,7 +18,7 @@ class Offre
      * @ORM\Column(type="integer")
      */
     private $id;
-
+   
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Do not leave empty"),
@@ -30,6 +30,11 @@ class Offre
      * )
      */
     private $nom_offre;
+    
+  /*  public function __toString() : string {
+        return $this->nom_offre;
+    }*/
+   
 
     /**
      * @ORM\Column(type="text")
@@ -105,7 +110,6 @@ class Offre
     }
     }
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -161,7 +165,6 @@ class Offre
         return $this;
     }
     
-
 
 
 

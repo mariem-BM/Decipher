@@ -3,18 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Offre;
+use App\Entity\Planinng;
 use App\Entity\PropertySearch;
 use App\Form\PropertySearchType;
 use App\Form\OffreType;
 use App\Repository\OffreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form;
-
-use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request; // Nous avons besoin d'accéder à la requête pour obtenir le numéro de page
+use Knp\Component\Pager\PaginatorInterface; // Nous appelons le bundle KNP Paginator
 
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -32,15 +31,33 @@ class OffreController extends AbstractController
             'offres' => $offreRepository->findAll(),
         ]);
     }
-
+    
     /***************************IndexFront **************************/
     /**
      * @Route("/indexOffreTest", name="offre_indexOffreTest", methods={"GET"})
      */
-    public function indexF(OffreRepository $offreRepository): Response
+    public function indexF(Request $request,OffreRepository $offreRepository, PaginatorInterface $paginator): Response
     {
-        return $this->render('offre/indexOffreTest.html.twig', [
-            'offres' => $offreRepository->findAll(),
+      
+        $em = $this->getDoctrine()->getManager();
+        // Get some repository of data, in our case we have an Billet entity
+        $offreRepository = $em->getRepository(Offre::class);
+        // Find all the data on the billets table, filter your query as you need
+       
+        $allOffreQuery = $offreRepository->createQueryBuilder('o')
+           // ->where('o.nom_offre = :nom_offre')
+          //  ->setParameter('id', 'canceled')
+            ->getQuery();
+             // Paginate the results of the query
+          $offres = $paginator->paginate(
+              // Doctrine Query, not results
+              $allOffreQuery,
+              // Define the page parameter
+              $request->query->getInt('page', 1),
+              // Items per page
+              3
+          );  return $this->render('offre/indexOffreTest.html.twig', [
+            'offres' => $offres,
         ]);
     }
 
@@ -100,6 +117,7 @@ class OffreController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
         $offre = new Offre();
+        
         $form = $this->createForm(OffreType::class, $offre);
         $form->handleRequest($request);
 
@@ -111,8 +129,15 @@ class OffreController extends AbstractController
          * Uses a __toString method on the $errors variable which is a
          * ConstraintViolationList object. This gives us a nice string
          * for debugging.
-         */
+         */ 
+     /*   $item->setPrice($product->getPrice());
+        $item->setDiscount(20);*/
+
                 $errorsString = (string) $errors;
+                /*$planning->getPrixPlanning();
+                $offre->setPrixOffre();*/
+            /*    $offre->setPrixOffre($planinng->getPrixPlanning() * $offre->getReduction());*/
+              //  $getPrixOffre()->setPrix($planning->getPrix() * $reduction );
 
                 return new Response($errorsString);
                 return $this->render('offre/_form.html.twig', [
