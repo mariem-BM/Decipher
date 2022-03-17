@@ -18,7 +18,7 @@ class ReservationType extends AbstractType
     {
         $builder
            
-            ->add('user',EntityType::class,[
+          ->add('user',EntityType::class,[
                 'class' => User::class,
                 'choice_label' => 'mail_utilisateur',
                  'label' => 'User']

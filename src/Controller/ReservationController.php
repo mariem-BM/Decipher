@@ -167,6 +167,7 @@ class ReservationController extends AbstractController
     { 
       // Retrieve the entity manager of Doctrine
       $em = $this->getDoctrine()->getManager();
+     
       // Get some repository of data, in our case we have an Billet entity
       $reservationRepository = $em->getRepository(Reservation::class);
       // Find all the data on the billets table, filter your query as you need
@@ -304,9 +305,9 @@ class ReservationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $contact = $form->getData();
            // Ici nous enverrons l'e-mail
-            $message = (new \Swift_Message('Nouveau contact') )
+            $message = (new \Swift_Message('Celestial Reservation Confirmation') )
             //On attribue l'expediteur
-            ->setFrom('pawp6703@gmail.com')
+            ->setFrom('celestialservice489@gmail.com')
             // destinataire
             ->setTo($contact['email'])
             // le contenu de notre msg avec Twig
@@ -351,7 +352,7 @@ class ReservationController extends AbstractController
             $message = (new \Swift_Message('Nouveau contact') )
             //On attribue l'expediteur
            
-            ->setFrom('pawp6703@gmail.com')
+            ->setFrom('celestialservice489@gmail.com')
             // destinataire
 
             ->setTo($contact['email'])
