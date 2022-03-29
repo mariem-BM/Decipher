@@ -34,6 +34,8 @@ class Planinng
      * maxMessage = "Le nom_planning doit comporter au plus {{ limit }} caractères"
      * )
      * @ORM\Column(type="string", length=255)
+     * @Groups("Planinng:read")
+
      */
     private $nom_planning;
 
@@ -93,7 +95,7 @@ class Planinng
 
    
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      * @Assert\NotBlank(message="Please upload image")
      * @Assert\File(mimeTypes={"image/jpeg"})
      */
