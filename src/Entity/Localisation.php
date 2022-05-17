@@ -145,9 +145,9 @@ class Localisation
 
         return $this;
     }
-   
+
+
     
-   
     /**
      * @return Collection|Billet[]
      */
@@ -177,37 +177,40 @@ class Localisation
 
         return $this;
     }
-
-     /**
-     * @return Collection|planinng[]
+    /**
+     * @return Collection|Planinng[]
      */
-    public function getplaninng(): Collection
+    public function getPlaninng(): Collection
     {
-        return $this->nomPlanning;
+        return $this->nom_planinng;
     }
-    public function addplaninng(planinng $nomPlanning): self
+
+    public function addPlaninng(Planinng $planinng): self
     {
-        if (!$this->planinng->contains($nomPlanning)) {
-            $this->planinng[] = $nomPlanning;
-            $nomPlanning->setNomPlanning($this);
+        if (!$this->planinng->contains($nom_planinng)) {
+        
+            $this->planinng[] = $nom_planinng;
+            $planinng->setPlaninng($this);
+        }
+
+        return $this;
+    }
+    
+    public function removePlaninng(Planinng $planinng): self
+    {
+        if ($this->planinng->removeElement($planinng)) {
+            // set the owning side to null (unless already changed)
+            if ($planinng->getPlaninng() === $this) {
+                $planinng->setPlaninng(null);
+            }
         }
 
         return $this;
     }
 
-    public function removePlanning(Planinng $nomPlanning)
-    {
-        if ($this->planning->removeElement($nomPlanning)) {
-            // set the owning side to null (unless already changed)
-            if ($nomPlanning->getNomPlanning() === $this) {
-                $nomPlanning->setNomPlanning($this);
-            }
-        }
-   
-    }
 
-    
 
+  
     
    
 }
