@@ -66,7 +66,7 @@
 
 				<!-- Nav Item - Dashboard -->
 				<li class="nav-item active">
-					<a class="nav-link" href="index.html">
+					<a class="nav-link" href="{{ path('baseback') }}">
 						<i class="fas fa-fw fa-tachometer-alt"></i>
 						<span>Dashboard</span>
 					</a>
@@ -90,8 +90,9 @@
 					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<h6 class="collapse-header">Gestion des utilisateurs:</h6>
-							<a class="collapse-item" href="buttons.html">Roles</a>
-							<a class="collapse-item" href="buttons.html">Utilisateurs</a>
+							<a class="collapse-item" href="{{path('user_index')}}">User</a>
+						<a class="collapse-item" href="{{path('role_index')}}">Role</a>
+						<a class="collapse-item" href="{{path('task_index')}}">Task</a>
 
 						</div>
 					</div>
