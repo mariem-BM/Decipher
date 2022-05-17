@@ -48,7 +48,18 @@
             <ul class="navbar-nav me-auto">
               <li class="nav-item"><a class="nav-link" href="{{path('reservation_front')}}">Reservation</a></li>
               <li class="nav-item"><a class="nav-link" href="{{path('equipement_index')}}">Equipement</a></li>
-              <li class="nav-item"><a class="nav-link" href="{{path('blog')}}">Blog</a></li>
+              <li class="nav-item">
+               <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Blog
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+            {% for valeur in categoryPost %}
+           <li><a class="dropdown-item" href="\tblog\{{ valeur.getId()}}"> {{ valeur.getNomCategoriePost()}} </a></li>
+            {% endfor %}
+          </ul>
+          </li>
+        </li
               <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{ path('reclamation_new') }}">Réclamer</a> </li>
             </ul>
@@ -137,7 +148,7 @@
         <div class="py-4 border-top border-dark text-center">
           <p class="mb-0 text-muted">Template designed by <a class="reset-anchor text-primary" href="https://bootstrapious.com/p/cathedral-bootstrap-church-charity-template">Bootstrap Temple</a>. </p>
           <!-- If you want to remove the backlink, please purchase the Attribution-Free License. See details in readme.txt or license.txt. Thanks!-->
-        </div>
+          </div>
       </div>
     </footer>
     {% endblock %}

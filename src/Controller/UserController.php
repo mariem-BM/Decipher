@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-
+use App\Repository\CategoriePostRepository;
 
 class UserController extends AbstractController
 {   /**
@@ -150,10 +150,10 @@ return new Response(json_encode($jsonContent));
     /**
      * @Route("/showC", name="user_showC", methods={"GET"})
      */
-    public function showClient(UsersRepository $userRepository): Response
+    public function showClient(UsersRepository $userRepository,CategoriePostRepository $repo): Response
     {
         return $this->render('user/showinfo.html.twig', [
-            'users' => $userRepository->findBy(array(),array('id'=>'DESC'),1,0)]);
+            'users' => $userRepository->findBy(array(),array('id'=>'DESC'),1,0),'categoryPost'=>$repo->findAll()]);
     }
 
     /**

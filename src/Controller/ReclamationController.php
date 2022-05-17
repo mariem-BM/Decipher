@@ -32,7 +32,7 @@ use Dompdf\Options;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Flex\Unpack\Result;
-
+use App\Repository\CategoriePostRepository;
 /**
  * @Route("/reclamation")
  */
@@ -76,7 +76,7 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/reclamation_indexreclamFront", name="reclamation_indexreclamFront", methods={"GET"})
      */
-    public function indexF(Request $request,ReclamationRepository $reclamationRepository, PaginatorInterface $paginator): Response
+    public function indexF(Request $request,ReclamationRepository $reclamationRepository, PaginatorInterface $paginator,CategoriePostRepository $repo): Response
     {
         $em = $this->getDoctrine()->getManager();
         // Get some repository of data, in our case we have an Billet entity
@@ -98,7 +98,7 @@ class ReclamationController extends AbstractController
           );
           
         return $this->render('reclamation/indexreclamFront.html.twig', [
-            'reclamations' => $reclamations,
+            'reclamations' => $reclamations,'categoryPost'=>$repo->findAll()
         ]);
     }
 
@@ -155,7 +155,7 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/new", name="reclamation_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,CategoriePostRepository $repo): Response
     {
        // $user = $this->getUser();
         $reclamation = new Reclamation();
@@ -176,7 +176,7 @@ class ReclamationController extends AbstractController
 
         return $this->render('reclamation/new.html.twig', [
             'reclamation' => $reclamation,
-            'form' => $form->createView(),
+            'form' => $form->createView(),'categoryPost'=>$repo->findAll()
         ]);
     }
 
@@ -327,7 +327,7 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/{id}/edit", name="reclamation_editFront", methods={"GET", "POST"})
      */
-    public function editF(Request $request, Reclamation $reclamation, EntityManagerInterface $entityManager): Response
+    public function editF(Request $request, Reclamation $reclamation, EntityManagerInterface $entityManager,CategoriePostRepository $repo): Response
     {
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
@@ -340,7 +340,7 @@ class ReclamationController extends AbstractController
 
         return $this->render('reclamation/editFront.html.twig', [
             'reclamation' => $reclamation,
-            'form' => $form->createView(),
+            'form' => $form->createView(),'categoryPost'=>$repo->findAll()
         ]);
     }
 
@@ -674,12 +674,12 @@ class ReclamationController extends AbstractController
      */
 
 
-    public function showF(Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
+    public function showF(Reclamation $reclamation, ReclamationRepository $reclamationRepository,CategoriePostRepository $repo): Response
     {
         //  $reclamation = $reclamationRepository->findOneByIdUser($this->getUser()->getId(), $reclamation->getId());
         $reclamation = $reclamationRepository->findOneBy(['id' => $reclamation->getId()]);
         return $this->render('reclamation/showFront.html.twig', [
-            'reclamation' => $reclamation,
+            'reclamation' => $reclamation,'categoryPost'=>$repo->findAll()
         ]);
     }
 

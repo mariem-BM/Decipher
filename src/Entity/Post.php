@@ -28,7 +28,7 @@ class Post
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      * @Groups("post:read")
      */
     private $img_post;

@@ -43,6 +43,7 @@ class Commentaire
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $post;
+    
 
     public function __construct(){
         $this->date_commentaire= new \DateTime();

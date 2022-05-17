@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Offre;
 use App\Entity\Planinng;
 use App\Entity\PropertySearch;
+use App\Repository\CategoriePostRepository;
 use App\Form\PropertySearchType;
 use App\Form\OffreType;
 use App\Repository\OffreRepository;
@@ -82,7 +83,7 @@ class OffreController extends AbstractController
     /**
      * @Route("/indexOffreTest", name="offre_indexOffreTest", methods={"GET"})
      */
-    public function indexF(Request $request,OffreRepository $offreRepository, PaginatorInterface $paginator): Response
+    public function indexF(Request $request,OffreRepository $offreRepository, PaginatorInterface $paginator,CategoriePostRepository $repo): Response
     {
      
         $em = $this->getDoctrine()->getManager();
@@ -104,7 +105,7 @@ class OffreController extends AbstractController
               3
           );
             return $this->render('offre/indexOffreTest.html.twig', [
-            'offres' => $offres,
+            'offres' => $offres,'categoryPost'=>$repo->findAll()
         ]);
     }
 
@@ -113,14 +114,14 @@ class OffreController extends AbstractController
      /**
      * @Route("/listOffreByReductionA", name="listOffreByReductionA", methods={"GET"})
      */
-    public function listOffreByReductionA(OffreRepository $repo)
+    public function listOffreByReductionA(OffreRepository $repo,CategoriePostRepository $repo1)
     {
 
         $offresByReductionA = $repo->orderByReductionOffreA();
 
         //orderByDate();
         return $this->render('offre/listOffreByReductionA.html.twig', [
-            "offresByReductionA" => $offresByReductionA,
+            "offresByReductionA" => $offresByReductionA,'categoryPost'=>$repo1->findAll()
         ]);
     }
 
@@ -130,14 +131,14 @@ class OffreController extends AbstractController
      /**
      * @Route("/listOffreByReduction", name="listOffreByReduction", methods={"GET"})
      */
-    public function listOffreByReduction(OffreRepository $repo)
+    public function listOffreByReduction(OffreRepository $repo,CategoriePostRepository $repo1)
     {
 
         $offresByReduction = $repo->orderByReductionOffre();
 
         //orderByDate();
         return $this->render('offre/listByReductionOffre.html.twig', [
-            "offresByReduction" => $offresByReduction,
+            "offresByReduction" => $offresByReduction,'categoryPost'=>$repo1->findAll()
         ]);
     }
 
@@ -211,10 +212,10 @@ class OffreController extends AbstractController
     /**
      * @Route("/offreFront/{id}", name="offre_showFront", methods={"GET"})
      */
-    public function showF(Offre $offre): Response
+    public function showF(Offre $offre,CategoriePostRepository $repo): Response
     {
         return $this->render('offre/showFront.html.twig', [
-            'offre' => $offre,
+            'offre' => $offre,'categoryPost'=>$repo->findAll()
         ]);
     }
 

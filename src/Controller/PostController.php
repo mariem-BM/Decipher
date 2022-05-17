@@ -5,6 +5,7 @@ use App\Entity\Post;
 use App\Entity\Commentaire;
 use App\Form\PostType;
 use App\Repository\PostRepository;
+use App\Repository\CategoriePostRepository;
 use App\Repository\CommentaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Sluggable\Util\Urlizer;
@@ -30,7 +31,17 @@ use Dompdf\Options;
  */
 class PostController extends AbstractController
 {
-   
+    const ATTRIBUTES_TO_SERIALIZE =['id','nom','imgPost','descriptionPost'];
+
+    /**
+     * @Route("/base",name="base")
+     */
+    public function base(CategoriePostRepository $repo){
+
+        return $this->render('basefront/base.html.twig', [
+           'categoryPost'=>$repo->findAll()
+        ]);
+    }
     /**
      * @Route("/", name="post_index", methods={"GET"})
      */
@@ -74,7 +85,49 @@ class PostController extends AbstractController
         $jsonContent= $Normalizer->normalize($Post,'json',['groups'=>"post:read"]);
         return new Response(json_encode($jsonContent));;
     }
+/**
+     * @Route("/edit/post/json/{id}" , name="post_modifier" ,  methods={"GET", "POST"}, requirements={"id":"\d+"})
+     */
+    public function editProfile(Request $request,SerializerInterface $serializer,$id,PostRepository $repo)
+    {
+        $post=$repo->findOneById($id);
+        $nom=$request->query->get('nom');
+        $description=$request->query->get('description');
+        $image=$request->query->get('image');
+        
+        $em=$this->getDoctrine()->getManager();
+        $post->setNom($nom);
+        $post->setDescriptionPost($description);
+        $post->setImgPost($image);
 
+        $em->persist($post);
+        $em->flush();
+        $serializer=new Serializer([new ObjectNormalizer()]);
+        $formatted=$serializer->normalize($post);
+        return new JsonResponse($formatted);
+    }
+
+    /**
+     * @Route("/delete/post/json", name="supprimer_post")
+     */
+    public function supprimerPost(Request $request, PostRepository $repo): Response
+    {
+
+        $id =$request->get("id");
+        $em=$this->getDoctrine()->getManager();
+
+     $d=   $repo->find($id);
+
+        if($d != null){
+            $em->remove($d);
+            $em->flush();
+            $serializer=new Serializer([new ObjectNormalizer()]);
+            $formatted=$serializer->normalize("post a eté supprimeé");
+            return new JsonResponse($formatted);
+        }
+
+       return  new JsonResponse("Id Invalide");
+    }
     /**
      * @Route("/new", name="post_new", methods={"GET", "POST"})
      */
@@ -170,7 +223,7 @@ $dompdf->stream("PostDetail.pdf", [
 /**
      * @Route("/postdetails/{id}", name="get_post_show", methods={"GET"})
      */
-    public function get_post_show(Request $request): Response
+    public function get_post_show(Request $request,CategoriePostRepository $repo): Response
     {
         $commentairs= new Commentaire();
         $Post = new Post();
@@ -179,7 +232,8 @@ $dompdf->stream("PostDetail.pdf", [
         $commentairs=$this->getDoctrine()->getRepository(Commentaire::class)->findBy(array('post' => $id));
         
         return $this->render('basefront/DetailsPost.html.twig', array(
-            'post'=>$Post ,'commentairs'=>$commentairs
+            'post'=>$Post ,'commentairs'=>$commentairs,'categoryPost'=>$repo->findAll()
+
         ));
     }
 

@@ -14,7 +14,7 @@ class RoleType extends AbstractType
         $builder
             ->add('nom_role')
             ->add('description_role')
-            ->add('Description')
+            
         ;
     }
 

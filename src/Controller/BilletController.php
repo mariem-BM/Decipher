@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Repository\CategoriePostRepository;
 use App\Entity\Billet;
 use App\Entity\Reservation;
 use App\Entity\Localisation;
@@ -143,7 +143,7 @@ class BilletController extends AbstractController
     /**
      * @Route("/billets", name="billet_front", methods={"GET"})
      */
-    public function indexfront(Request $request, BilletRepository $billetRepository, PaginatorInterface $paginator): Response
+    public function indexfront(Request $request, BilletRepository $billetRepository, PaginatorInterface $paginator,CategoriePostRepository $repo): Response
     {// Retrieve the entity manager of Doctrine
         $em = $this->getDoctrine()->getManager();
         // Get some repository of data, in our case we have an Billet entity
@@ -165,7 +165,7 @@ class BilletController extends AbstractController
         
         return $this->render('billet/indexfront.html.twig', [
           //  'billets' => $billetRepository->findAll(),
-            'billets' => $billets,
+            'billets' => $billets,'categoryPost'=>$repo->findAll()
         ]);
         
     }

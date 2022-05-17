@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-
+use App\Repository\CategoriePostRepository;
 use App\Entity\Planinng;
 use App\Entity\Localisation;
 use App\Form\PlaninngType;
@@ -46,10 +46,10 @@ class PlaninngController extends AbstractController
     /**
      * @Route("/plans", name="planinng_front", methods={"GET"})
      */
-    public function indexfront(PlaninngRepository $planinngRepository): Response
+    public function indexfront(PlaninngRepository $planinngRepository,CategoriePostRepository $repo): Response
     {
         return $this->render('planinng/indexfront.html.twig', [
-            'planinngs' => $planinngRepository->findAll(),
+            'planinngs' => $planinngRepository->findAll(),'categoryPost'=>$repo->findAll()
         ]);
     }
 
@@ -323,10 +323,10 @@ class PlaninngController extends AbstractController
      /**
      * @Route("/{id}", name="planinng_showfront", methods={"GET"})
      */
-    public function showfront(Planinng $planinng): Response
+    public function showfront(Planinng $planinng,CategoriePostRepository $repo1): Response
     {
         return $this->render('planinng/showfront.html.twig', [
-            'planinng' => $planinng,
+            'planinng' => $planinng,'categoryPost'=>$repo1->findAll()
         ]);
     }
 

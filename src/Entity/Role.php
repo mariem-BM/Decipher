@@ -76,17 +76,6 @@ class Role
     }
 
   
-    public function getTacherole(): ?string
-    {
-        return $this->tacherole;
-    }
-
-    public function setTacherole(string $tacherole): self
-    {
-        $this->tacherole = $tacherole;
-
-        return $this;
-    }
 
     /**
      * @return Collection|User[]
@@ -122,17 +111,6 @@ class Role
     return (string) $this->nom_role; 
 }
 
-    public function getDescription(): ?Task
-    {
-        return $this->Description;
-    }
-
-    public function setDescription(?Task $Description): self
-    {
-        $this->Description = $Description;
-
-        return $this;
-    }
 
    
 }

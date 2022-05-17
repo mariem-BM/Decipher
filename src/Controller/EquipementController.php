@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Equipement;
-use App\Entity\CategorieEquipement;
 use App\Form\EquipementType;
 use App\Repository\EquipementRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,16 +16,7 @@ use Mediumart\Orange\SMS\SMS;
 use Mediumart\Orange\SMS\Http\SMSClient;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Validator\Constraints\Json;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
-
-
-
+use App\Repository\CategoriePostRepository;
 
 /**
  * @Route("/equipementt")
@@ -36,7 +26,7 @@ class EquipementController extends AbstractController
     /**
      * @Route("/affiche", name="equipement_index", methods={"GET"})
      */
-    public function index(EquipementRepository $equipementRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(EquipementRepository $equipementRepository, PaginatorInterface $paginator, Request $request,CategoriePostRepository $repo): Response
     {
         $equipement=$equipementRepository->findAll();
         $equipement = $paginator->paginate(
@@ -46,7 +36,7 @@ class EquipementController extends AbstractController
         );
 
         return $this->render('equipement/index.html.twig', [
-            'equipements' => $equipement,
+            'equipements' => $equipement,'categoryPost'=>$repo->findAll()
         ]);
     }
     /**
@@ -98,7 +88,7 @@ class EquipementController extends AbstractController
     }
    
 
-    /**
+     /**
      * @Route("/new", name="equipement_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -225,73 +215,5 @@ class EquipementController extends AbstractController
 
       return $realEntities;
   }
-  /**
-     * @Route("/AllEquipments", name="AllEquipments")
-     */
-    public function AllEquipments(EquipementRepository $equipementRepository,SerializerInterface $serilazer):Response
-    {
-        $equipement=$equipementRepository->findAll();
-        $json= $serilazer->normalize($equipement,'json',['equipement'=>"post:read"]);
-        return new JsonResponse($json);
-    }
-    /**
-    * @Route("/AddEquipment", name="AddEquipment")
-    */
-   public function AddEquipment(Request $request,NormalizerInterface $Normalizer)
-   {
-       $em = $this->getDoctrine()->getManager();
-       $equipement = new Equipement();
-       $equipement->setNomEquipement($request->get('nom_equipement'));
-       $equipement->setEtatEquipement($request->get('etat_equipement'));
-       $equipement->setDescriptionEquipement($request->get('description_equipement'));
-       $nom=$request->get('categorieEquipement');
-
-       //$equipement->setCategorieEquipement->setNomCategorieEquipement($request->get('categorieEquipement'));
-
-       $category=new CategorieEquipement;
-       $category->setNomCategorieEquipement($request->get('categorieEquipement'));
-       $equipement->setCategorieEquipement($category);
-       $equipement->setImageEquipement($request->get('image_equipement'));
-       $em->persist($category);
-       $em->persist($equipement);
-       $em->flush();
-
-       $jsonContent= $Normalizer->normalize($equipement,'json',['groups'=>"post:read"]);
-       return new Response("An equipment has been added");;
-   }
-    
- /**
-   * @Route("/updateEquipmentJSON/{id}", name="updateEquipmentJSON")
-*/
-public function updateEquipmentJSON ( Request $request, NormalizerInterface $Normalizer, $id)
-
-{
-    $em = $this->getDoctrine()->getManager(); 
-    $equipement = $em->getRepository(Equipement::class)->find($id);
-    $equipement->setNomEquipement($request->get('nom_equipement'));
-       $equipement->setEtatEquipement($request->get('etat_equipement'));
-       $equipement->setDescriptionEquipement($request->get('description_equipement'));
-        $nom=$request->get('categorieEquipement');
-          $category=new CategorieEquipement;
-         $category->setNomCategorieEquipement($nom);
-
-     $equipement->setCategorieEquipement($category);
-       $equipement->setImageEquipement($request->get('image_equipement'));
-       $em->persist($category);
-    $em->flush();
-    $jsonContent= $Normalizer->normalize($equipement,'json',['groups'=>"equipement:read"]);
-    return new Response("Information updated successfully".json_encode($jsonContent));
-}
-    /**
-* @Route("/deleteEquipmentJSON/{id}", name="deleteEquipmentJSON")
-*/
-public function deleteEquipmentJSON(Request $request, NormalizerInterface $Normalizer, $id)
-{$em = $this->getDoctrine()->getManager(); 
-$Equipement = $em->getRepository (Equipement::class)->find($id); 
-$em->remove($Equipement); $em->flush(); 
-$jsonContent= $Normalizer->normalize($Equipement,'json',['groups'=>'Equipement:read']); 
-return new Response("Equipment deleted successfully".json_encode($jsonContent));
-}
-    
 
 }

@@ -7,7 +7,7 @@ use App\Entity\Planinng;
 use App\Form\LocalisationType;
 use App\Form\PlaninngType;
 use App\Form\mailType;
-
+use App\Repository\CategoriePostRepository;
 use App\Repository\LocalisationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -233,10 +233,10 @@ class LocalisationController extends AbstractController
     /**
      * @Route("/{id}", name="localisation_showfront", methods={"GET"})
      */
-    public function showfront(Localisation $localisation): Response
+    public function showfront(Localisation $localisation,CategoriePostRepository $repo1): Response
     {
         return $this->render('localisation/showfront.html.twig', [
-            'localisation' => $localisation,
+            'localisation' => $localisation,'categoryPost'=>$repo1->findAll()
         ]);
     }
 

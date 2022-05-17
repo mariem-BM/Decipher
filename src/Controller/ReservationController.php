@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-
+use App\Repository\CategoriePostRepository;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer;
@@ -289,40 +289,40 @@ class ReservationController extends AbstractController
        /**
      * @Route("/listReservationByDatefront", name="listReservationByDatefront", methods={"GET"})
      */
-    public function listReservationByDatefront(ReservationRepository $repo)
+    public function listReservationByDatefront(ReservationRepository $repo,CategoriePostRepository $repo1)
     {
         //list of reservations order By Date
         $reservationsByDate = $repo->orderByDate();
 
         return $this->render('reservation/listByDatefront.html.twig', [
-            "reservationsByDate" => $reservationsByDate,
+            "reservationsByDate" => $reservationsByDate,'categoryPost'=>$repo1->findAll()
         ]);
     }
       /**
      * @Route("/listReservationByMailfront", name="listReservationByMailfront", methods={"GET"})
     */
-    public function listReservationByMailfront(ReservationRepository $repo)
+    public function listReservationByMailfront(ReservationRepository $repo,CategoriePostRepository $repo1)
     {
        
         $reservationsByMail = $repo->orderByMail();
     
         return $this->render('reservation/listByDatefront.html.twig', [
  
-            "reservationsByMail" => $reservationsByMail,
+            "reservationsByMail" => $reservationsByMail,'categoryPost'=>$repo1->findAll()
           
         ]);
     }
          /**
      * @Route("/listReservationByEtatfront", name="listReservationByEtatfront", methods={"GET"})
     */
-    public function listReservationByEtatfront(ReservationRepository $repo)
+    public function listReservationByEtatfront(ReservationRepository $repo,CategoriePostRepository $repo1)
     {
        
         $reservationsByEtat = $repo->orderByEtat();
     
         return $this->render('reservation/listByDatefront.html.twig', [
  
-            "reservationsByEtat" => $reservationsByEtat,
+            "reservationsByEtat" => $reservationsByEtat,'categoryPost'=>$repo1->findAll()
           
         ]);
     }
@@ -354,7 +354,7 @@ class ReservationController extends AbstractController
      /**
      * @Route("/mesreservations", name="reservation_front", methods={"GET"})
      */
-    public function indexfront(Request $request,ReservationRepository $reservationRepository, PaginatorInterface $paginator): Response
+    public function indexfront(Request $request,ReservationRepository $reservationRepository, PaginatorInterface $paginator,CategoriePostRepository $repo): Response
     { 
       // Retrieve the entity manager of Doctrine
       $em = $this->getDoctrine()->getManager();
@@ -377,7 +377,7 @@ class ReservationController extends AbstractController
         );
         return $this->render('reservation/indexfront.html.twig', [
           //  'reservations' => $reservationRepository->findAll(),
-            'reservations' => $reservations,
+            'reservations' => $reservations,'categoryPost'=>$repo->findAll()
         ]);
     }
   
@@ -417,7 +417,7 @@ class ReservationController extends AbstractController
     /**
      * @Route("/new", name="reservation_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,CategoriePostRepository $repo): Response
     {
        
         $reservation = new Reservation();
@@ -453,7 +453,7 @@ class ReservationController extends AbstractController
 
         return $this->render('reservation/new.html.twig', [
             'reservation' => $reservation,
-            'form' => $form->createView(),
+            'form' => $form->createView(),'categoryPost'=>$repo->findAll()
         ]);
     }
 
@@ -470,10 +470,10 @@ class ReservationController extends AbstractController
      /**
      * @Route("/showfront/{id}", name="reservationfront_show", methods={"GET"})
      */
-    public function showfront(Reservation $reservation): Response
+    public function showfront(Reservation $reservation,CategoriePostRepository $repo): Response
     {
         return $this->render('reservation/showfront.html.twig', [
-            'reservation' => $reservation,
+            'reservation' => $reservation,'categoryPost'=>$repo->findAll()
         ]);
     }
     /**
@@ -520,13 +520,13 @@ class ReservationController extends AbstractController
     /**
      * @Route("/cancelreservation/{id}",name="cancelreservation")
      */
-    public function cancelreservation(Request $request, ReservationRepository $Rep,Reservation $reservation): Response
+    public function cancelreservation(Request $request, ReservationRepository $Rep,Reservation $reservation,CategoriePostRepository $repo): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $reservation->setEtatReservation("cancelled");
         $entityManager->flush();
         return $this->render('reservation/showfront.html.twig', [
-            'reservation' => $reservation,
+            'reservation' => $reservation,'categoryPost'=>$repo->findAll()
         ]);
     }
  /**
@@ -579,7 +579,7 @@ class ReservationController extends AbstractController
     /**
      * @Route("/{id}/edit", name="reservation_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager,CategoriePostRepository $repo): Response
     {
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
@@ -595,7 +595,7 @@ class ReservationController extends AbstractController
 
         return $this->render('reservation/edit.html.twig', [
             'reservation' => $reservation,
-            'form' => $form->createView(),
+            'form' => $form->createView(),'categoryPost'=>$repo->findAll()
         ]);
     }
     /**
