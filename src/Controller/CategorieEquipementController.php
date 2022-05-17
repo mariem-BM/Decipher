@@ -166,4 +166,3 @@ return new Response("Category deleted successfully".json_encode($jsonContent));
     }
     
 }
-
